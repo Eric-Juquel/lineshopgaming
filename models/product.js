@@ -45,7 +45,7 @@ const productSchema = new Schema(
       required: true,
       enum: {
         values: ['console', 'game'],
-        message: 'Please select correct category for product'
+        message: 'Please select correct category for product',
       },
     },
     description: {

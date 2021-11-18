@@ -1,0 +1,119 @@
+@import '../../styles/sass/variables';
+@import '../../styles/sass/mixins';
+
+.container {
+  width: 70%;
+  // height: 100%;
+  background-color: $color-background-secondary;
+  margin: auto;
+  padding: 0.5rem;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.gallery {
+  background-color: rgba($color-secondary, 0.8);
+  margin: auto;
+  border-radius: 4px;
+
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  grid-template-rows: repeat(5, 5.6vw);
+
+  grid-gap: 1.5rem;
+  padding: 1.5rem;
+
+  & .item {
+    transition: all 0.2s ease;
+    &__0 {
+      grid-row: 1 / span 2;
+      grid-column: 1 / span 3;
+    }
+
+    &__1 {
+      grid-row: 3 / span 1;
+      grid-column: 11 / span 1;
+    }
+
+    &__2 {
+      grid-row: 4 / span 2;
+      grid-column: 10 / span 2;
+    }
+
+    &__3 {
+      grid-row: 1 / span 3;
+      grid-column: 5 / span 3;
+    }
+
+    &__4 {
+      grid-row: 3 / span 3;
+      grid-column: 12 / span 3;
+    }
+
+    &__5 {
+      grid-row: 2 / span 1;
+      grid-column: 4 / span 1;
+    }
+
+    &__6 {
+      grid-row: 4 / span 2;
+      grid-column: 5 / span 2;
+    }
+
+    &__8 {
+      grid-row: 4 / span 2;
+      grid-column: 7 / span 3;
+    }
+
+    &__9 {
+      grid-row: 1 / span 3;
+      grid-column: 8 / span 3;
+    }
+
+    &__10 {
+      grid-row: 1 / span 2;
+      grid-column: 13 / span 2;
+    }
+
+    &__11 {
+      grid-row: 1 / span 2;
+      grid-column: 11 / span 2;
+    }
+
+    &__12 {
+      grid-row: 3 / span 2;
+      grid-column: 3 / span 2;
+    }
+
+    &__13 {
+      grid-row: 3 / span 2;
+      grid-column: 1 / span 2;
+    }
+
+    &:hover {
+      transform: scale(1.5);
+    }
+
+    & div {
+      max-height:100%;
+      max-width:100%;
+      object-fit: cover;
+    }
+
+    & img {
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+    }
+  }
+
+
+  & .title {
+    grid-row: 5 / span 1;
+    grid-column: 1 / span 4;
+
+    & h1 {
+      font-size: 2vw;
+    }
+  }
+}

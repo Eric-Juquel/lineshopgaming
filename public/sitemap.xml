@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>https://lineshopgaming.vercel.app</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.690Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/cart</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/cart/payment</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/cart/placeOrder</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/cart/shipping</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/login</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/order</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/gallery</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/register</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/5fca4b935e34bb17741c5327</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/5fca4b935e34bb17741c5328</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/5fca4b935e34bb17741c5329</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/5fca4b935e34bb17741c532a</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/5fca4b935e34bb17741c532c</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/6001b64ef47d6f1bdcf8c9aa</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/6005a34dbac1eb3060d97743</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/6005a697bac1eb3060d97744</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/6005a7eebac1eb3060d97745</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/60099802ef74724c9c71ff9a</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/60099923ef74724c9c71ff9b</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/60099b80ef74724c9c71ff9c</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/60099c52ef74724c9c71ff9d</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/60099dd2ef74724c9c71ff9e</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/60099eb6ef74724c9c71ff9f</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/6009a037ef74724c9c71ffa0</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+<url><loc>https://lineshopgaming.vercel.app/products/600e9d94ece1415cf8267cb7</loc><changefreq>daily</changefreq><priority>0.7</priority><lastmod>2021-08-15T15:14:55.691Z</lastmod></url>
+</urlset>

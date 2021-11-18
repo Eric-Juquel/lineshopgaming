@@ -1,0 +1,59 @@
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+
+.container {
+  height: 100%;
+  background-color: transparent;
+  padding: 0 2rem;
+
+  display: grid;
+  grid-template-columns: [logo-start] 15% [logo-end nav-start] 25% [nav-end search-start] 25% [search-end action-start] 35% [action-end];
+
+  @media screen and (max-width: $bp-mobile-land) {
+    grid-template-columns: [logo-start] 28% [logo-end search-start] 44% [search-end action-start] 28% [action-end];
+  }
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    grid-template-columns: [logo-start] 35% [logo-end action-start] 65% [action-end];
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  & div {
+    @include flexCenter;
+  }
+}
+
+.logo {
+  grid-column: logo-start / logo-end;
+  grid-row: 1/ 2;
+}
+
+.navigation {
+  grid-column: nav-start / nav-end;
+
+  @media screen and (max-width: $bp-mobile-land) {
+    display: none !important;
+  }
+}
+
+.searchbar {
+  grid-column: search-start / search-end;
+  grid-row: 1/ 2;
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    grid-column: logo-start / action-end;
+    grid-row: 2 / 3;
+    width: 90%;
+    margin: auto;
+  }
+}
+
+.userActions {
+  grid-column: action-start / action-end;
+  grid-row: 1 / 2;
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    width: 100%;
+    justify-content: space-evenly !important;
+  }
+}

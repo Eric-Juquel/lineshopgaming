@@ -1,0 +1,66 @@
+//FONTS
+
+@font-face {
+  font-family: "Star wars";
+  src: url("/fonts/Star-wars/SF\ Distant\ Galaxy.ttf");
+}
+
+@font-face {
+  font-family: "Star wars1";
+  src: url("/fonts/Star-wars/SF\ Distant\ Galaxy\ Outline\ Italic.ttf");
+}
+
+@font-face {
+  font-family: "Quantity";
+  src: url("/fonts/numbers/CRASS\ ROOTS\ OFL.ttf");
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Montserrat&family=Open+Sans&family=Roboto&display=swap");
+
+
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-shadow: 1px 2px 2px $color-secondary;
+}
+
+h1 {
+  margin-bottom: 5px;
+  font-size: 3rem;
+  font-family: "Audiowide", cursive;
+  color: $color-yellow-light;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: $color-blue-light;
+}
+
+h3 {
+  font-family: "Audiowide", cursive;
+  font-size: 2.3rem;
+  text-transform: capitalize;
+  color: $color-yellow-light;
+}
+
+h4 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.1rem;
+  text-transform: capitalize;
+  color: $color-blue-light;
+}
+
+h5 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.1rem;
+  text-transform: capitalize;
+  color: $color-yellow-light;
+}
+
+

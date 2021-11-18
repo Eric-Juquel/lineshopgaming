@@ -1,0 +1,66 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-width: thin !important;
+  scrollbar-color: $color-yellow-light $color-background-secondary;
+}
+
+//Chrome
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px!important;
+  background: $color-background-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-yellow-light;
+  -webkit-border-radius: 1ex;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; // 10px/16px = 62.5% -> 1rem = 10px
+
+  @media only screen and (max-width: $bp-largest) {
+    font-size: 60%;
+  }
+
+  @media only screen and (max-width: $bp-large) {
+    font-size: 55%;
+  }
+
+  @media only screen and (max-width: $bp-medium) {
+    font-size: 50%;
+  }
+
+  // @media only screen and (max-width: $bp-mobile-land) {
+  //   font-size: 40%;
+  // }
+}
+
+body {
+  font-family: $font-primary;
+  color: $color-grey-light-1;
+  font-weight: 300;
+  line-height: 1.5;
+
+  background: transparent;
+  // -webkit-touch-callout: none;
+  // -webkit-user-select: none;
+  // -khtml-user-select: none;
+  // -moz-user-select: none;
+  // -ms-user-select: none;
+  // user-select: none;
+  ::selection {
+    background: rgba(0, 0, 0, 0.534); /* WebKit/Blink Browsers */
+    color: white;
+  }
+  ::-moz-selection {
+    background: rgba(0, 0, 0, 0.514); /* Gecko Browsers */
+    color: white;
+  }
+  cursor: default;
+}

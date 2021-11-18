@@ -1,0 +1,112 @@
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+@import './Navigation.module.scss';
+
+.actionContainer {
+  width: 100%;
+
+  @media only screen and (max-width: $bp-mobile-land) {
+    justify-content: space-between !important;
+  }
+
+  & .burger {
+    display: none;
+
+    @media only screen and (max-width: $bp-mobile-land) {
+      display: block;
+      width: 40%;
+    }
+  }
+
+  & .navigation {
+    @media only screen and (max-width: $bp-mobile-land) {
+      width: 50%;
+    }
+  }
+}
+
+.userCart {
+  width: 6rem;
+  @include flexCenter;
+
+  @media only screen and (max-width: $bp-mobile-land) {
+    margin: auto;
+  }
+
+  & a {
+    display: flex;
+  }
+
+  & img {
+    margin-right: 0.6rem;
+    filter: invert(1);
+    -webkit-filter: invert(1);
+  }
+
+  & .qty {
+    font-family: 'Quantity';
+    font-size: 1.8rem;
+    color: orange;
+    margin: auto 0 auto 0.5rem;
+  }
+}
+
+.userLoged {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  & :link {
+    font-size: 2.8rem;
+  }
+
+  @media screen and (max-width: $bp-mobile-land) {
+    width: 20%;
+  }
+}
+
+.navigation {
+  @media screen and (max-width: $bp-mobile-land) {
+    display: none;
+  }
+}
+
+.empty {
+  width: 13rem;
+}
+
+.avatar {
+  & img {
+    border-radius: 100px;
+    cursor: pointer;
+    width: 6rem;
+  }
+}
+
+.noAvatar {
+  text-transform: uppercase;
+  font-size: 3rem;
+  color: $color-secondary;
+  font-weight: 600;
+  background-color: $color-blue-light;
+  cursor: pointer;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 100px;
+  @include flexCenter;
+}
+
+.item.desktop {
+  @media only screen and (max-width: $bp-mobile-land) {
+    display: none;
+  }
+}
+
+.admin,
+.user {
+  @media only screen and (max-width: $bp-mobile-land) {
+    display: none;
+  }
+}

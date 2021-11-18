@@ -1,0 +1,84 @@
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+
+.navigation {
+  width: 100%;
+  height: 100%;
+
+  & .list {
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    @media screen and (max-width: $bp-mobile-land) {
+      @include centerElement;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  & .item {
+    display: flex;
+    align-items: center;
+
+    &.mobile {
+      display: none;
+      @media screen and (max-width: $bp-mobile-land) {
+        display: flex;
+        margin: 1rem;
+      }
+
+      &.portrait {
+        @media screen and (max-width: $bp-mobile-vert) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  & a {
+    min-width: 120%;
+    outline: none;
+
+    display: inline-block;
+    font-size: 3.5rem;
+    font-family: $font-starwars-i;
+    font-weight: 300;
+    color: white;
+    padding: 0 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-image: linear-gradient(
+      120deg,
+      transparent 0%,
+      transparent 50%,
+      $color-background-secondary 50%
+    );
+    background-size: 230%;
+    clip-path: polygon(3rem 0, 100% 0, calc(100% - 3rem) 100%, 0 100%);
+    transition: all 0.4s;
+
+    @media screen and (max-width: $bp-mobile-land) {
+      clip-path: none;
+      font-size: 4rem;
+    }
+
+    &:hover,
+    &:active {
+      @media screen and (min-width: $bp-mobile-land) {
+        border-radius: 4px;
+        background-position: -90%;
+        transform: translateY(-0.3rem);
+        clip-path: polygon(3rem 0, 100% 0, calc(100% - 3rem) 100%, 0 100%);
+      }
+    }
+  }
+
+  & .active a {
+    color: $color-yellow-light;
+  }
+}

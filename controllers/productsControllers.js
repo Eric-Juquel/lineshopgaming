@@ -8,7 +8,7 @@ import APIFeatures from '../utils/apiFeatures';
 // @route  Get  /api/products
 // @acces  Public
 export const allProducts = async (req, res) => {
-  const resPerPage = 10;
+  const resPerPage = 9;
   const productsCount = await Product.countDocuments();
 
   const apiFeatures = new APIFeatures(Product, req.query).search().filter();

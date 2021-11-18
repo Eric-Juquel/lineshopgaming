@@ -1,0 +1,65 @@
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+
+.search {
+  width: 100%;
+  @include flexCenter;
+
+  & .input {
+    font-family: inherit;
+    font-size: 1.5rem;
+    color: white;
+    background-color: $color-purple-mid;
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 100px;
+    width: 80%;
+    transition: all 0.5s;
+    margin-right: -3.15rem;
+
+    @media screen and (max-width: $bp-mobile-land) {
+      height: 4.5rem;
+    }
+
+    &::placeholder {
+      color: $color-grey-light-1;
+    }
+
+    &:focus {
+      outline: none;
+      background-color: $color-grey-light-1;
+      color: $color-secondary;
+
+      & + .btn {
+        & .icon {
+          fill: $color-secondary;
+        }
+      }
+
+      &::placeholder {
+        font-weight: 100;
+        color: $color-secondary;
+      }
+    }
+  }
+
+  & .btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
+  & .icon {
+    height: 2rem;
+    width: 2rem;
+    fill: $color-grey-light-1;
+  }
+}

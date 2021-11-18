@@ -21,13 +21,9 @@ class APIFeatures {
   filter() {
     const queryCopy = { ...this.queryStr };
 
-    console.log('query', queryCopy)
-
     //Remove fields from query
     const removeFields = ['keyword', 'page'];
     removeFields.forEach((el) => delete queryCopy[el]);
-
-    console.log('query2', queryCopy)
 
     this.model = this.model.find(queryCopy);
     return this;
@@ -40,7 +36,6 @@ class APIFeatures {
     this.model = this.model.limit(resPerPage).skip(skip);
     return this;
   }
-
 }
 
 export default APIFeatures;

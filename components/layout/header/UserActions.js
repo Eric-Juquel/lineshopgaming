@@ -1,0 +1,117 @@
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+
+import Link from 'next/link';
+import Image from 'next/image';
+import classes from './UserActions.module.scss';
+import BurgerNavigation from './BurgerNavigation';
+
+const UserActions = () => {
+  const router = useRouter();
+
+  // const getPublicId = (url) => {
+  //   const parts = url.split("/");
+  //   return parts[parts.length - 1];
+  // }
+
+  const [active, setActive] = useState('');
+
+  useEffect(() => {
+    setActive(router.pathname);
+  }, [router]);
+
+  return (
+    <div className={classes.actionContainer}>
+      <div className={classes.userCart}>
+        <Link href="/cart">
+          <a>
+            <Image
+              src="/images/icones/marketplace-drawing-clipart-4.png"
+              alt="cart"
+              width={130}
+              height={100}
+            />
+            {/* {cartItems && (
+              <div className={classes.qty}>
+                {' '}
+                {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+              </div>
+            )} */}
+          </a>
+        </Link>
+      </div>
+
+      {/* {!user ? ( */}
+      <nav className={classes.navigation}>
+        <ul className={classes.list}>
+          <li
+            className={`${classes.item} ${classes.desktop}  ${
+              active === '/register' && classes.active
+            }`}
+          >
+            <Link className={classes.link} href="/register">
+              REGISTER
+            </Link>
+          </li>
+          <li
+            className={`${classes.item} ${classes.desktop}  ${
+              active === '/login' && classes.active
+            }`}
+          >
+            <Link className={classes.link} href="/login">
+              LOGIN
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      {/* ) : (
+        <div className={classes.userLoged}>
+          <nav className={classes.navigation}>
+            <ul className={classes.list}>
+              <li
+                className={`${classes.item} ${classes.desktop}  ${
+                  active === '/auth/logout' && classes.active
+                }`}
+              >
+                <Link className={classes.link} href="/auth/logout">
+                  Logout
+                </Link>
+              </li>
+              <li
+                className={`${classes.item} ${classes.desktop}  ${
+                  active === '/auth/profile' && classes.active
+                }`}
+              >
+                <Link className={classes.link} href="/auth/profile">
+                  {user.firstName}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <Link className={classes.link} href="/auth/profile">
+            <div className={classes.avatar}>
+              {user && user.avatar ? (
+                <Image
+                  src={user.avatar}
+                  alt={`${user.name}'s avatar`}
+                  width={55}
+                  height={55}
+                />
+              ) : (
+                <div className={classes.noAvatar}>
+                  {user.firstName.substring(0, 1)}
+                </div>
+              )}
+            </div>
+          </Link>
+        </div>
+      )} */}
+
+      <div className={classes.burger}>
+        <BurgerNavigation />
+      </div>
+    </div>
+  );
+};
+
+export default UserActions;

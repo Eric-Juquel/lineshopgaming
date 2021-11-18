@@ -1,0 +1,19 @@
+@import '../../../styles/sass/variables.scss';
+
+.logo {
+  outline: none;
+  max-height:100%;
+  display:flex;
+  align-items:center;
+
+  & img {
+    filter: invert(1) brightness(150%)
+      drop-shadow(2px 2px 8px rgb(255, 252, 252));
+    -webkit-filter: invert(1) brightness(150%)
+      drop-shadow(2px 2px 8px rgb(255, 252, 252));
+  }
+
+  @media only screen and (max-width: $bp-mobile-land) {
+    margin-left:-15%;
+  }
+}
