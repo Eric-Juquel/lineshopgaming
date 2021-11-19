@@ -5,10 +5,10 @@ class APIFeatures {
   }
 
   search() {
-    const keyword = this.queryStr.keyword
+    const keyword = this.queryStr.search
       ? {
           name: {
-            $regex: this.queryStr.keyword,
+            $regex: this.queryStr.search,
             $options: 'i',
           },
         }
@@ -22,7 +22,7 @@ class APIFeatures {
     const queryCopy = { ...this.queryStr };
 
     //Remove fields from query
-    const removeFields = ['keyword', 'page'];
+    const removeFields = ['search', 'page'];
     removeFields.forEach((el) => delete queryCopy[el]);
 
     this.model = this.model.find(queryCopy);

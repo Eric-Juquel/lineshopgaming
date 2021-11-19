@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 
 import classes from './ProductsScreen.module.scss';
 
@@ -9,9 +10,13 @@ import Paginate from './Paginate';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import router from 'next/router';
 
 const ProductScreen = () => {
+  const router = useRouter();
   const containerRef = useRef(null);
+
+  const [category, setCategory] = useState('');
 
   const {
     products,
@@ -26,12 +31,17 @@ const ProductScreen = () => {
 
   useEffect(() => {
     toast.error(error);
-  }, [error]);
+
+    if (category) {
+      router.push(`/products?category=${category}`);
+      scrollToTopHandler();
+    }
+  }, [error, category]);
 
   const scrollToTopHandler = () => {
     setTimeout(() => {
       containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 400);
+    }, 200);
   };
 
   return (
@@ -54,15 +64,35 @@ const ProductScreen = () => {
           ))
         )}
       </div>
-      <div className={classes.paginate}>
-        <Paginate
-          pages={numOfPages}
-          page={currentPage}
-          itemsPerPage={resPerPage}
-          totalItems={productsCount}
-          scrollToTop={scrollToTopHandler}
-        />
-      </div>
+      <section className={classes.pageActions}>
+        <button
+          className={router.query.category === 'Console' ? classes.active : ''}
+          onClick={() => {
+            setCategory('Console');
+          }}
+        >
+          Consoles
+        </button>
+
+        <div className={classes.paginate}>
+          <Paginate
+            pages={numOfPages}
+            page={currentPage}
+            itemsPerPage={resPerPage}
+            totalItems={productsCount}
+            scrollToTop={scrollToTopHandler}
+          />
+        </div>
+
+        <button
+          className={router.query.category === 'Games' ? classes.active : ''}
+          onClick={() => {
+            setCategory('Games');
+          }}
+        >
+          Games
+        </button>
+      </section>
     </div>
   );
 };

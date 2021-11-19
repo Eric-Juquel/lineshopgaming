@@ -28,8 +28,8 @@ const UserActions = () => {
             <Image
               src="/images/icones/marketplace-drawing-clipart-4.png"
               alt="cart"
-              width={130}
-              height={100}
+              width={35}
+              height={25}
             />
             {/* {cartItems && (
               <div className={classes.qty}>

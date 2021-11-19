@@ -13,12 +13,12 @@ const Searchbar = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // if (keyword) {
-    //   const fullPath = `/products/search/${keyword}`;
-    //   router.push(fullPath);
-    // } else {
-    //   router.push('/products');
-    // }
+    if (keyword.trim()) {
+      router.push(`/products/?search=${keyword}`);
+    } else {
+      router.push('/products');
+    }
+    setKeyword('')
   };
 
   return (

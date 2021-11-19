@@ -48,8 +48,30 @@
   }
 }
 
-.paginate {
+.pageActions {
   height: 5%;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+
+  button {
+    cursor: pointer;
+    width: 10rem;
+    height: 2.5rem;
+    margin: 0 0.5rem;
+    @include btnFlat;
+
+    &.active {
+      background-color: $color-yellow-light;
+      color: $color-secondary;
+    }
+  }
+
+  .paginate {
+    width: 80%;
+    height: 100%;
+  }
 }
 
 .centerSpinner {

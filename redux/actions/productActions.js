@@ -28,16 +28,18 @@ import {
 
 // Get all products
 export const listProducts =
-  (req, currentPage = 1) =>
+  (req, currentPage = 1, keyword = '', category) =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
 
       const { origin } = absoluteUrl(req);
 
-      const { data } = await axios.get(
-        `${origin}/api/products?page=${currentPage}`
-      );
+      let link = `${origin}/api/products?page=${currentPage}&search=${keyword}`;
+
+      if (category) link = link.concat(`&category=${category}`);
+
+      const { data } = await axios.get(link);
 
       dispatch({
         type: PRODUCT_LIST_SUCCESS,

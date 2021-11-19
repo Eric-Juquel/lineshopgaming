@@ -11,6 +11,8 @@ const Paginate = ({
   keyword = '',
   scrollToTop,
 }) => {
+
+  console.log('page',page)
   return (
     pages > 1 && (
       <div className={classes.pages}>

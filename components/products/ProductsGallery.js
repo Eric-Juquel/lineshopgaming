@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import classes from './ProductsGallery.module.scss'
+import classes from './ProductsGallery.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
 import Spinner from '../ui/Spinner';
@@ -7,8 +7,6 @@ import ErrorComponent from '../ui/ErrorComponent';
 // import { listTopProducts } from "../../actions/productActions";
 
 const ProductsGallery = ({ products }) => {
-  console.log('products', products);
-
   // const gridPlaces = [
   //   { gridRow: '1 / span 2', gridColumn: '1 / span 3' },
   //   { gridRow: '3 / span 1', gridColumn: '11 / span 1' },
