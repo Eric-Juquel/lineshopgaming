@@ -5,7 +5,7 @@
   width: 100%;
   @include flexCenter;
 
-  & .input {
+  .input {
     font-family: inherit;
     font-size: 1.5rem;
     color: white;
@@ -31,7 +31,7 @@
       color: $color-secondary;
 
       & + .btn {
-        & .icon {
+        .icon {
           fill: $color-secondary;
         }
       }
@@ -43,7 +43,7 @@
     }
   }
 
-  & .btn {
+  .btn {
     border: none;
     background-color: transparent;
     cursor: pointer;
@@ -57,7 +57,7 @@
     }
   }
 
-  & .icon {
+  .icon {
     height: 2rem;
     width: 2rem;
     fill: $color-grey-light-1;

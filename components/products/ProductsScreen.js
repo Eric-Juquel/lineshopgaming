@@ -1,27 +1,42 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import classes from './ProductsScreen.module.scss';
 
 import ProductCard from './ProductCard';
 import Spinner from '../ui/Spinner';
 
-// import Paginate from './Paginate';
+import Paginate from './Paginate';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 const ProductScreen = () => {
-  const { products, loading, error } = useSelector(
-    (state) => state.productsList
-  );
+  const containerRef = useRef(null);
+
+  const {
+    products,
+    resPerPage,
+    productsCount,
+    filteredProductsCount,
+    currentPage,
+    numOfPages,
+    loading,
+    error,
+  } = useSelector((state) => state.productsList);
 
   useEffect(() => {
     toast.error(error);
   }, [error]);
 
+  const scrollToTopHandler = () => {
+    setTimeout(() => {
+      containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 400);
+  };
+
   return (
     <div className={classes.container}>
-      <div className={classes.cardsContainer}>
+      <div className={classes.cardsContainer} ref={containerRef}>
         {loading ? (
           <div className={classes.centerSpinner}>
             <Spinner />
@@ -38,6 +53,15 @@ const ProductScreen = () => {
             </div>
           ))
         )}
+      </div>
+      <div className={classes.paginate}>
+        <Paginate
+          pages={numOfPages}
+          page={currentPage}
+          itemsPerPage={resPerPage}
+          totalItems={productsCount}
+          scrollToTop={scrollToTopHandler}
+        />
       </div>
     </div>
   );

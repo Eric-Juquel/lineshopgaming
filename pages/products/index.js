@@ -22,7 +22,7 @@ export default function ProductsPage() {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }) => {
-      await store.dispatch(listProducts(req));
+    async ({ req, query }) => {
+      await store.dispatch(listProducts(req, query.page));
     }
 );

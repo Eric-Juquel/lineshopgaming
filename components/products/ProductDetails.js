@@ -62,7 +62,7 @@ const ProductDetails = () => {
             src={product.image}
             alt={product.name}
             width={250}
-            height={350}
+            height={300}
           />
         </div>
 

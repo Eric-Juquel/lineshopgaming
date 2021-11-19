@@ -15,17 +15,16 @@
   width: 100%;
   padding: 0 4rem;
   overflow-y: auto;
-  scrollbar-width: none;
+  // scrollbar-width: none;
   background-color: $color-background-secondary;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 47%);
+  grid-template-rows: 47%;
   grid-gap: 3rem;
 
   @media only screen and (max-width: $bp-small) {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 47%);
     grid-gap: 2rem;
   }
 
@@ -34,14 +33,13 @@
     height: 95%;
     margin: auto;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 50%);
     grid-gap: 0rem;
   }
 
   @media screen and (max-width: $bp-mobile-vert) {
     height: 100%;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(12, 50%);
+    grid-template-rows: 50%;
     grid-gap: 3.5rem;
   }
 

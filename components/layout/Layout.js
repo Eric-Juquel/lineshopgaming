@@ -21,7 +21,7 @@ const Layout = (props) => {
 
   return (
     <>
-      <ShootingStars />
+      {/* <ShootingStars /> */}
       <div className="container">
         <Header />
         <ToastContainer position="bottom-right" />

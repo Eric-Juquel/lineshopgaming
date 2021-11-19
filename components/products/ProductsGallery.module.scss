@@ -23,7 +23,7 @@
   grid-gap: 1.5rem;
   padding: 1.5rem;
 
-  & .item {
+  .item {
     transition: all 0.2s ease;
     &__0 {
       grid-row: 1 / span 2;
@@ -94,25 +94,24 @@
       transform: scale(1.5);
     }
 
-    & div {
-      max-height:100%;
-      max-width:100%;
+    div {
+      max-height: 100%;
+      max-width: 100%;
       object-fit: cover;
     }
 
-    & img {
+    img {
       object-fit: cover;
       display: block;
       border-radius: 4px;
     }
   }
 
-
-  & .title {
+  .title {
     grid-row: 5 / span 1;
     grid-column: 1 / span 4;
 
-    & h1 {
+    h1 {
       font-size: 2vw;
     }
   }

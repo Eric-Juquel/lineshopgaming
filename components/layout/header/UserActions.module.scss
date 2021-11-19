@@ -9,7 +9,7 @@
     justify-content: space-between !important;
   }
 
-  & .burger {
+  .burger {
     display: none;
 
     @media only screen and (max-width: $bp-mobile-land) {
@@ -18,7 +18,7 @@
     }
   }
 
-  & .navigation {
+  .navigation {
     @media only screen and (max-width: $bp-mobile-land) {
       width: 50%;
     }
@@ -33,17 +33,17 @@
     margin: auto;
   }
 
-  & a {
+  a {
     display: flex;
   }
 
-  & img {
+  img {
     margin-right: 0.6rem;
     filter: invert(1);
     -webkit-filter: invert(1);
   }
 
-  & .qty {
+  .qty {
     font-family: 'Quantity';
     font-size: 1.8rem;
     color: orange;
@@ -58,7 +58,7 @@
   align-items: center;
   justify-content: space-evenly;
 
-  & :link {
+  :link {
     font-size: 2.8rem;
   }
 
@@ -78,7 +78,7 @@
 }
 
 .avatar {
-  & img {
+  img {
     border-radius: 100px;
     cursor: pointer;
     width: 6rem;

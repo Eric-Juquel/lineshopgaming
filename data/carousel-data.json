@@ -3,64 +3,64 @@
     {
       "id": "p1",
       "title": "Teken-7",
-      "src": "/images/carousel/Tekken_7_Logo.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246080/LineShop/carousel/tekken7_f4rxi6.png"
     },
     {
       "id": "p2",
       "title": "Zelda",
-      "src": "/images/carousel/1200px-The_Legend_of_Zelda_Breath_of_the_Wild_Logo.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246075/LineShop/carousel/Zelda_mqyq4s.png"
     },
     {
       "id": "p3",
       "title": "Cyberpunk-2077",
-      "src": "/images/carousel/6964887_preview.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246075/LineShop/carousel/cyberpunk_u0nmia.png"
     },
     {
       "id": "p4",
       "title": "Ark",
-      "src": "/images/carousel/ark-server-png-4.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246083/LineShop/carousel/ark_msk0jd.png"
     },
     {
       "id": "p5",
       "title": "battelfield-V",
-      "src": "/images/carousel/Battlefield-V-icon-download.png.webp"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246072/LineShop/carousel/battlefield_kzzpf9.webp"
     },
     {
       "id": "p6",
       "title": "diablo",
-      "src": "/images/carousel/diablo-3-logo-png-1.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246075/LineShop/carousel/diablo_iufibp.png"
     }
   ],
   "consoles": [
     {
       "id": "p1",
       "title": "Playstation 5",
-      "src": "/images/carousel/1565722572563.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246072/LineShop/carousel/ps5_oy3lcd.png"
     },
     {
       "id": "p2",
       "title": "WiiU",
-      "src": "/images/carousel/Wiiu.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246072/LineShop/carousel/Wiiu_drytoj.png"
     },
     {
       "id": "p3",
       "title": "Playstation",
-      "src": "/images/carousel/fb765b8752d50de50cfa15203f9a7acd.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246072/LineShop/carousel/playstation_aj65fr.png"
     },
     {
       "id": "p4",
       "title": "Nintendo switch",
-      "src": "/images/carousel/logo.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246072/LineShop/carousel/switch_e6bktn.png"
     },
     {
       "id": "p5",
       "title": "Playstation 4",
-      "src": "/images/carousel/ps4-logo-png-12.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246071/LineShop/carousel/ps4_hc7thi.png"
     },
     {
       "id": "p6",
       "title": "Xbox 360",
-      "src": "/images/carousel/xbox-one-logo-png-1.png"
+      "src": "https://res.cloudinary.com/ericjuquel94/image/upload/v1637246075/LineShop/carousel/xbox1_ncp8i8.png"
     }
   ]
 }

@@ -92,7 +92,7 @@
 .upload {
   position: relative;
 
-  & .input {
+  .input {
     height: 100%;
     width: 40%;
     // position: relative;
@@ -106,7 +106,7 @@
     }
   }
 
-  & .btnUpload {
+  .btnUpload {
     width: 35%;
     height: 85%;
     @include centerElement;
@@ -119,31 +119,31 @@
     color: rgba($color-grey-light-1, 0.8);
     background-image: linear-gradient(to top, rgb(49, 49, 49), rgb(99, 97, 97));
 
-    & svg {
+    svg {
       margin-right: 5%;
     }
   }
 
-  & .label {
+  .label {
     position: absolute;
     top: 25%;
     left: 0;
   }
 
-  & .avatar {
+  .avatar {
     width: 20%;
     height: 100%;
     right: 0;
     margin-left: 80%;
-    
-    & img,
-    & .noAvatar {
+
+    img,
+    .noAvatar {
       height: 4rem;
       width: 4rem;
       border-radius: 100px;
     }
 
-    & .noAvatar {
+    .noAvatar {
       text-transform: uppercase;
       font-size: 3rem;
       color: $color-secondary;
@@ -159,7 +159,7 @@
   width: 0;
   margin-left: 89%;
 
-  & svg {
+  svg {
     font-size: 2.2rem;
     transform: translateY(-240%);
     fill: $color-secondary;

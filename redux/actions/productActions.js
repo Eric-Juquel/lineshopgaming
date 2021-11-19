@@ -27,25 +27,29 @@ import {
 } from '../constants/productConstants';
 
 // Get all products
-export const listProducts = (req) => async (dispatch) => {
-  try {
-    dispatch({ type: PRODUCT_LIST_REQUEST });
+export const listProducts =
+  (req, currentPage = 1) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const { origin } = absoluteUrl(req);
+      const { origin } = absoluteUrl(req);
 
-    const { data } = await axios.get(`${origin}/api/products`);
+      const { data } = await axios.get(
+        `${origin}/api/products?page=${currentPage}`
+      );
 
-    dispatch({
-      type: PRODUCT_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_LIST_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: PRODUCT_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 //Get  single product details
 export const getProductDetails = (req, id) => async (dispatch) => {

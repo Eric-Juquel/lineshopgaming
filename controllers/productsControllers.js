@@ -9,6 +9,7 @@ import APIFeatures from '../utils/apiFeatures';
 // @acces  Public
 export const allProducts = async (req, res) => {
   const resPerPage = 9;
+  const currentPage = Number(req.query.pageNumber) || 1;
   const productsCount = await Product.countDocuments();
 
   const apiFeatures = new APIFeatures(Product, req.query).search().filter();
@@ -22,6 +23,8 @@ export const allProducts = async (req, res) => {
   res.status(200).json({
     success: true,
     productsCount,
+    currentPage,
+    numOfPages: Math.ceil(productsCount / resPerPage),
     resPerPage,
     filteredProductsCount,
     products,
