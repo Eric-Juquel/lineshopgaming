@@ -1,0 +1,168 @@
+@import '../../styles/sass/variables';
+@import '../../styles/sass/mixins';
+
+.container {
+  width: 90%;
+  height: 100%;
+  overflow-y: auto;
+
+  @include container;
+
+  @media screen and (max-width: $bp-mobile-land) {
+    padding: 1rem;
+  }
+
+  & h1 {
+    height: 10%;
+    text-align: start;
+
+    @media screen and (min-width: $bp-mobile-vert) and (max-width: $bp-mobile-land) {
+      font-size: 2rem;
+    }
+  }
+}
+
+.profile,
+.orders,
+.admin {
+  width: 100%;
+  padding: 1.5rem;
+
+  @media screen and (max-width: $bp-mobile-land) {
+    padding: 0;
+  }
+}
+
+.alert {
+  height: 4rem;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  @media screen and (max-width: $bp-mobile-small) {
+    @include flexCenter;
+    flex-direction: column;
+  }
+
+  & .formGroup {
+    width: 80%;
+    margin-bottom: 1rem;
+
+    &.upload {
+      margin-top: 0.5rem;
+    }
+  }
+
+  & button {
+    grid-column: 2 / span 1;
+    width: 20rem;
+    height: 4rem;
+    @include btn3d;
+  }
+}
+
+.admin {
+  & .btnGroup {
+    height: 5rem;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  & a {
+    height: 4rem;
+    width: 20rem;
+    text-transform: uppercase;
+    @include flexCenter;
+    @include btn3d($color: $color-blue-light);
+  }
+}
+
+.orders {
+  @media screen and (max-width: $bp-mobile-land) {
+    width: 100%;
+    height: 65%;
+  }
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    height: 50%;
+  }
+}
+
+.orderTable {
+  @include tableScroll;
+}
+
+.row,
+.entitled {
+  width: 100%;
+  display: grid;
+  grid-template-columns: [id-start]28%[id-end date-start]20%[date-end total-start]20%[total-end paid-start]16%[paid-end deliver-start]16%[deliver-end];
+  // grid-template-rows: repeat(auto-fit, 5rem);
+
+  justify-items: stretch;
+
+  & .cell {
+    @include tableCel;
+    @include flexCenter;
+  }
+}
+
+.entitled {
+  border-bottom: 1px solid $color-purple-mid;
+  color: $color-blue-light;
+
+  & h2 {
+    font-size: 1.8rem;
+  }
+}
+
+.row {
+  border-top: 1px solid $color-purple-mid;
+
+  &:hover {
+    & .cell {
+      background-color: rgba($color-secondary, 0.7);
+    }
+  }
+
+  & .cell {
+    & svg {
+      fill: $color-danger;
+      margin: auto;
+    }
+
+    & button {
+      width: 15rem;
+      height: 3rem;
+      margin: auto;
+      @include btnFlat;
+
+      @media screen and (max-width: $bp-mobile) {
+        width: 6rem;
+      }
+
+      & svg {
+        fill: $color-yellow-light;
+        font-size: 2.5rem;
+        @media screen and (min-width: $bp-mobile) {
+          display: none;
+        }
+      }
+
+      & p {
+        @media screen and (max-width: $bp-mobile) {
+          display: none;
+        }
+      }
+    }
+  }
+}

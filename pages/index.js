@@ -4,7 +4,7 @@ import path from 'path';
 import Head from 'next/head';
 import Carousel3d from '../components/layout/carousel/Carousel3d';
 
-const HomePage = (props) => {
+export default function HomePage(props) {
   return (
     <>
       <Head>
@@ -18,7 +18,7 @@ const HomePage = (props) => {
       <Carousel3d images={props.images} />
     </>
   );
-};
+}
 
 export async function getStaticProps() {
   const filePath = path.join(process.cwd(), 'data', 'carousel-data.json');
@@ -31,5 +31,3 @@ export async function getStaticProps() {
     },
   };
 }
-
-export default HomePage;

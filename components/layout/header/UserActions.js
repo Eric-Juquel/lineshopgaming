@@ -1,13 +1,22 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 
 import Link from 'next/link';
 import Image from 'next/image';
 import classes from './UserActions.module.scss';
 import BurgerNavigation from './BurgerNavigation';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { loadUser, clearErrors } from '../../../redux/actions/userActions';
+
 const UserActions = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const [session] = useSession();
+
+  const { user, loading } = useSelector((state) => state.auth);
 
   // const getPublicId = (url) => {
   //   const parts = url.split("/");
@@ -18,7 +27,11 @@ const UserActions = () => {
 
   useEffect(() => {
     setActive(router.pathname);
-  }, [router]);
+
+    if (session && session.user && !user) {
+      dispatch(loadUser());
+    }
+  }, [router, dispatch]);
 
   return (
     <div className={classes.actionContainer}>
@@ -41,30 +54,30 @@ const UserActions = () => {
         </Link>
       </div>
 
-      {/* {!user ? ( */}
-      <nav className={classes.navigation}>
-        <ul className={classes.list}>
-          <li
-            className={`${classes.item} ${classes.desktop}  ${
-              active === '/register' && classes.active
-            }`}
-          >
-            <Link className={classes.link} href="/register">
-              REGISTER
-            </Link>
-          </li>
-          <li
-            className={`${classes.item} ${classes.desktop}  ${
-              active === '/login' && classes.active
-            }`}
-          >
-            <Link className={classes.link} href="/login">
-              LOGIN
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      {/* ) : (
+      {!user ? (
+        <nav className={classes.navigation}>
+          <ul className={classes.list}>
+            <li
+              className={`${classes.item} ${classes.desktop}  ${
+                active === '/register' && classes.active
+              }`}
+            >
+              <Link className={classes.link} href="/register">
+                REGISTER
+              </Link>
+            </li>
+            <li
+              className={`${classes.item} ${classes.desktop}  ${
+                active === '/login' && classes.active
+              }`}
+            >
+              <Link className={classes.link} href="/login">
+                LOGIN
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      ) : (
         <div className={classes.userLoged}>
           <nav className={classes.navigation}>
             <ul className={classes.list}>
@@ -105,7 +118,7 @@ const UserActions = () => {
             </div>
           </Link>
         </div>
-      )} */}
+      )}
 
       <div className={classes.burger}>
         <BurgerNavigation />

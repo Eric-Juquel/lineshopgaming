@@ -3,8 +3,7 @@ import classes from './Header.module.scss';
 import Logo from './Logo';
 import Navigation from './Navigation';
 import Searchbar from './Searchbar';
-import UserActions from  './UserActions'
-
+import UserActions from './UserActions';
 
 const Header = () => {
   return (
@@ -13,6 +12,7 @@ const Header = () => {
         <div className={classes.logo}>
           <Logo />
         </div>
+
         <div className={classes.navigation}>
           <Navigation />
         </div>

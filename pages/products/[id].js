@@ -4,7 +4,7 @@ import { getProductDetails } from '../../redux/actions/productActions';
 
 import { wrapper } from '../../redux/store';
 
-export default function ProductsPage() {
+export default function ProductPage() {
   return <ProductsDetails />;
 }
 

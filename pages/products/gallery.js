@@ -3,7 +3,7 @@ import Product from '../../models/product';
 import Head from 'next/head';
 import ProductsGallery from '../../components/products/ProductsGallery';
 
-const GalleryPage = ({ topRatedProducts }) => {
+export default function GalleryPage({ topRatedProducts }) {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ const GalleryPage = ({ topRatedProducts }) => {
       <ProductsGallery products={topRatedProducts} />
     </>
   );
-};
+}
 
 export const getStaticProps = async () => {
   dbConnect();
@@ -27,5 +27,3 @@ export const getStaticProps = async () => {
     revalidate: 600,
   };
 };
-
-export default GalleryPage;
