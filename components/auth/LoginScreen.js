@@ -44,7 +44,11 @@ const LoginScreen = () => {
   return (
     <div className={classes.container}>
       <h1>Sign In</h1>
+
       <div className={classes.message}>{message && <p>{message}</p>}</div>
+      <div className={classes.forgot}>
+        <Link href="/forgotPassword">Forgot Password ? </Link>
+      </div>
       <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
         <div className={classes.formGroup}>
           <TextField
@@ -72,8 +76,9 @@ const LoginScreen = () => {
             mandatory={true}
           />
         </div>
+
         <button type="submit" disabled={loading ? true : false}>
-          {loading ? <Spinner /> : 'LOGIN' }
+          {loading ? <Spinner /> : 'LOGIN'}
         </button>
         <div className={classes.new}>
           <p>

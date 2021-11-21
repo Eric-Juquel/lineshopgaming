@@ -25,6 +25,16 @@
   color: $color-danger;
 }
 
+.forgot {
+  a {
+    color: $color-yellow-light;
+    transition: all 0.2s ease;
+    display: inline-block;
+
+    @include hoverlink;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -42,6 +52,10 @@
     width: 10rem;
     @include btn3d;
     letter-spacing: 1px;
+
+    &.forgotBtn{
+      width:15rem
+    }
 
     img {
       max-height: 2.5rem;
