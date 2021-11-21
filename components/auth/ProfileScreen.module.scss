@@ -12,7 +12,7 @@
     padding: 1rem;
   }
 
-  & h1 {
+  h1 {
     height: 10%;
     text-align: start;
 
@@ -53,7 +53,7 @@
     flex-direction: column;
   }
 
-  & .formGroup {
+  .formGroup {
     width: 80%;
     margin-bottom: 1rem;
 
@@ -62,22 +62,27 @@
     }
   }
 
-  & button {
+  button {
     grid-column: 2 / span 1;
     width: 20rem;
     height: 4rem;
     @include btn3d;
+    @include flexCenter;
+
+    img {
+      max-height: 2.5rem;
+    }
   }
 }
 
 .admin {
-  & .btnGroup {
+  .btnGroup {
     height: 5rem;
     display: flex;
     justify-content: space-evenly;
   }
 
-  & a {
+  a {
     height: 4rem;
     width: 20rem;
     text-transform: uppercase;
@@ -110,7 +115,7 @@
 
   justify-items: stretch;
 
-  & .cell {
+  .cell {
     @include tableCel;
     @include flexCenter;
   }
@@ -120,7 +125,7 @@
   border-bottom: 1px solid $color-purple-mid;
   color: $color-blue-light;
 
-  & h2 {
+  h2 {
     font-size: 1.8rem;
   }
 }
@@ -134,13 +139,13 @@
     }
   }
 
-  & .cell {
-    & svg {
+  .cell {
+    svg {
       fill: $color-danger;
       margin: auto;
     }
 
-    & button {
+    button {
       width: 15rem;
       height: 3rem;
       margin: auto;
@@ -150,7 +155,7 @@
         width: 6rem;
       }
 
-      & svg {
+      svg {
         fill: $color-yellow-light;
         font-size: 2.5rem;
         @media screen and (min-width: $bp-mobile) {
@@ -158,7 +163,7 @@
         }
       }
 
-      & p {
+      p {
         @media screen and (max-width: $bp-mobile) {
           display: none;
         }

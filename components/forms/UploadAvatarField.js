@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react';
 import classes from './CustomInputs.module.scss';
 import { BsUpload } from 'react-icons/bs';
 import Spinner from '../ui/Spinner';
@@ -17,8 +17,9 @@ const UploadAvatarField = ({
   loading,
   image,
   firstName,
+  setAvatar,
 }) => {
-const [previewImage, setPreviewImage] = useState(null)
+  const [previewImage, setPreviewImage] = useState(null);
 
   return (
     <div
@@ -26,7 +27,7 @@ const [previewImage, setPreviewImage] = useState(null)
       style={{ width: inputwidth, height: inputheight }}
     >
       <input
-        {...register(name, { required: mandatory === true ? true : false })}
+        // {...register(name, { required: mandatory === true ? true : false })}
         type={type}
         className={classes.input}
         id={name}
@@ -36,12 +37,13 @@ const [previewImage, setPreviewImage] = useState(null)
         defaultValue={defaultValue ? defaultValue : ''}
         onChange={(e) => {
           if (e.target.files[0]) {
-            const file = e.target.files[0]
-            const reader = new FileReader()
+            const file = e.target.files[0];
+            const reader = new FileReader();
             reader.onloadend = () => {
-              setPreviewImage(reader.result)
-            }
-            reader.readAsDataURL(file)
+              setAvatar(reader.result);
+              setPreviewImage(reader.result);
+            };
+            reader.readAsDataURL(file);
           }
         }}
       />
@@ -59,12 +61,14 @@ const [previewImage, setPreviewImage] = useState(null)
         {label}
       </label>
       <div className={classes.avatar}>
-        {previewImage ? <img src={previewImage}/> : image ? (
+        {previewImage ? (
+          <img src={previewImage} />
+        ) : image ? (
           <Image
             src={image}
             alt={`${firstName}'s avatar`}
             width={35}
-            height={45}
+            height={35}
           />
         ) : (
           <div className={classes.noAvatar}>{firstName.substring(0, 1)}</div>

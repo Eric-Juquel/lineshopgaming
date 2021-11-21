@@ -48,7 +48,9 @@ export const listProducts =
     } catch (error) {
       dispatch({
         type: PRODUCT_LIST_FAIL,
-        payload: error.response.data.message,
+        payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
       });
     }
   };
@@ -69,7 +71,9 @@ export const getProductDetails = (req, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
-      payload: error.response.data.message,
+      payload: error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message,
     });
   }
 };

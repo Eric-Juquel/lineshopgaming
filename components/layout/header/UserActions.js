@@ -31,7 +31,7 @@ const UserActions = () => {
     if (session && session.user && !user) {
       dispatch(loadUser());
     }
-  }, [router, dispatch]);
+  }, [router, dispatch, user]);
 
   return (
     <div className={classes.actionContainer}>
@@ -105,7 +105,7 @@ const UserActions = () => {
             <div className={classes.avatar}>
               {user && user.avatar ? (
                 <Image
-                  src={user.avatar}
+                  src={user.avatar.url}
                   alt={`${user.name}'s avatar`}
                   width={55}
                   height={55}

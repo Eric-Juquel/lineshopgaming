@@ -1,39 +1,62 @@
 import classes from './ProfileScreen.module.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+import Spinner from '../ui/Spinner';
 import TextField from '../forms/TextField';
 import UploadAvatarField from '../forms/UploadAvatarField';
-import { uploadAvatar } from '../../lib/user-actions';
+// import { uploadAvatar } from '../../lib/user-actions';
 
-const ProfileForm = ({ user, updateHandler, alert, setAlert }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  updateProfile,
+  loadUser,
+  clearErrors,
+} from '../../redux/actions/userActions';
+import { USER_UPDATE_PROFILE_RESET } from '../../redux/constants/userConstants';
+import { toast } from 'react-toastify';
+
+const ProfileForm = ({ user }) => {
+  const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
 
-  const { firstName, lastName, email, avatar } = user;
+  const [alert, setAlert] = useState({ status: '', text: '' });
 
   const [uploading, setUploading] = useState(false);
 
-  const onSubmit = async (data) => {
-    let payload = {
-      id: user._id,
+  const { firstName, lastName, email } = user;
+  const [avatar, setAvatar] = useState(user.avatar ? user.avatar.url : '');
+
+  const { error, isUpdated, loading } = useSelector(
+    (state) => state.updateProfile
+  );
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      setAlert(() => ({ status: 'error', text: error }));
+      dispatch(clearErrors());
+    }
+
+    if (isUpdated) {
+      dispatch(loadUser());
+      dispatch({ type: USER_UPDATE_PROFILE_RESET });
+    }
+  }, [dispatch, isUpdated, error]);
+
+  const updateHandler = (data) => {
+    const userData = {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
-      avatar: avatar,
       password: data.password,
+      avatar: avatar,
     };
-
-    if (data.avatar && data.avatar.length > 0) {
-      setUploading(true);
-      const imageData = await uploadAvatar(data.avatar[0]);
-      payload.avatar = imageData.secure_url;
-      setUploading(false);
-    }
 
     if (data.password !== data.confirmPassword) {
       setAlert({ status: 'error', text: 'Passwords do not match' });
     } else {
-      await updateHandler(payload);
+      dispatch(updateProfile(userData));
     }
   };
 
@@ -42,7 +65,7 @@ const ProfileForm = ({ user, updateHandler, alert, setAlert }) => {
       <div className={classes.alert}>
         {alert && <p className={alert.status}>{alert.text}</p>}
       </div>
-      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={classes.form} onSubmit={handleSubmit(updateHandler)}>
         <div className={classes.formGroup}>
           <TextField
             type="text"
@@ -88,7 +111,7 @@ const ProfileForm = ({ user, updateHandler, alert, setAlert }) => {
         <div className={`${classes.formGroup} ${classes.upload}`}>
           <UploadAvatarField
             type="file"
-            register={register}
+            // register={register}
             error={errors}
             inputwidth="100%"
             inputheight="4rem"
@@ -99,6 +122,7 @@ const ProfileForm = ({ user, updateHandler, alert, setAlert }) => {
             loading={uploading}
             image={avatar}
             firstName={firstName}
+            setAvatar={setAvatar}
           />
         </div>
         <div className={classes.formGroup}>
@@ -129,7 +153,7 @@ const ProfileForm = ({ user, updateHandler, alert, setAlert }) => {
           />
         </div>
 
-        <button type="submit">Update</button>
+        <button className={classes.updateBtn} type="submit">{loading ? <>Updating... <Spinner /></> : 'Update'}</button>
       </form>
     </>
   );

@@ -1,62 +1,50 @@
 import { useEffect, useState } from 'react';
 import classes from './ProfileScreen.module.scss';
-
-import { listUserOrders, useAuth, updateUser } from '../../context/useAuth';
+import { toast } from 'react-toastify';
 
 import Spinner from '../ui/Spinner';
 import ProfileForm from './ProfileForm';
-import ProfileOrders from './ProfileOrders';
+// import ProfileOrders from './ProfileOrders';
 import ProfileAdmin from './ProfileAdmin';
 
-const ProfileScreen = () => {
-  const [userState, userDispatch] = useAuth();
-  const { user, orders, message, error } = userState;
+import { useDispatch, useSelector } from 'react-redux';
+import { loadUser, clearErrors } from '../../redux/actions/userActions';
 
+const ProfileScreen = () => {
+  const dispatch = useDispatch();
   const [alert, setAlert] = useState(null);
 
-  useEffect(() => {
-    if (user) {
-      listUserOrders(userDispatch);
-    }
-  }, [user]);
+  const { user, loading, error } = useSelector((state) => state.auth);
 
-  const updateHandler = async (data) => {
-    try {
-      await updateUser(userDispatch, data);
-      setAlert(() => message);
-      setTimeout(() => {
-        setAlert(null);
-      }, 3000);
-    } catch (error) {
-      setAlert(error.message);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
     }
-  };
+    if (!user) {
+      dispatch(loadUser());
+    }
+    // if (user) {
+    //   listUserOrders(userDispatch);
+    // }
+  }, [user]);
 
   return (
     <div className={classes.container}>
       <div className={classes.profile}>
         <h1>User Profile</h1>
-        {!user ? (
-          <Spinner />
-        ) : (
-          <ProfileForm
-            user={user}
-            updateHandler={updateHandler}
-            alert={alert}
-            setAlert={setAlert}
-          />
-        )}
+        {loading ? <Spinner /> : user && <ProfileForm user={user} />}
       </div>
-      {user && user.isAdmin && (
+     {user && user.role === 'admin' && (
         <div className={classes.admin}>
           <h1>Admin</h1>
           <ProfileAdmin />
         </div>
       )}
-      <div className={classes.orders}>
+      {/* <div className={classes.orders}>
         <h1>My Orders</h1>
         <ProfileOrders orders={orders} />
-      </div>
+      </div>  */}
     </div>
   );
 };
