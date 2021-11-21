@@ -24,8 +24,8 @@ const ProfileForm = ({ user }) => {
 
   const [uploading, setUploading] = useState(false);
 
-  const { firstName, lastName, email } = user;
-  const [avatar, setAvatar] = useState(user.avatar ? user.avatar.url : '');
+  const { firstName, lastName, email, avatar:previewAvatar } = user;
+  const [avatar, setAvatar] = useState('');
 
   const { error, isUpdated, loading } = useSelector(
     (state) => state.updateProfile
@@ -111,7 +111,6 @@ const ProfileForm = ({ user }) => {
         <div className={`${classes.formGroup} ${classes.upload}`}>
           <UploadAvatarField
             type="file"
-            // register={register}
             error={errors}
             inputwidth="100%"
             inputheight="4rem"
@@ -120,7 +119,7 @@ const ProfileForm = ({ user }) => {
             placeholder="Upload Avatar"
             mandatory={false}
             loading={uploading}
-            image={avatar}
+            image={previewAvatar ? previewAvatar.url : ''}
             firstName={firstName}
             setAvatar={setAvatar}
           />

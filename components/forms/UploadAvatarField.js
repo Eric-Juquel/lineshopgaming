@@ -6,7 +6,6 @@ import Image from 'next/image';
 
 const UploadAvatarField = ({
   type,
-  register,
   inputwidth,
   inputheight,
   label,
@@ -21,13 +20,14 @@ const UploadAvatarField = ({
 }) => {
   const [previewImage, setPreviewImage] = useState(null);
 
+  
+
   return (
     <div
       className={classes.upload}
       style={{ width: inputwidth, height: inputheight }}
     >
       <input
-        // {...register(name, { required: mandatory === true ? true : false })}
         type={type}
         className={classes.input}
         id={name}
