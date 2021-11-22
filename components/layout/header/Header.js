@@ -18,13 +18,11 @@ const Header = () => {
 
   const { user, loading } = useSelector((state) => state.loadedUser);
 
-  console.log('user', user, 'session', session, 'router');
-
   useEffect(() => {
-    if (session && !user) {
+    if (session && session.user && !user) {
       dispatch(loadUser());
     }
-  }, [ dispatch,session, user]);
+  }, [dispatch, session, user]);
 
   return (
     <header className="header">

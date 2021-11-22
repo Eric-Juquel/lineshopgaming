@@ -1,9 +1,9 @@
 import { getSession } from 'next-auth/client';
 import Logout from '../../components/auth/Logout';
 
-const LogoutPage = () => {
+export default function LogoutPage() {
   return <Logout />;
-};
+}
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
@@ -21,5 +21,3 @@ export async function getServerSideProps(context) {
     props: { session },
   };
 }
-
-export default LogoutPage;

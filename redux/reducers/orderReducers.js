@@ -10,10 +10,10 @@ import {
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
   ORDER_PAY_RESET,
-  ORDER_LIST_MY_REQUEST,
-  ORDER_LIST_MY_SUCCESS,
-  ORDER_LIST_MY_FAIL,
-  ORDER_LIST_MY_RESET,
+  USER_ORDERS_REQUEST,
+  USER_ORDERS_SUCCESS,
+  USER_ORDERS_FAIL,
+  USER_ORDERS_RESET,
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAIL,
@@ -21,7 +21,7 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_RESET,
-} from "../constants/orderConstants";
+} from '../constants/orderConstants';
 
 export const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
@@ -47,10 +47,7 @@ export const orderCreateReducer = (state = {}, action) => {
   }
 };
 
-export const orderDetailsReducer = (
-  state = { loading: true, orderItems: [], shippingAddress: {} },
-  action
-) => {
+export const orderDetailsReducer = (state = { order: {} }, action) => {
   switch (action.type) {
     case ORDER_DETAILS_REQUEST:
       return {
@@ -118,23 +115,23 @@ export const orderDeliverReducer = (state = {}, action) => {
   }
 };
 
-export const orderListMyReducer = (state = { orders: [] }, action) => {
+export const userOrdersReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
-    case ORDER_LIST_MY_REQUEST:
+    case USER_ORDERS_REQUEST:
       return {
         loading: true,
       };
-    case ORDER_LIST_MY_SUCCESS:
+    case USER_ORDERS_SUCCESS:
       return {
         loading: false,
         orders: action.payload,
       };
-    case ORDER_LIST_MY_FAIL:
+    case USER_ORDERS_FAIL:
       return {
         loading: false,
         error: action.payload,
       };
-    case ORDER_LIST_MY_RESET:
+    case USER_ORDERS_RESET:
       return {
         orders: [],
       };

@@ -1,17 +1,18 @@
 import { getSession } from 'next-auth/client';
-import ProfileScreen from '../../components/auth/ProfileScreen';
+import OrderScreen from '../../components/order/OrderScreen';
 
 import { wrapper } from '../../redux/store';
-import { userOrders } from '../../redux/actions/orderActions';
+import { getOrderDetails } from '../../redux/actions/orderActions';
 
-export default function userProfilePage() {
-  return <ProfileScreen />;
+export default function userOrderDetailPage() {
+  return <OrderScreen />;
 }
-
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }) => {
+    async ({ req, params }) => {
       const session = await getSession({ req });
+
+      
 
       if (!session) {
         return {
@@ -22,7 +23,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(userOrders(req.headers.cookie, req));
+      await store.dispatch(getOrderDetails(req.headers.cookie, req, params.orderID));
 
       return {
         props: { session },
