@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import ForgotPasswordScreen from '../components/auth/ForgotPasswordScreen';
+import ForgotPasswordScreen from '../../components/auth/ForgotPasswordScreen';
 
 export default function forgotPasswordPage() {
   return (

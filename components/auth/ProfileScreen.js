@@ -14,7 +14,7 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(null);
 
-  const { user, loading, error } = useSelector((state) => state.auth);
+  const { user, loading, error } = useSelector((state) => state.loadedUser);
 
   useEffect(() => {
     if (error) {

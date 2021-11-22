@@ -7,13 +7,16 @@ import TextField from '../forms/TextField';
 import Spinner from '../ui/Spinner';
 import { toast } from 'react-toastify';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { forgotPassword, clearErrors } from '../../redux/actions/userActions';
+import { useRouter } from 'next/router';
 
-const ForgotPasswordScreen = () => {
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPassword, clearErrors } from '../../redux/actions/userActions';
+
+const NewPasswordScreen = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
-  const { error, loading, message } = useSelector(
+  const { error, loading, success } = useSelector(
     (state) => state.forgotPassword
   );
 
@@ -23,10 +26,10 @@ const ForgotPasswordScreen = () => {
       dispatch(clearErrors());
     }
 
-    if (message) {
-      toast.success(message);
+    if (success) {
+      router.push('/login');
     }
-  }, [dispatch, error, message]);
+  }, [dispatch, error, success]);
 
   const {
     register,
@@ -35,24 +38,37 @@ const ForgotPasswordScreen = () => {
   } = useForm();
 
   const submitHandler = (data) => {
-    dispatch(forgotPassword(data));
+    dispatch(resetPassword(router.query.token, data));
   };
 
   return (
     <div className={classes.container}>
-      <h1>Forgot Password</h1>
+      <h1>New Password</h1>
       <div className={classes.message}>{error && <p>{error}</p>}</div>
       <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
         <div className={classes.formGroup}>
           <TextField
-            type="email"
+            type="password"
             register={register}
             error={errors}
             inputwidth="100%"
             inputheight="4rem"
-            label="Email"
-            name="email"
-            placeholder="Email"
+            label="Password"
+            name="password"
+            placeholder="Password"
+            mandatory={true}
+          />
+        </div>
+        <div className={classes.formGroup}>
+          <TextField
+            type="password"
+            register={register}
+            error={errors}
+            inputwidth="100%"
+            inputheight="4rem"
+            label="Confirm Password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
             mandatory={true}
           />
         </div>
@@ -61,11 +77,11 @@ const ForgotPasswordScreen = () => {
           type="submit"
           disabled={loading ? true : false}
         >
-          {loading ? <Spinner /> : 'SEND EMAIL'}
+          {loading ? <Spinner /> : 'SET PASSWORD'}
         </button>
       </form>
     </div>
   );
 };
 
-export default ForgotPasswordScreen;
+export default NewPasswordScreen;

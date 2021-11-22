@@ -1,22 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
 
 import Link from 'next/link';
 import Image from 'next/image';
 import classes from './UserActions.module.scss';
 import BurgerNavigation from './BurgerNavigation';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { loadUser, clearErrors } from '../../../redux/actions/userActions';
-
-const UserActions = () => {
+const UserActions = ({user}) => {
   const router = useRouter();
-  const dispatch = useDispatch();
-
-  const [session] = useSession();
-
-  const { user, loading } = useSelector((state) => state.auth);
 
   // const getPublicId = (url) => {
   //   const parts = url.split("/");
@@ -27,11 +18,7 @@ const UserActions = () => {
 
   useEffect(() => {
     setActive(router.pathname);
-
-    if (session && session.user && !user) {
-      dispatch(loadUser());
-    }
-  }, [router, dispatch, user]);
+  }, [router]);
 
   return (
     <div className={classes.actionContainer}>

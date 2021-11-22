@@ -1,6 +1,7 @@
 import User from '../models/user';
 import cloudinary from 'cloudinary';
 import absoluteUrl from 'next-absolute-url';
+import crypto from 'crypto'
 
 import sendEmail from '../utils/sendEmail';
 import ErrorHandler from '../utils/errorHandler';
@@ -113,7 +114,7 @@ export const forgotPassword = async (req, res, next) => {
   const { origin } = absoluteUrl(req);
 
   // Create reset password url
-  const resetUrl = `${origin}/password/reset/${resetToken}`;
+  const resetUrl = `${origin}/password/${resetToken}`;
 
   const message = `Your password reset url is as follow: \n\n ${resetUrl} \n\n If you have not requested this email, then ignore it.`;
 
@@ -176,6 +177,6 @@ export const resetPassword = async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: 'Password updated siccessfully',
+    message: 'Password updated successfully',
   });
 };

@@ -47,7 +47,7 @@ const LoginScreen = () => {
 
       <div className={classes.message}>{message && <p>{message}</p>}</div>
       <div className={classes.forgot}>
-        <Link href="/forgotPassword">Forgot Password ? </Link>
+        <Link href="/password">Forgot Password ? </Link>
       </div>
       <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
         <div className={classes.formGroup}>
