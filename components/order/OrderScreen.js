@@ -9,8 +9,9 @@ import classes from './OrderScreen.module.scss';
 // import StripeButton from '../ui/StripeButton';
 import Spinner from '../../components/ui/Spinner';
 
-import downloadInvoice from '../../utils/downloadInvoice';
-// import OrderPdfScreen from './OrderPdfScreen';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+
+import OrderPdfScreen from './OrderPdfScreen';
 
 // import Cookies from 'js-cookie';
 
@@ -20,8 +21,6 @@ const OrderScreen = () => {
   const { order } = useSelector((state) => state.orderDetails);
 
   const { user } = order;
-
-  console.log('order', order);
 
   const itemsPrice = order.orderItems.reduce(
     (acc, item) => acc + item.price * item.qty,
@@ -121,6 +120,7 @@ const OrderScreen = () => {
             )}
           </div>
         </div>
+
         <div className={classes.summary}>
           <div className={classes.card}>
             <div>
@@ -147,12 +147,6 @@ const OrderScreen = () => {
           </div>
         </div>
         <div className={classes.paymentBtn}>
-          <div
-            className={classes.download}
-            onClick={() => downloadInvoice(order)}
-          >
-            Download Order
-          </div>
           {/* {!order.isPaid ? (
             order.paymentMethod === 'PayPal' ? (
               <div className={classes.paypalBtn}>Paypall Button</div>
@@ -167,27 +161,27 @@ const OrderScreen = () => {
                 <p>Any 3 digits Any future date</p>
               </div>
             )
-          ) : (
-             isClient && (
-            <>
-              <PDFDownloadLink
-                document={<OrderPdfScreen order={order} />}
-                fileName="test.pdf"
-              >
-                 {({ loading }) =>
-              loading ? (
-                'Loading'
-              ) : ( 
-                <div
-                  className={classes.download}
-                  onClick={() => Cookies.remove('placeOrder')}
-                >
-                  Download Order
-                </div>
-                 )
-            } 
-              </PDFDownloadLink>
-              {user && user.isAdmin && (
+          ) : ( */}
+          <>
+            <PDFDownloadLink
+              document={<OrderPdfScreen order={order} />}
+              fileName="test.pdf"
+            >
+              {({ loading }) =>
+                loading ? (
+                  'Loading'
+                ) : (
+                  <div
+                    className={classes.download}
+                    // onClick={() => Cookies.remove('placeOrder')}
+                  >
+                    Download Order
+                  </div>
+                )
+              }
+            </PDFDownloadLink>
+
+            {/* {user && user.isAdmin && (
                 <div className={classes.adminBtn}>
                   <button
                     className={classes.payBtn}
@@ -207,10 +201,9 @@ const OrderScreen = () => {
                     Delete
                   </button>
                 </div>
-              )}
-            </>
-             )
-          )} */}
+              )} */}
+          </>
+          {/* ))}  */}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/client';
 
 import classes from './Header.module.scss';
@@ -16,13 +16,21 @@ const Header = () => {
 
   const [session] = useSession();
 
-  const { user, loading } = useSelector((state) => state.loadedUser);
+  const [user, setUser] = useState();
+
+  // const { user, loading } = useSelector((state) => state.loadedUser);
+
+  // useEffect(() => {
+  //   if (session && session.user && !user) {
+  //     dispatch(loadUser());
+  //   }
+  // }, [dispatch, session, user]);
 
   useEffect(() => {
-    if (session && session.user && !user) {
-      dispatch(loadUser());
+    if (session && session.user) {
+      setUser(() => session.user);
     }
-  }, [dispatch, session, user]);
+  }, [session]);
 
   return (
     <header className="header">

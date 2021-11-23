@@ -2,9 +2,9 @@ import Head from 'next/head';
 import Layout from '../components/layout/Layout';
 import '../styles/globals.scss';
 
-import { wrapper} from '../redux/store'
+import { wrapper } from '../redux/store';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <Layout>
       <Head>
