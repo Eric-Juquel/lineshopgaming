@@ -85,9 +85,9 @@ const ProductScreen = () => {
         </div>
 
         <button
-          className={router.query.category === 'Games' ? classes.active : ''}
+          className={router.query.category === 'Game' ? classes.active : ''}
           onClick={() => {
-            setCategory('Games');
+            setCategory('Game');
           }}
         >
           Games

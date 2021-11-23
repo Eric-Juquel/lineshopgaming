@@ -49,6 +49,7 @@ export const productListReducer = (state = { products: [] }, action) => {
       };
     case CLEAR_ERRORS:
       return {
+        ...state,
         error: null,
       };
     default:
@@ -75,6 +76,7 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
       };
     case CLEAR_ERRORS:
       return {
+        ...state,
         error: null,
       };
     default:
@@ -153,28 +155,28 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
 //   }
 // };
 
-// export const productReviewCreateReducer = (state = {}, action) => {
-//   switch (action.type) {
-//     case PRODUCT_CREATE_REVIEW_REQUEST:
-//       return {
-//         loading: true,
-//       }
-//     case PRODUCT_CREATE_REVIEW_SUCCESS:
-//       return {
-//         loading: false,
-//         success: true,
-//       }
-//     case PRODUCT_CREATE_REVIEW_FAIL:
-//       return {
-//         loading: false,
-//         error: action.payload,
-//       }
-//     case PRODUCT_CREATE_REVIEW_RESET:
-//       return {}
-//     default:
-//       return state
-//   }
-// }
+export const productReviewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_CREATE_REVIEW_REQUEST:
+      return {
+        loading: true,
+      }
+    case PRODUCT_CREATE_REVIEW_SUCCESS:
+      return {
+        loading: false,
+        message: action.payload,
+      }
+    case PRODUCT_CREATE_REVIEW_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case PRODUCT_CREATE_REVIEW_RESET:
+      return {}
+    default:
+      return state
+  }
+}
 
 // export const productTopRatedReducer = (state = { products: [] }, action) => {
 //   switch (action.type) {

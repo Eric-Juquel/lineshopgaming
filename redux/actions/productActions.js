@@ -48,9 +48,10 @@ export const listProducts =
     } catch (error) {
       dispatch({
         type: PRODUCT_LIST_FAIL,
-        payload: error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
       });
     }
   };
@@ -71,9 +72,10 @@ export const getProductDetails = (req, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
-      payload: error.response && error.response.data.message
-      ? error.response.data.message
-      : error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
@@ -180,40 +182,39 @@ export const getProductDetails = (req, id) => async (dispatch) => {
 //   }
 // };
 
-// export const createProductReview = (productId, review) => async (
-//   dispatch,
-//   getState
-// ) => {
-//   try {
-//     dispatch({
-//       type: PRODUCT_CREATE_REVIEW_REQUEST,
-//     });
+export const createProductReview = (productId, review) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_REQUEST,
+    });
 
-//     const {
-//       userLogin: { userInfo },
-//     } = getState();
+    // const { origin } = absoluteUrl(req);
 
-//     const config = {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${userInfo.token}`,
-//       },
-//     };
-//     await axios.post(`/api/products/${productId}/reviews`, review, config);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.post(
+      `/api/auth/addreview/${productId}`,
+      review,
+      config
+    );
 
-//     dispatch({
-//       type: PRODUCT_CREATE_REVIEW_SUCCESS,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: PRODUCT_CREATE_REVIEW_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     });
-//   }
-// };
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_SUCCESS,
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 // export const listTopProducts = () => async (dispatch) => {
 //   try {

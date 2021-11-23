@@ -15,23 +15,43 @@ import ProductReviewForm from './ProductReviewForm';
 import Rating from '../ui/Rating';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { clearErrors } from '../../redux/actions/productActions';
+import {
+  clearErrors,
+  productDetails,
+} from '../../redux/actions/productActions';
 
 // import Cookies from 'js-cookie';
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
   const containerRef = useRef(null);
   const router = useRouter();
 
-  const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
   const [addReview, setAddReview] = useState(false);
   const [qty, setQty] = useState(1);
-  const [newReview, setNewReview] = useState(false);
 
   const { product, error, loading } = useSelector(
     (state) => state.productDetails
   );
+  const { user } = useSelector((state) => state.loadedUser);
+  const { message, error: reviewError } = useSelector(
+    (state) => state.productReview
+  );
+
+  useEffect(() => {
+    if (reviewError) {
+      toast.error(reviewError);
+      dispatch(clearErrors());
+    }
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+    if (message) {
+      toast.success(message);
+      router.push(`/products/${product._id}`);
+    }
+  }, [dispatch, message, reviewError, error]);
 
   const scrollToTopHandler = () => {
     containerRef.current.scrollTo({ top: 0 });
@@ -43,6 +63,12 @@ const ProductDetails = () => {
   };
 
   let alreadyReviewed = false;
+  if (product && user) {
+    const userReviewed = product.reviews.map((r) => r.user);
+    if (userReviewed.includes(user._id)) {
+      alreadyReviewed = true;
+    }
+  }
 
   return (
     <>
@@ -70,7 +96,6 @@ const ProductDetails = () => {
           <ProductReviewForm
             product={product}
             user={user}
-            setNewReview={setNewReview}
             setAddReview={setAddReview}
           />
         ) : (

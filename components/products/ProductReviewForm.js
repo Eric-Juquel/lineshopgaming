@@ -3,9 +3,13 @@ import { useForm } from 'react-hook-form';
 import SelectField from '../forms/SelectField';
 import TextareaField from '../forms/Textarea';
 import ErrorComponent from '../ui/ErrorComponent';
-// import { createProductReview } from '../../lib/products-actions';
 
-const ProductReviewForm = ({ product, setAddReview, setNewReview }) => {
+import { useDispatch } from 'react-redux';
+import { createProductReview } from '../../redux/actions/productActions';
+
+const ProductReviewForm = ({ product, setAddReview }) => {
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -26,15 +30,14 @@ const ProductReviewForm = ({ product, setAddReview, setNewReview }) => {
     setAddReview(false);
   };
 
-  console.log('id', product._id);
-
   const onSubmit = async (data) => {
-    // const result = await createProductReview(product._id, {
-    //   rating: data.rating.value,
-    //   comment: data.comment,
-    // });
+    const review = {
+      rating: data.rating.value,
+      comment: data.comment,
+    };
+    console.log(review);
+    dispatch(createProductReview(product._id, review));
     setAddReview(false);
-    setNewReview(true);
   };
 
   return (

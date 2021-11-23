@@ -16,21 +16,23 @@ const Header = () => {
 
   const [session] = useSession();
 
-  const [user, setUser] = useState();
+  // const [user, setUser] = useState();
 
-  // const { user, loading } = useSelector((state) => state.loadedUser);
-
-  // useEffect(() => {
-  //   if (session && session.user && !user) {
-  //     dispatch(loadUser());
-  //   }
-  // }, [dispatch, session, user]);
+  const { user, loading } = useSelector((state) => state.loadedUser);
 
   useEffect(() => {
-    if (session && session.user) {
-      setUser(() => session.user);
+    if (session && session.user && !user) {
+      dispatch(loadUser());
     }
-  }, [session]);
+  }, [dispatch, session, user]);
+
+  // useEffect(() => {
+  //   if (session && session.user) {
+  //     setUser(() => session.user);
+  //   }
+  // }, [session]);
+
+  
 
   return (
     <header className="header">

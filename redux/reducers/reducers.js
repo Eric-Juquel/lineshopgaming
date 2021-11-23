@@ -2,7 +2,11 @@ import { combineReducers } from 'redux';
 
 import { userOrdersReducer, orderDetailsReducer } from './orderReducers';
 
-import { productListReducer, productDetailsReducer } from './productReducers';
+import {
+  productListReducer,
+  productDetailsReducer,
+  productReviewReducer,
+} from './productReducers';
 
 import {
   authReducer,
@@ -14,6 +18,7 @@ import {
 const reducer = combineReducers({
   productsList: productListReducer,
   productDetails: productDetailsReducer,
+  productReview: productReviewReducer,
   auth: authReducer,
   loadedUser: loadedUserReducer,
   updateProfile: updateProfileReducer,

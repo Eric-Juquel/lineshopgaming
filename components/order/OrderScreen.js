@@ -165,7 +165,7 @@ const OrderScreen = () => {
           <>
             <PDFDownloadLink
               document={<OrderPdfScreen order={order} />}
-              fileName="test.pdf"
+              fileName={`Lineshop invoice${order._id}`}
             >
               {({ loading }) =>
                 loading ? (

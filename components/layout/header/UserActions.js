@@ -6,7 +6,7 @@ import Image from 'next/image';
 import classes from './UserActions.module.scss';
 import BurgerNavigation from './BurgerNavigation';
 
-const UserActions = ({user}) => {
+const UserActions = ({ user }) => {
   const router = useRouter();
 
   // const getPublicId = (url) => {
@@ -83,26 +83,28 @@ const UserActions = ({user}) => {
                 }`}
               >
                 <Link className={classes.link} href="/auth/profile">
-                  {user.firstName}
+                  <a>{user.firstName}</a>
                 </Link>
               </li>
             </ul>
           </nav>
           <Link className={classes.link} href="/auth/profile">
-            <div className={classes.avatar}>
-              {user && user.avatar ? (
-                <Image
-                  src={user.avatar.url}
-                  alt={`${user.name}'s avatar`}
-                  width={55}
-                  height={55}
-                />
-              ) : (
-                <div className={classes.noAvatar}>
-                  {user.firstName.substring(0, 1)}
-                </div>
-              )}
-            </div>
+            <a>
+              <div className={classes.avatar}>
+                {user && user.avatar ? (
+                  <Image
+                    src={user.avatar.url}
+                    alt={`${user.name}'s avatar`}
+                    width={55}
+                    height={55}
+                  />
+                ) : (
+                  <div className={classes.noAvatar}>
+                    {user.firstName.substring(0, 1)}
+                  </div>
+                )}
+              </div>
+            </a>
           </Link>
         </div>
       )}
