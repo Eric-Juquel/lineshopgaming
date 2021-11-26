@@ -1,0 +1,65 @@
+@import '../../styles/sass/variables';
+@import '../../styles/sass/mixins';
+
+.container {
+  width: 90rem;
+  height: 100%;
+  @include container;
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    width: 90%;
+    height: 90%;
+  }
+
+  h1 {
+    height: 7%;
+    text-align: start;
+    margin-bottom: 2rem;
+  }
+}
+
+.message {
+  height: 5%;
+  color: $color-danger;
+}
+
+.form {
+  min-height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow-y: auto;
+
+  @media screen and (max-width: $bp-mobile-land) {
+    display: block;
+    height: 70%;
+    // margin: 5rem;
+  }
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    margin: 0;
+    height: 70%;
+  }
+
+  .formGroup {
+    width: 50rem;
+    margin: auto;
+
+    @media screen and (max-width: $bp-mobile-vert) {
+      width: 95%;
+    }
+  }
+}
+
+.continue {
+  display: flex;
+  padding: 1rem 0;
+
+  @media screen and (max-width: $bp-mobile-land) {
+    display: block;
+    margin: auto;
+  }
+}
+
+@include btnTopSlide;

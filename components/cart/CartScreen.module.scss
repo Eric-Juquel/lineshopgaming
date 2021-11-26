@@ -1,0 +1,295 @@
+@import '../../styles/sass/variables';
+@import '../../styles/sass/mixins';
+
+.container {
+  width: 80%;
+  height: 90%;
+  @include container;
+
+  h1 {
+    text-align: start;
+  }
+
+  display: grid;
+  grid-template-columns: 70% 25%;
+  grid-template-rows: 40% 10% 40%;
+  grid-gap: 5%;
+
+  @media screen and (max-width: $bp-mobile-land) {
+    width: 95%;
+    height: 95%;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
+.cart {
+  grid-column: 1 / 2;
+  grid-row: 1 / -1;
+
+  .items {
+    display: flex;
+    height: 92%;
+    width: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin !important;
+
+    .empty {
+      width: 50%;
+      height: 15rem;
+      margin: 5rem auto 0 auto;
+
+      button {
+        height: 4rem;
+        width: 10rem;
+        margin-top: 2rem;
+        @include btn3d($color-grey-light-1);
+      }
+    }
+
+    .list {
+      width: 95%;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      height: 92%;
+    }
+  }
+
+  .item {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 100%;
+    height: 20%;
+    padding: 0.5rem;
+
+    @media screen and (max-width: $bp-mobile-vert) {
+      padding: 1rem 0;
+      min-height: 8rem;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $color-blue-mid;
+    }
+
+    .image {
+      position: relative;
+      height: 100%;
+      width: 7rem;
+      margin: auto 1rem;
+      img {
+        box-shadow: $box-shadow-dark;
+      }
+    }
+
+    h5 {
+      width: 35%;
+
+      @media screen and (max-width: $bp-mobile-land) {
+        font-size: 1.5rem;
+      }
+
+      @media screen and (max-width: $bp-mobile-vert) {
+        font-size: 1.8rem;
+      }
+
+      a {
+        transition: all 0.2s ease;
+        display: inline-block;
+        margin-left: 1rem;
+
+        @include hoverlink;
+      }
+    }
+
+    p {
+      font-size: 2rem;
+      font-weight: 600;
+      width: 20%;
+
+      @media screen and (max-width: $bp-mobile-vert) {
+        font-size: 1.6rem;
+      }
+    }
+
+    .qty {
+      .select {
+        height: 3.5rem;
+        width: 5rem;
+        align-self: center;
+        display: flex;
+        align-items: center;
+        position: relative;
+        border: none;
+        border-radius: 0.25em;
+        padding: 0.25em 0.5em;
+        cursor: pointer;
+        line-height: 1.1;
+
+        // Optional styles
+        // remove for transparency
+        background-color: #fff;
+        background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+
+        // Custom arrow
+        &::after {
+          content: '';
+          margin-left: -1rem;
+          width: 0.8em;
+          height: 0.5em;
+          background-color: $color-grey-dark;
+          clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+        }
+      }
+    }
+
+    svg {
+      cursor: pointer;
+      width: 5%;
+      font-size: 3rem;
+      fill: $color-danger;
+
+      @media screen and (max-width: $bp-mobile-vert) {
+        width: 7%;
+        margin-left: 2rem;
+      }
+    }
+  }
+}
+
+.checkout {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    order: 1;
+    min-height: 20rem;
+    max-width: 80%;
+    margin: 1.5rem auto;
+  }
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 90%;
+  border: 1px solid $color-purple-mid;
+  box-shadow: $box-shadow-dark;
+
+  @media screen and (max-width: $bp-mobile-land) {
+    width: 100%;
+  }
+
+  h3 {
+    width: 100%;
+    font-family: 'Audiowide', cursive;
+    color: $color-yellow-light;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  div {
+    width: 100%;
+    height: 22%;
+    padding: 0 8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media screen and (max-width: $bp-mobile-land) {
+      padding: 0 5rem;
+    }
+
+    &:last-child {
+      height: 34%;
+      border-top: 1px solid $color-purple-mid;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .num {
+      font-weight: 600;
+    }
+
+    button {
+      width: 20rem;
+      height: 4rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin: auto;
+      @include btnFlat;
+    }
+  }
+}
+
+.shopping {
+  grid-column: 2 / 3;
+  grid-row: 3 / 4;
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+
+    margin: 1.5rem auto;
+  }
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20rem;
+    height: 5rem;
+    margin: auto;
+    @include btn3d($color-blue-light);
+
+    svg {
+      font-size: 2.5rem;
+      margin: 2px 5px 0 -2px;
+    }
+  }
+}
+
+// SELECT BUTTON
+.select select {
+  // A reset of styles, including removing the default dropdown arrow
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+
+  // Stack above custom arrow
+  z-index: 1;
+
+  // Remove dropdown arrow in IE10 & IE11
+  // @link https://www.filamentgroup.com/lab/select-css.html
+  &::-ms-expand {
+    display: none;
+  }
+
+  // Remove focus outline, will add on alternate element
+  outline: none;
+}
+
+// Interim solution until :focus-within has better support
+select:focus + .focus {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border: 2px solid var($color-yellow-light);
+  border-radius: inherit;
+}

@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
+import { cartReducer } from './cartReducers';
+
 import { userOrdersReducer, orderDetailsReducer } from './orderReducers';
 
 import {
@@ -25,6 +27,7 @@ const reducer = combineReducers({
   forgotPassword: forgotPasswordReducer,
   userOrders: userOrdersReducer,
   orderDetails: orderDetailsReducer,
+  cart: cartReducer
 });
 
 export default reducer;

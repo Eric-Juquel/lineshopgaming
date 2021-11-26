@@ -82,8 +82,6 @@ export const createProductReview = async (req, res, next) => {
     product.reviews.reduce((acc, item) => item.rating + acc, 0) /
     product.reviews.length;
 
-    console.log('product', product)
-
   await product.save();
   res.status(201).json({
     message: 'review added',

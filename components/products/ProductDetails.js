@@ -15,12 +15,10 @@ import ProductReviewForm from './ProductReviewForm';
 import Rating from '../ui/Rating';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  clearErrors,
-  productDetails,
-} from '../../redux/actions/productActions';
+import { addToCart } from '../../redux/actions/cartActions';
+import { clearErrors } from '../../redux/actions/productActions';
 
-// import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -37,8 +35,16 @@ const ProductDetails = () => {
   const { message, error: reviewError } = useSelector(
     (state) => state.productReview
   );
+  const { cartItems } = useSelector((state) => state.cart);
 
   useEffect(() => {
+    Cookies.set(
+      'cartItems',
+      JSON.stringify(cartItems),
+      { expires: 7 },
+      { sameSite: 'strict' }
+    );
+
     if (reviewError) {
       toast.error(reviewError);
       dispatch(clearErrors());
@@ -51,7 +57,7 @@ const ProductDetails = () => {
       toast.success(message);
       router.push(`/products/${product._id}`);
     }
-  }, [dispatch, message, reviewError, error]);
+  }, [dispatch, message, reviewError, error, cartItems]);
 
   const scrollToTopHandler = () => {
     containerRef.current.scrollTo({ top: 0 });
@@ -69,6 +75,10 @@ const ProductDetails = () => {
       alreadyReviewed = true;
     }
   }
+
+  const addToCartHandler = (productId, qty) => {
+    dispatch(addToCart(productId, qty));
+  };
 
   return (
     <>

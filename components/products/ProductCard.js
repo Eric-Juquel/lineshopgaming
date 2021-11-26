@@ -4,18 +4,25 @@ import FlipCard from './FlipCard';
 import classes from './ProductCard.module.scss';
 import Rating from '../ui/Rating';
 
-// import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../../redux/actions/cartActions';
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+
   const { _id, name, rating, price, countInStock } = product;
 
-  // useEffect(() => {
-  //   Cookies.set('cartItems', JSON.stringify(cartItems), { expires: 1 / 24 });
-  // }, [cartItems]);
+  const { cartItems } = useSelector((state) => state.cart);
 
-  // const addToCartHandler = async (productId, qty) => {
-  //   await addToCart(cartDispatch, productId, qty);
-  // };
+  useEffect(() => {
+    Cookies.set('cartItems', JSON.stringify(cartItems), { expires: 7 },{ sameSite:'strict' });
+  }, [cartItems]);
+
+  const addToCartHandler = (productId, qty) => {
+    dispatch(addToCart(productId, qty));
+  };
 
   return (
     <div className={classes.card}>
@@ -55,7 +62,7 @@ const ProductCard = ({ product }) => {
       <button
         className={classes.btn}
         disabled={countInStock === 0}
-        // onClick={() => addToCartHandler(_id, 1)}
+        onClick={() => addToCartHandler(_id, 1)}
       >
         Add to cart
       </button>

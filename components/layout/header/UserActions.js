@@ -6,8 +6,13 @@ import Image from 'next/image';
 import classes from './UserActions.module.scss';
 import BurgerNavigation from './BurgerNavigation';
 
+import { useSelector } from 'react-redux';
+
 const UserActions = ({ user }) => {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  const { cartItems } = useSelector((state) => state.cart);
 
   // const getPublicId = (url) => {
   //   const parts = url.split("/");
@@ -20,6 +25,11 @@ const UserActions = ({ user }) => {
     setActive(router.pathname);
   }, [router]);
 
+  // When mounted on client, now we can show the UI
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (
     <div className={classes.actionContainer}>
       <div className={classes.userCart}>
@@ -31,12 +41,12 @@ const UserActions = ({ user }) => {
               width={35}
               height={25}
             />
-            {/* {cartItems && (
+            {cartItems && (
               <div className={classes.qty}>
                 {' '}
                 {cartItems.reduce((acc, item) => acc + item.qty, 0)}
               </div>
-            )} */}
+            )}
           </a>
         </Link>
       </div>

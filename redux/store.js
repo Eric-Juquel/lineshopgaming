@@ -19,7 +19,8 @@ const reducer = (state, action) => {
       ...action.payload,
     };
     if (state.loadedUser) nextState.loadedUser = state.loadedUser;
-    
+    if (state.cart) nextState.cart = state.cart;
+
     return nextState;
   } else {
     return reducers(state, action);
