@@ -1,4 +1,3 @@
-import next from 'next';
 import Product from '../models/product';
 
 import ErrorHandler from '../utils/errorHandler';

@@ -36,7 +36,7 @@ const UserActions = ({ user }) => {
         <Link href="/cart">
           <a>
             <Image
-              src="/images/icones/marketplace-drawing-clipart-4.png"
+              src="https://res.cloudinary.com/ericjuquel94/image/upload/v1637593378/LineShop/logos/marketplace-drawing-clipart-4_zdj8gn.png"
               alt="cart"
               width={35}
               height={25}

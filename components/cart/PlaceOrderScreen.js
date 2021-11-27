@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+
+import Spinner from '../ui/Spinner';
 import Link from 'next/link';
 import Image from 'next/image';
 import classes from './PlaceOrderScreen.module.scss';
 import CheckoutSteps from './CheckoutSteps';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { newOrder } from '../../redux/actions/orderActions';
 
 import Cookies from 'js-cookie';
 
@@ -17,6 +21,17 @@ const PlaceOrderScreen = () => {
   const { cartItems, shippingAddress, paymentMethod } = useSelector(
     (state) => state.cart
   );
+  const { success, error, order } = useSelector((state) => state.newOrder);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+    if (success && order) {
+      toast.success(success);
+      router.push(`/auth/${order._id}`)
+    }
+  }, [error, success, order]);
 
   // Calculate prices
   const addDecimals = (num) => {
@@ -47,16 +62,22 @@ const PlaceOrderScreen = () => {
       totalPrice: totalPrice,
     };
 
-    // const result = await createOrder(order);
+    await dispatch(newOrder(order));
 
-    // if (!user) {
-    //   Cookies.set('placeOrder', JSON.stringify(result.orderId), {
-    //     expires: 1 / 24,
-    //   });
-    // }
+    console.log('result', result);
 
-    // router.push(`/auth/${result.orderId}`);
+    if (!user) {
+      Cookies.set(
+        'placeOrder',
+        JSON.stringify(result.orderId),
+        { expires: 1 / 24 },
+        { sameSite: 'strict' }
+      );
+    }
   };
+
+  if (!user || !cartItems || !shippingAddress || !paymentMethod)
+    return <Spinner />;
 
   return (
     <div className={classes.container}>

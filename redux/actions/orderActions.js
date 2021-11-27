@@ -22,24 +22,21 @@ import {
   ORDER_DELIVER_FAIL,
 } from '../constants/orderConstants';
 
-export const createOrder = (order) => async (dispatch, getState) => {
+export const newOrder = (order) => async (dispatch) => {
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.post('/api/orders', order, config);
+    const { data } = await axios.post('/api/auth/orders', order, config);
+
+    console.log('data',data)
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,

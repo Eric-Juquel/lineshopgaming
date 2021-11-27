@@ -24,6 +24,7 @@ const ProductCard = ({ product }) => {
     dispatch(addToCart(productId, qty));
   };
 
+
   return (
     <div className={classes.card}>
       <div className={classes.title}>

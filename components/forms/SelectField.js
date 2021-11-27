@@ -53,7 +53,8 @@ const SelectField = ({
       ...provided,
       fontSize: '1.5rem',
       marginLeft: '1.5rem',
-      marginBottom:'1.5rem',
+      marginBottom: '1.5rem',
+
       color: 'rgb(54, 58, 63)',
     }),
     indicatorsContainer: (provided, state) => ({
@@ -63,6 +64,7 @@ const SelectField = ({
     singleValue: (provided, state) => ({
       ...provided,
       minHeight: '30px',
+      marginTop:'-8px',
     }),
     menu: (provided, state) => ({
       ...provided,

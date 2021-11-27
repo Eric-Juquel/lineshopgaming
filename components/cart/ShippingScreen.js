@@ -18,6 +18,7 @@ const ShippingScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const [mounted, setMounted] = useState();
   const [message, setMessage] = useState(null);
 
   const { shippingAddress } = useSelector((state) => state.cart);
@@ -54,6 +55,8 @@ const ShippingScreen = () => {
   }, [Object.entries(errors).length]);
 
   const onSubmit = async (data) => {
+    console.log('data', data);
+
     await dispatch(
       saveShippingAddress({
         firstName: data.firstName,
@@ -68,6 +71,11 @@ const ShippingScreen = () => {
 
     router.push('/cart/payment');
   };
+
+  // When mounted on client, now we can show the UI
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   return (
     <div className={classes.container}>
@@ -86,7 +94,7 @@ const ShippingScreen = () => {
             name="firstName"
             placeholder="Enter First name"
             defaultValue={
-              shippingAddress
+              shippingAddress && shippingAddress.firstName
                 ? shippingAddress.firstName
                 : user
                 ? user.firstName
@@ -106,7 +114,7 @@ const ShippingScreen = () => {
             name="lastName"
             placeholder="Enter Last name"
             defaultValue={
-              shippingAddress
+              shippingAddress && shippingAddress.lastName
                 ? shippingAddress.lastName
                 : user
                 ? user.lastName
@@ -126,7 +134,11 @@ const ShippingScreen = () => {
             name="email"
             placeholder="Email"
             defaultValue={
-              shippingAddress ? shippingAddress.email : user ? user.email : ''
+              shippingAddress && shippingAddress.email
+                ? shippingAddress.email
+                : user
+                ? user.email
+                : ''
             }
             mandatory={true}
           />

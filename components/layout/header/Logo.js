@@ -7,11 +7,10 @@ const Logo = () => {
     <Link href="/">
       <a className={classes.logo}>
         <Image
-          src="/images/logo/logo.png"
+          src="https://res.cloudinary.com/ericjuquel94/image/upload/v1637593345/LineShop/logos/logo_eir33c.png"
           alt="LineShopGaming"
           width={200}
           height={70}
-          
         />
       </a>
     </Link>
