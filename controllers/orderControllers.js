@@ -44,23 +44,44 @@ export const createOrder = async (req, res) => {
     totalPrice,
   } = req.body;
 
-  if (orderItems && orderItems.length === 0) {
+  if (orderItems && orderItems.length === 0)
     return next(new ErrorHandler('No Order Items', 400));
-  } else {
-    const order = await Order.create({
-      orderItems,
-      user: req.user._id,
-      shippingAddress,
-      paymentMethod,
-      itemsPrice,
-      taxPrice,
-      shippingPrice,
-      totalPrice,
-    });
 
-    res.status(201).json({
-      message: 'New order saved',
-      order,
-    });
+  const order = await Order.create({
+    orderItems,
+    user: req.user._id,
+    shippingAddress,
+    paymentMethod,
+    itemsPrice,
+    taxPrice,
+    shippingPrice,
+    totalPrice,
+  });
+
+  res.status(201).json({
+    message: 'New order saved',
+    order,
+  });
+};
+
+// @desc   Pay order
+// @route  PATCH  /api/auth/orders/:orderId/pay
+// @acces  Private
+export const payOrder = async (req, res, next) => {
+  const order = await Order.findById(req.query.orderID);
+
+  if (!order) {
+    return next(new ErrorHandler('Order Not Found', 403));
   }
+
+  const result = await Order.updateOne(
+    { _id: order._id },
+    {
+      $set: {
+        isPaid: true,
+        payedAt: new Date(),
+      },
+    }
+  );
+  res.status(201).json({ message: 'Order Paid' });
 };

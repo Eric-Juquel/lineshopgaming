@@ -6,7 +6,7 @@ import Image from 'next/image';
 import classes from './OrderScreen.module.scss';
 
 // import { PayPalButton } from 'react-paypal-button-v2';
-// import StripeButton from '../ui/StripeButton';
+import StripeButton from '../ui/StripeButton';
 import Spinner from '../../components/ui/Spinner';
 
 import { PDFDownloadLink } from '@react-pdf/renderer';
@@ -154,7 +154,7 @@ const OrderScreen = () => {
           </div>
         </div>
         <div className={classes.paymentBtn}>
-          {/* {!order.isPaid ? (
+          {!order.isPaid ? (
             order.paymentMethod === 'PayPal' ? (
               <div className={classes.paypalBtn}>Paypall Button</div>
             ) : (
@@ -168,27 +168,27 @@ const OrderScreen = () => {
                 <p>Any 3 digits Any future date</p>
               </div>
             )
-          ) : ( */}
-          <>
-            <PDFDownloadLink
-              document={<OrderPdfScreen order={order} />}
-              fileName={`Lineshop invoice${order._id}`}
-            >
-              {({ loading }) =>
-                loading ? (
-                  'Loading'
-                ) : (
-                  <div
-                    className={classes.download}
-                    // onClick={() => Cookies.remove('placeOrder')}
-                  >
-                    Download Order
-                  </div>
-                )
-              }
-            </PDFDownloadLink>
+          ) : (
+            <>
+              <PDFDownloadLink
+                document={<OrderPdfScreen order={order} />}
+                fileName={`Lineshop invoice${order._id}`}
+              >
+                {({ loading }) =>
+                  loading ? (
+                    'Loading'
+                  ) : (
+                    <div
+                      className={classes.download}
+                      onClick={() => Cookies.remove('placeOrder')}
+                    >
+                      Download Order
+                    </div>
+                  )
+                }
+              </PDFDownloadLink>
 
-            {/* {user && user.isAdmin && (
+              {user && user.isAdmin && (
                 <div className={classes.adminBtn}>
                   <button
                     className={classes.payBtn}
@@ -208,9 +208,9 @@ const OrderScreen = () => {
                     Delete
                   </button>
                 </div>
-              )} */}
-          </>
-          {/* ))}  */}
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>
