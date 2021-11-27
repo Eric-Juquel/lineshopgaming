@@ -121,6 +121,10 @@ const styles = StyleSheet.create({
 const OrderPdfScreen = ({ order }) => {
   const paymentDate = <Moment format="DD/MM/YY">{order.paidAt}</Moment>;
   const orderDate = <Moment format="DD/MM/YY">{order.createdAt}</Moment>;
+  const totalPrice = new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(order.totalPrice);
 
   return (
     <Document>
@@ -198,9 +202,7 @@ const OrderPdfScreen = ({ order }) => {
           <View style={styles.itemPrice}>
             <Text style={styles.bold}>TOTAL PRICE</Text>
             <Text>=</Text>
-            <Text style={styles.bold}>
-              {new Intl.NumberFormat().format(order.totalPrice)} €
-            </Text>
+            <Text style={styles.bold}>{totalPrice}</Text>
           </View>
         </View>
 

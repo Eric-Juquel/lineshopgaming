@@ -178,12 +178,7 @@ const OrderScreen = () => {
                   loading ? (
                     'Loading'
                   ) : (
-                    <div
-                      className={classes.download}
-                      onClick={() => Cookies.remove('placeOrder')}
-                    >
-                      Download Order
-                    </div>
+                    <div className={classes.download}>Download Order</div>
                   )
                 }
               </PDFDownloadLink>
