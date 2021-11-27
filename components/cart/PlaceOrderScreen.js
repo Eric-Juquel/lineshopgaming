@@ -29,7 +29,7 @@ const PlaceOrderScreen = () => {
     }
     if (success && order) {
       toast.success(success);
-      router.push(`/auth/${order._id}`)
+      router.push(`/auth/${order._id}`);
     }
   }, [error, success, order]);
 
@@ -50,7 +50,7 @@ const PlaceOrderScreen = () => {
     Number(taxPrice)
   ).toFixed(2);
 
-  const placeOrderHandler = async () => {
+  const placeOrderHandler = () => {
     const order = {
       user: user ? user._id : 'a0a0a0a0a0a0a0a0a0a0a0a0',
       orderItems: cartItems,
@@ -62,9 +62,7 @@ const PlaceOrderScreen = () => {
       totalPrice: totalPrice,
     };
 
-    await dispatch(newOrder(order));
-
-    console.log('result', result);
+    dispatch(newOrder(order));
 
     if (!user) {
       Cookies.set(

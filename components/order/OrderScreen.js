@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -18,6 +18,8 @@ import OrderPdfScreen from './OrderPdfScreen';
 import { useDispatch, useSelector } from 'react-redux';
 
 const OrderScreen = () => {
+  const [mounted, setMounted] = useState(false);
+
   const { order } = useSelector((state) => state.orderDetails);
 
   const { user } = order;
@@ -38,6 +40,11 @@ const OrderScreen = () => {
   const deleteHandler = () => {
     console.log('deleted');
   };
+
+  // When mounted on client, now we can show the UI
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   return (
     <div className={classes.container}>

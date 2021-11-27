@@ -55,7 +55,6 @@ const ShippingScreen = () => {
   }, [Object.entries(errors).length]);
 
   const onSubmit = async (data) => {
-    console.log('data', data);
 
     await dispatch(
       saveShippingAddress({
