@@ -34,7 +34,7 @@ export const newOrder = (order) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post('/api/auth/orders', order, config);
+    const { data } = await axios.post('/api/orders', order, config);
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,

@@ -28,6 +28,14 @@ const PlaceOrderScreen = () => {
       toast.error(error);
     }
     if (success && order) {
+      if (!user) {
+        Cookies.set(
+          'placeOrder',
+          JSON.stringify(order._id),
+          { expires: 1 / 24 },
+          { sameSite: 'strict' }
+        );
+      }
       toast.success(success);
       router.push(`/auth/${order._id}`);
     }
@@ -51,7 +59,7 @@ const PlaceOrderScreen = () => {
   ).toFixed(2);
 
   const placeOrderHandler = () => {
-    const order = {
+    const orderPayload = {
       user: user ? user._id : 'a0a0a0a0a0a0a0a0a0a0a0a0',
       orderItems: cartItems,
       shippingAddress: shippingAddress,
@@ -62,20 +70,12 @@ const PlaceOrderScreen = () => {
       totalPrice: totalPrice,
     };
 
-    dispatch(newOrder(order));
+    dispatch(newOrder(orderPayload));
 
-    if (!user) {
-      Cookies.set(
-        'placeOrder',
-        JSON.stringify(result.orderId),
-        { expires: 1 / 24 },
-        { sameSite: 'strict' }
-      );
-    }
+    
   };
 
-  if (!user || !cartItems || !shippingAddress || !paymentMethod)
-    return <Spinner />;
+  if (!cartItems || !shippingAddress || !paymentMethod) return <Spinner />;
 
   return (
     <div className={classes.container}>

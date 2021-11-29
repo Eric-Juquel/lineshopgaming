@@ -31,10 +31,11 @@ export const orderDetails = async (req, res) => {
 };
 
 // @desc   Create new order
-// @route  POST  /api/auth/orders
-// @acces  Private
+// @route  POST  /api/orders
+// @acces  Public
 export const createOrder = async (req, res) => {
   const {
+    user,
     orderItems,
     shippingAddress,
     paymentMethod,
@@ -49,7 +50,7 @@ export const createOrder = async (req, res) => {
 
   const order = await Order.create({
     orderItems,
-    user: req.user._id,
+    user,
     shippingAddress,
     paymentMethod,
     itemsPrice,
