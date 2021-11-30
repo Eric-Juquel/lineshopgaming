@@ -8,6 +8,7 @@ import { GiEmptyMetalBucketHandle } from 'react-icons/gi';
 import classes from './CartScreen.module.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { addToCart, removeFromCart } from '../../redux/actions/cartActions';
 
 import Cookies from 'js-cookie';
 
@@ -30,12 +31,12 @@ const CartScreen = () => {
     router.back();
   };
 
-  const addToCartHandler = async (productId, qty) => {
-    await dispatch(addToCart(productId, qty));
+  const addToCartHandler = (productId, qty) => {
+    dispatch(addToCart(productId, qty));
   };
 
-  const removeFromCartHandler = async (id) => {
-    await dispatch(removeFromCart(id));
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {

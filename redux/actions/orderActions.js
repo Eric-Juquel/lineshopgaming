@@ -5,6 +5,7 @@ import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
   ORDER_CREATE_FAIL,
+  ORDER_CREATE_RESET,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
@@ -97,11 +98,6 @@ export const payOrder = (orderId, paymentResult) => async (dispatch) => {
 
     dispatch({
       type: ORDER_PAY_SUCCESS,
-      payload: data,
-    });
-
-    dispatch({
-      type: CART_CLEAR_ITEMS,
       payload: data,
     });
   } catch (error) {

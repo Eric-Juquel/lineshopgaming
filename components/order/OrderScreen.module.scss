@@ -342,3 +342,28 @@
     @include btnFlat($color-danger);
   }
 }
+
+.invoice {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  .quitInvoice {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    h5 {
+      padding: 2rem;
+    }
+
+    button {
+      height: 4rem;
+      @include btn3d($color-danger);
+    }
+  }
+}

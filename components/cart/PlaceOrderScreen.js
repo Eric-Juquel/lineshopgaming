@@ -126,7 +126,7 @@ const PlaceOrderScreen = () => {
                   <Image
                     src={item.image}
                     alt={item.name}
-                    width={55}
+                    width={40}
                     height={55}
                   />
                   <Link href={`/products/${item.product}`}>

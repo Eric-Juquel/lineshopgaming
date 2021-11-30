@@ -20,7 +20,7 @@ const PaymentScreen = () => {
   useEffect(() => {
     Cookies.set('paymentMethod', JSON.stringify(paymentMethod), {
       expires: 1 / 24,
-    });
+    },{sameSite:"strict"});
   }, [paymentMethod]);
 
   const submitHandler = (e) => {

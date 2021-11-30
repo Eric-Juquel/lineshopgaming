@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import classes from './Logout.module.scss';
 import Modal from '../ui/Modal';
 
+import Cookies from 'js-cookie';
+
 const Logout = () => {
   const router = useRouter();
 
@@ -14,6 +16,10 @@ const Logout = () => {
   }, []);
 
   const onLogout = () => {
+    Cookies.remove('cartItems')
+    Cookies.remove('shippingAddress')
+    Cookies.remove('paymentMethod')
+    Cookies.remove('placeOrder')
     signOut({ callbackUrl: 'http://localhost:3000/' });
   };
 

@@ -54,9 +54,8 @@ const ShippingScreen = () => {
     }
   }, [Object.entries(errors).length]);
 
-  const onSubmit = async (data) => {
-
-    await dispatch(
+  const onSubmit = (data) => {
+    dispatch(
       saveShippingAddress({
         firstName: data.firstName,
         lastName: data.lastName,

@@ -63,6 +63,8 @@ const OrderScreen = () => {
 
   if (!mounted) return null;
 
+  if(!userOrder) return <Spinner />
+
   return (
     <div className={classes.container}>
       <h1>
@@ -129,7 +131,7 @@ const OrderScreen = () => {
                   <Image
                     src={item.image}
                     alt={item.name}
-                    width={55}
+                    width={40}
                     height={55}
                   />
                   <Link href={`/products/${item.product}`}>
@@ -175,7 +177,7 @@ const OrderScreen = () => {
           </div>
         </div>
         <div className={classes.paymentBtn}>
-          {!userOrder.isPaid && !success ? (
+          {!userOrder.isPaid  ? (
             userOrder.paymentMethod === 'PayPal' ? (
               <div className={classes.paypalBtn}>Paypall Button</div>
             ) : (
@@ -183,7 +185,7 @@ const OrderScreen = () => {
                 <StripeButton
                   price={userOrder.totalPrice}
                   email={userOrder.shippingAddress.email}
-                  orderId={userOrder._id}
+                  order={userOrder}
                 />
                 <p>Visa 4242424242424242 </p>
                 <p>Any 3 digits Any future date</p>

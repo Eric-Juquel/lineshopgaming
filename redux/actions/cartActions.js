@@ -15,7 +15,6 @@ export const setCartFromStorage = () => async (dispatch) => {
 };
 
 export const addToCart = (productId, qty) => async (dispatch) => {
-  console.log('id', productId);
   const { data } = await axios.get(`/api/products/${productId}`);
 
   const { product } = data;
