@@ -19,15 +19,32 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const OrderScreen = () => {
   const [mounted, setMounted] = useState(false);
+  const [userOrder, setUserOrder] = useState(null);
+  const [itemsPrice, setItemsPrice] = useState(0);
 
   const { order } = useSelector((state) => state.orderDetails);
-
   const { user } = order;
 
-  const itemsPrice = order.orderItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
+  const { order: newOrder } = useSelector((state) => state.newOrder);
+
+  const { success } = useSelector((state) => state.orderPay);
+
+  useEffect(() => {
+    if (order) {
+      setUserOrder(order);
+    }
+    if (newOrder) {
+      setUserOrder(newOrder);
+    }
+    if (userOrder) {
+      setItemsPrice(
+        userOrder.orderItems.reduce(
+          (acc, item) => acc + item.price * item.qty,
+          0
+        )
+      );
+    }
+  }, [order, newOrder, userOrder]);
 
   const payHandler = () => {
     console.log('success');
@@ -49,32 +66,35 @@ const OrderScreen = () => {
   return (
     <div className={classes.container}>
       <h1>
-        Order <span>{order._id}</span>
+        Order <span>{userOrder._id}</span>
       </h1>
       <div className={classes.content}>
         <div className={classes.shipping}>
           <h2>Shipping</h2>
           <div className={classes.contact}>
             <strong>Contact: </strong>{' '}
-            {user ? user.firstName : order.shippingAddress.firstName}{' '}
-            {user ? user.lastName : order.shippingAddress.lastName}
+            {user ? user.firstName : userOrder.shippingAddress.firstName}{' '}
+            {user ? user.lastName : userOrder.shippingAddress.lastName}
             <a
-              href={`mailto:${user ? user.email : order.shippingAddress.email}`}
+              href={`mailto:${
+                user ? user.email : userOrder.shippingAddress.email
+              }`}
               title="send email"
             >
-              {user ? user.email : order.shippingAddress.email}
+              {user ? user.email : userOrder.shippingAddress.email}
             </a>
           </div>
           <div className={classes.address}>
             <strong>Address: </strong>
-            {order.shippingAddress.address}, {order.shippingAddress.city}{' '}
-            {order.shippingAddress.postalCode},{' '}
-            {order.shippingAddress.country.label.toUpperCase()}
+            {userOrder.shippingAddress.address},{' '}
+            {userOrder.shippingAddress.city}{' '}
+            {userOrder.shippingAddress.postalCode},{' '}
+            {userOrder.shippingAddress.country.label.toUpperCase()}
           </div>
-          {order.isDelivered ? (
+          {userOrder.isDelivered ? (
             <div className={classes.statusSuccess}>
               Delidery on &nbsp;
-              <Moment format="DD/MM/YY">{order.deliveredAt}</Moment>
+              <Moment format="DD/MM/YY">{userOrder.deliveredAt}</Moment>
             </div>
           ) : (
             <div className={classes.statusDanger}>
@@ -87,11 +107,12 @@ const OrderScreen = () => {
           <h2>Payment Method</h2>
           <p>
             <strong>Method:</strong>
-            {order.paymentMethod}
+            {userOrder.paymentMethod}
           </p>
-          {order.isPaid ? (
+          {userOrder.isPaid || success ? (
             <div className={classes.statusSuccess}>
-              Paid on &nbsp;<Moment format="DD/MM/YY">{order.paidAt}</Moment>
+              Paid on &nbsp;
+              <Moment format="DD/MM/YY">{userOrder.isPaid ? userOrder.paidAt : new Date()}</Moment>
             </div>
           ) : (
             <div className={classes.statusDanger}>Not Paid</div>
@@ -100,10 +121,10 @@ const OrderScreen = () => {
         <div className={classes.order}>
           <h2>Order Items</h2>
           <div className={classes.items}>
-            {order.orderItems.length === 0 ? (
+            {userOrder.orderItems.length === 0 ? (
               <p>Order is empty</p>
             ) : (
-              order.orderItems.map((item) => (
+              userOrder.orderItems.map((item) => (
                 <div key={item.product} className={classes.item}>
                   <Image
                     src={item.image}
@@ -139,30 +160,30 @@ const OrderScreen = () => {
             </div>
             <div>
               <label>Shipping :</label>
-              <p>{order.shippingPrice} €</p>
+              <p>{userOrder.shippingPrice} €</p>
             </div>
             <div>
               <label>Tax :</label>
-              <p>{order.taxPrice} €</p>
+              <p>{userOrder.taxPrice} €</p>
             </div>
             <div>
               <label>Total :</label>
               <p className={classes.total}>
-                {new Intl.NumberFormat().format(order.totalPrice)} €
+                {new Intl.NumberFormat().format(userOrder.totalPrice)} €
               </p>
             </div>
           </div>
         </div>
         <div className={classes.paymentBtn}>
-          {!order.isPaid ? (
-            order.paymentMethod === 'PayPal' ? (
+          {!userOrder.isPaid && !success ? (
+            userOrder.paymentMethod === 'PayPal' ? (
               <div className={classes.paypalBtn}>Paypall Button</div>
             ) : (
               <div className={classes.stripeBtn}>
                 <StripeButton
-                  price={order.totalPrice}
-                  email={order.shippingAddress.email}
-                  orderId={order._id}
+                  price={userOrder.totalPrice}
+                  email={userOrder.shippingAddress.email}
+                  orderId={userOrder._id}
                 />
                 <p>Visa 4242424242424242 </p>
                 <p>Any 3 digits Any future date</p>
@@ -171,8 +192,8 @@ const OrderScreen = () => {
           ) : (
             <>
               <PDFDownloadLink
-                document={<OrderPdfScreen order={order} />}
-                fileName={`Lineshop invoice${order._id}`}
+                document={<OrderPdfScreen order={userOrder} />}
+                fileName={`Lineshop invoice${userOrder._id}`}
               >
                 {({ loading }) =>
                   loading ? (

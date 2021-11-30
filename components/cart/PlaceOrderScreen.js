@@ -10,6 +10,7 @@ import CheckoutSteps from './CheckoutSteps';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { newOrder } from '../../redux/actions/orderActions';
+import { saveOrder } from '../../redux/actions/cartActions';
 
 import Cookies from 'js-cookie';
 
@@ -18,26 +19,33 @@ const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.loadedUser);
-  const { cartItems, shippingAddress, paymentMethod } = useSelector(
+  const { cartItems, shippingAddress, paymentMethod, placeOrder } = useSelector(
     (state) => state.cart
   );
   const { success, error, order } = useSelector((state) => state.newOrder);
+
+  useEffect(() => {
+    Cookies.set(
+      'placeOrder',
+      JSON.stringify(placeOrder),
+      {
+        expires: 1 / 24,
+      },
+      { sameSite: 'strict' }
+    );
+  }, [placeOrder]);
 
   useEffect(() => {
     if (error) {
       toast.error(error);
     }
     if (success && order) {
-      if (!user) {
-        Cookies.set(
-          'placeOrder',
-          JSON.stringify(order._id),
-          { expires: 1 / 24 },
-          { sameSite: 'strict' }
-        );
-      }
       toast.success(success);
-      router.push(`/auth/${order._id}`);
+      if (!user) {
+        router.push('/cart/userOrder');
+      } else {
+        router.push(`/auth/${order._id}`);
+      }
     }
   }, [error, success, order]);
 
@@ -70,9 +78,10 @@ const PlaceOrderScreen = () => {
       totalPrice: totalPrice,
     };
 
+
     dispatch(newOrder(orderPayload));
 
-    
+    dispatch(saveOrder(orderPayload))
   };
 
   if (!cartItems || !shippingAddress || !paymentMethod) return <Spinner />;

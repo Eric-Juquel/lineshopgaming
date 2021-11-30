@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import PlaceOrderScreen from '../../components/cart/PlaceOrderScreen';
+import OrderScreen from '../../components/order/OrderScreen';
 
 import { setCartFromStorage } from '../../redux/actions/cartActions';
 import { wrapper } from '../../redux/store';
@@ -8,10 +8,10 @@ export default function placeOrderPage() {
   return (
     <>
       <Head>
-        <title>LineShop | Place Order</title>
-        <meta name="description" content="Place Order" />
+        <title>LineShop | User Order</title>
+        <meta name="description" content="User Order" />
       </Head>
-      <PlaceOrderScreen />
+      <OrderScreen />
     </>
   );
 }
@@ -41,6 +41,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return {
           redirect: {
             destination: '/cart/payment',
+            permanent: false,
+          },
+        };
+      }
+      else if (!cookies.placeOrder) {
+        return {
+          redirect: {
+            destination: '/cart/placeOrder',
             permanent: false,
           },
         };

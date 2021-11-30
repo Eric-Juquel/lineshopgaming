@@ -90,7 +90,7 @@ export const payOrder = (orderId, paymentResult) => async (dispatch) => {
       },
     };
     const { data } = await axios.patch(
-      `/api/auth/orders/${orderId}/pay`,
+      `/api/orders/${orderId}/pay`,
       paymentResult,
       config
     );

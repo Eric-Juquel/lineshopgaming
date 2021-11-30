@@ -5,6 +5,7 @@ import {
   CART_SAVE_PAYMENT_METHOD,
   CART_CLEAR_ITEMS,
   SET_CART,
+  CART_SAVE_ORDER,
 } from '../constants/cartConstants';
 
 import Cookies from 'js-cookie';
@@ -19,12 +20,16 @@ const shippingAddressFromStorage = Cookies.get('shippingAddress')
 const paymentMethodFromStorage = Cookies.get('paymentMethod')
 ? JSON.parse(Cookies.get('paymentMethod'))
 : null;
+const placeOrderFromStorage = Cookies.get('placeOrder')
+? JSON.parse(Cookies.get('placeOrder'))
+: null;
 
 export const cartReducer = (
   state = {
     cartItems: cartItemsFromStorage,
     shippingAddress: shippingAddressFromStorage,
     paymentMethod: paymentMethodFromStorage,
+    placeOrder: placeOrderFromStorage
   },
   action
 ) => {
@@ -65,6 +70,11 @@ export const cartReducer = (
       return {
         ...state,
         paymentMethod: action.payload,
+      };
+    case CART_SAVE_ORDER:
+      return {
+        ...state,
+        placeOrder: action.payload,
       };
     case CART_CLEAR_ITEMS:
       return {

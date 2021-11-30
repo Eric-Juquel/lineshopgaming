@@ -66,9 +66,10 @@ export const createOrder = async (req, res) => {
 };
 
 // @desc   Pay order
-// @route  PATCH  /api/auth/orders/:orderId/pay
-// @acces  Private
+// @route  PATCH  /api/orders/:orderID/pay
+// @acces  Public
 export const payOrder = async (req, res, next) => {
+
   const order = await Order.findById(req.query.orderID);
 
   if (!order) {

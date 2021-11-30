@@ -6,6 +6,8 @@ import { getOrderDetails } from '../../redux/actions/orderActions';
 
 export default function userOrderDetailPage() {
   return <OrderScreen />;
+
+ 
 }
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>

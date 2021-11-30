@@ -20,6 +20,7 @@ const reducer = (state, action) => {
     };
     if (state.loadedUser) nextState.loadedUser = state.loadedUser;
     if (state.cart) nextState.cart = state.cart;
+    if (state.newOrder) nextState.newOrder = state.newOrder
 
     return nextState;
   } else {

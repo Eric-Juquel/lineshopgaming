@@ -5,6 +5,7 @@ import {
   CART_SAVE_SHIPPING_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
   SET_CART,
+  CART_SAVE_ORDER,
 } from '../constants/cartConstants';
 import Cookies from 'js-cookie';
 
@@ -49,6 +50,13 @@ export const saveShippingAddress = (data) => (dispatch) => {
 export const savePaymentMethod = (data) => (dispatch) => {
   dispatch({
     type: CART_SAVE_PAYMENT_METHOD,
+    payload: data,
+  });
+};
+
+export const saveOrder = (data) => (dispatch) => {
+  dispatch({
+    type: CART_SAVE_ORDER,
     payload: data,
   });
 };
