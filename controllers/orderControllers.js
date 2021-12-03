@@ -9,7 +9,18 @@ export const userOrders = async (req, res) => {
   const orders = await Order.find({ user: req.user._id });
   res.status(200).json({
     success: true,
-    orders,
+    orders: orders.reverse(),
+  });
+};
+
+// @desc   Get all orders
+// @route  GET /api/admin/orders
+// @acces  Admin
+export const getOrders = async (req, res) => {
+  const orders = await Order.find({}).populate('user', 'id firstName lastName');
+  res.json({
+    success: true,
+    orders: orders.reverse(),
   });
 };
 
@@ -69,7 +80,6 @@ export const createOrder = async (req, res) => {
 // @route  PATCH  /api/orders/:orderID/pay
 // @acces  Public
 export const payOrder = async (req, res, next) => {
-
   const order = await Order.findById(req.query.orderID);
 
   if (!order) {
