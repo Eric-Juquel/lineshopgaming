@@ -1,6 +1,5 @@
 import Head from 'next/head';
-import InvoiceScreen from '../../components/cart/PlaceOrderScreen';
-
+import InvoiceScreen from '../../components/order/InvoiceScreen';
 
 import { setCartFromStorage } from '../../redux/actions/cartActions';
 import { wrapper } from '../../redux/store';
@@ -17,4 +16,8 @@ export default function invoicePage() {
   );
 }
 
-
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async ({req}) => {
+    await store.dispatch(setCartFromStorage());
+  }
+);

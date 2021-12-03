@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 import Link from 'next/link';
 import Image from 'next/image';
+import {useRouter} from 'next/router'
 
 import classes from './OrderScreen.module.scss';
 
@@ -13,11 +14,17 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 
 import OrderPdfScreen from './OrderPdfScreen';
 
-// import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { IoMdFastforward } from 'react-icons/io';
+import { CART_CLEAR_ITEMS } from '../../redux/constants/cartConstants';
+import { ORDER_CREATE_RESET } from '../../redux/constants/orderConstants';
 
 const OrderScreen = () => {
+const router= useRouter()
+const dispatch = useDispatch()
+
   const [mounted, setMounted] = useState(false);
   const [userOrder, setUserOrder] = useState(null);
   const [itemsPrice, setItemsPrice] = useState(0);
@@ -44,7 +51,18 @@ const OrderScreen = () => {
         )
       );
     }
-  }, [order, newOrder, userOrder]);
+    if(success && !user) {
+      router.push('/cart/invoice');
+    }
+    if(success && user) {
+      dispatch({ type: CART_CLEAR_ITEMS });
+      dispatch({ type: ORDER_CREATE_RESET });
+      Cookies.remove('cartItems')
+      Cookies.remove('placeOrder')
+      router.push(`/auth/${order._id}`);
+    }
+    
+  }, [order, newOrder, userOrder, success, user]);
 
   const payHandler = () => {
     console.log('success');
@@ -63,7 +81,6 @@ const OrderScreen = () => {
 
   if (!mounted) return null;
 
-  if(!userOrder) return <Spinner />
 
   return (
     <div className={classes.container}>

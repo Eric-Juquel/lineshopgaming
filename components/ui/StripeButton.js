@@ -1,26 +1,16 @@
-import { useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 
 import StripeCheckout from 'react-stripe-checkout';
-import Modal from './Modal';
-import { PDFViewer } from '@react-pdf/renderer';
-import OrderPdfScreen from '../order/OrderPdfScreen';
-import classes from '../order/OrderScreen.module.scss';
 
 import { useDispatch } from 'react-redux';
 import { payOrder } from '../../redux/actions/orderActions';
-
-import Cookies from 'js-cookie';
 import { CART_CLEAR_ITEMS } from '../../redux/constants/cartConstants';
 import { ORDER_CREATE_RESET } from '../../redux/constants/orderConstants';
 
 const StripeButton = ({ price, email, order }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-
-  // Modal
-  const modalRef = useRef();
 
   const [session] = useSession();
 
@@ -30,25 +20,6 @@ const StripeButton = ({ price, email, order }) => {
 
   const onToken = (token) => {
     dispatch(payOrder(order._id));
-
-    if (session) {
-      dispatch({ type: CART_CLEAR_ITEMS });
-      dispatch({ type: ORDER_CREATE_RESET });
-      router.push(`/auth/${order._id}`);
-    } else {
-      modalRef.current.openModal();
-    }
-  };
-
-  const backHomeHandler = () => {
-    router.push('/');
-    Cookies.remove('cartItems');
-    Cookies.remove('shippingAddress');
-    Cookies.remove('paymentMethod');
-    Cookies.remove('placeOrder');
-    dispatch({ type: CART_CLEAR_ITEMS });
-    dispatch({ type: ORDER_CREATE_RESET });
-    modalRef.current.closeModal();
   };
 
   return (
@@ -66,20 +37,6 @@ const StripeButton = ({ price, email, order }) => {
         token={onToken}
         stripeKey={publishableKey}
       />
-      <Modal ref={modalRef} height="100%" wifth="100%">
-        <div className={classes.invoice}>
-          <PDFViewer width="80%" height="80%">
-            <OrderPdfScreen order={order} />
-          </PDFViewer>
-          <div className={classes.quitInvoice}>
-            <h5>
-              Download or print this invoice before leaving this page, you won't
-              be able to do it again{' '}
-            </h5>
-            <button onClick={backHomeHandler}>Back Home</button>
-          </div>
-        </div>
-      </Modal>
     </>
   );
 };
