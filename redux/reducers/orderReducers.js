@@ -21,6 +21,10 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_RESET,
+  CLEAR_ERRORS,
+  ORDER_DELETE_REQUEST,
+  ORDER_DELETE_SUCCESS,
+  ORDER_DELETE_FAIL,
 } from '../constants/orderConstants';
 
 export const newOrderReducer = (state = {}, action) => {
@@ -42,6 +46,13 @@ export const newOrderReducer = (state = {}, action) => {
       };
     case ORDER_CREATE_RESET:
       return {};
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
     default:
       return state;
   }
@@ -64,6 +75,11 @@ export const orderDetailsReducer = (state = { order: {} }, action) => {
         loading: false,
         error: action.payload,
       };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }
@@ -79,7 +95,7 @@ export const orderPayReducer = (state = {}, action) => {
       return {
         loading: false,
         success: true,
-        message: action.payload.message
+        message: action.payload.message,
       };
     case ORDER_PAY_FAIL:
       return {
@@ -88,6 +104,11 @@ export const orderPayReducer = (state = {}, action) => {
       };
     case ORDER_PAY_RESET:
       return {};
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }
@@ -102,7 +123,7 @@ export const orderDeliverReducer = (state = {}, action) => {
     case ORDER_DELIVER_SUCCESS:
       return {
         loading: false,
-        success: true,
+        success: action.payload,
       };
     case ORDER_DELIVER_FAIL:
       return {
@@ -111,6 +132,11 @@ export const orderDeliverReducer = (state = {}, action) => {
       };
     case ORDER_DELIVER_RESET:
       return {};
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }
@@ -136,12 +162,17 @@ export const userOrdersReducer = (state = { orders: [] }, action) => {
       return {
         orders: [],
       };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }
 };
 
-export const orderListReducer = (state = { orders: [] }, action) => {
+export const ordersListReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST_REQUEST:
       return {
@@ -153,6 +184,32 @@ export const orderListReducer = (state = { orders: [] }, action) => {
         orders: action.payload,
       };
     case ORDER_LIST_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const orderDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_DELETE_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_DELETE_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload,
+      };
+    case ORDER_DELETE_FAIL:
       return {
         loading: false,
         error: action.payload,

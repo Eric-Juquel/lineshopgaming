@@ -1,0 +1,18 @@
+import nc from 'next-connect';
+import dbConnect from '../../../../../config/dbConnect';
+
+import { updateOrderToDelivered} from '../../../../../controllers/orderControllers';
+
+import {
+  isAuthenticatedUser,
+  authorizeRoles,
+} from '../../../../../middlewares/auth';
+import onError from '../../../../../middlewares/errors';
+
+const handler = nc({ onError });
+
+dbConnect();
+
+handler.use(isAuthenticatedUser, authorizeRoles('admin')).put(updateOrderToDelivered);
+
+export default handler;

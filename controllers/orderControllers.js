@@ -7,6 +7,7 @@ import ErrorHandler from '../utils/errorHandler';
 // @acces  Private
 export const userOrders = async (req, res) => {
   const orders = await Order.find({ user: req.user._id });
+
   res.status(200).json({
     success: true,
     orders: orders.reverse(),
@@ -18,6 +19,7 @@ export const userOrders = async (req, res) => {
 // @acces  Admin
 export const getOrders = async (req, res) => {
   const orders = await Order.find({}).populate('user', 'id firstName lastName');
+
   res.json({
     success: true,
     orders: orders.reverse(),
@@ -30,10 +32,8 @@ export const getOrders = async (req, res) => {
 export const orderDetails = async (req, res) => {
   const order = await Order.findById(req.query.orderID).populate(
     'user',
-    'firstName lastName email'
+    'firstName lastName email role'
   );
-
-  console.log(req.query.id);
 
   res.status(200).json({
     success: true,
@@ -83,7 +83,7 @@ export const payOrder = async (req, res, next) => {
   const order = await Order.findById(req.query.orderID);
 
   if (!order) {
-    return next(new ErrorHandler('Order Not Found', 403));
+    return next(new ErrorHandler('Order Not Found', 404));
   }
 
   const result = await Order.updateOne(
@@ -91,9 +91,48 @@ export const payOrder = async (req, res, next) => {
     {
       $set: {
         isPaid: true,
-        payedAt: new Date(),
+        paidAt: new Date(),
       },
     }
   );
   res.status(201).json({ message: 'Order Paid' });
+};
+
+
+
+// @desc   Update order to delivered
+// @route  PUT /api/admin/orders/:id/deliver
+// @acces  Private/Admin
+export const updateOrderToDelivered = async (req, res, next) => {
+  const order = await Order.findById(req.query.orderID);
+
+  if (!order) {
+    return next(new ErrorHandler('Order Not Found', 404));
+  }
+
+  const result = await Order.updateOne(
+    { _id: order._id },
+    {
+      $set: {
+        isDelivered: true,
+        deliveredAt: Date.now(),
+      },
+    }
+  );
+
+  res.status(201).json({ message: 'Order Delivered' });
+};
+
+// @desc   Delete a order
+// @route  DELETE  /api/admin/orders/:id/delete
+// @acces  Private/Admin
+export const deleteOrder = async (req, res) => {
+  const order = await Order.findById(req.query.orderID);
+
+  if (!order) {
+    return next(new ErrorHandler('Order Not Found', 404));
+  }
+
+  await order.remove();
+  res.status(200).json({ message: 'Order removed' });
 };

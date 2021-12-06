@@ -6,15 +6,11 @@ import { getOrderDetails } from '../../redux/actions/orderActions';
 
 export default function userOrderDetailPage() {
   return <OrderScreen />;
-
- 
 }
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params }) => {
       const session = await getSession({ req });
-
-      
 
       if (!session) {
         return {
@@ -25,7 +21,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(getOrderDetails(req.headers.cookie, req, params.orderID));
+      await store.dispatch(
+        getOrderDetails(req.headers.cookie, req, params.orderID)
+      );
 
       return {
         props: { session },

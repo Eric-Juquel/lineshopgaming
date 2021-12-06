@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 import Link from 'next/link';
 import Image from 'next/image';
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router';
 
 import classes from './OrderScreen.module.scss';
 
 // import { PayPalButton } from 'react-paypal-button-v2';
 import StripeButton from '../ui/StripeButton';
 import Spinner from '../../components/ui/Spinner';
+import { IoMdFastforward } from 'react-icons/io';
 
 import { PDFDownloadLink } from '@react-pdf/renderer';
 
@@ -17,13 +18,18 @@ import OrderPdfScreen from './OrderPdfScreen';
 import Cookies from 'js-cookie';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { IoMdFastforward } from 'react-icons/io';
+import { deliverOrder, deleteOrder } from '../../redux/actions/orderActions';
+
 import { CART_CLEAR_ITEMS } from '../../redux/constants/cartConstants';
-import { ORDER_CREATE_RESET } from '../../redux/constants/orderConstants';
+import {
+  ORDER_CREATE_RESET,
+  ORDER_DELIVER_RESET,
+} from '../../redux/constants/orderConstants';
+import { toast } from 'react-toastify';
 
 const OrderScreen = () => {
-const router= useRouter()
-const dispatch = useDispatch()
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const [mounted, setMounted] = useState(false);
   const [userOrder, setUserOrder] = useState(null);
@@ -34,7 +40,16 @@ const dispatch = useDispatch()
 
   const { order: newOrder } = useSelector((state) => state.newOrder);
 
-  const { success } = useSelector((state) => state.orderPay);
+  const { success, loading } = useSelector((state) => state.orderPay);
+  const { loading: loadingDeliver, success: successDeliver } = useSelector(
+    (state) => state.orderDeliver
+  );
+
+  const { success: successDelete, error: errorDelete } = useSelector(
+    (state) => state.orderDelete
+  );
+
+  const { user: loadedUser } = useSelector((state) => state.loadedUser);
 
   useEffect(() => {
     if (order) {
@@ -51,36 +66,58 @@ const dispatch = useDispatch()
         )
       );
     }
-    if(success && !user) {
+    if (success && !user) {
       router.push('/cart/invoice');
     }
-    if(success && user) {
+    if (success && user) {
       dispatch({ type: CART_CLEAR_ITEMS });
       dispatch({ type: ORDER_CREATE_RESET });
-      Cookies.remove('cartItems')
-      Cookies.remove('placeOrder')
+      Cookies.remove('cartItems');
+      Cookies.remove('placeOrder');
       router.push(`/auth/${order._id}`);
     }
-    
-  }, [order, newOrder, userOrder, success, user]);
+
+    if (successDeliver) {
+      toast.success(successDeliver);
+      dispatch({ type: ORDER_DELIVER_RESET });
+      router.push(`/auth/${order._id}`);
+    }
+
+    if (successDelete) {
+      router.back();
+      toast.success(successDelete);
+    }
+
+    if (errorDelete) {
+      toast.error(errorDelete);
+    }
+  }, [
+    order,
+    newOrder,
+    userOrder,
+    success,
+    user,
+    successDeliver,
+    successDelete,
+    errorDelete,
+  ]);
 
   const payHandler = () => {
     console.log('success');
   };
 
-  const deliverHandler = () => {
-    console.log('success');
+  const deliverHandler = (orderID) => {
+    dispatch(deliverOrder(orderID));
   };
 
-  const deleteHandler = () => {
-    console.log('deleted');
+  const deleteHandler = (orderID) => {
+    dispatch(deleteOrder(orderID));
   };
 
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
-
 
   return (
     <div className={classes.container}>
@@ -117,8 +154,7 @@ const dispatch = useDispatch()
             </div>
           ) : (
             <div className={classes.statusDanger}>
-              Not delivered
-              {/* {loadingDeliver ? <Spinner /> : 'Not Delivered'} */}
+              {loadingDeliver ? <Spinner /> : 'Not Delivered'}
             </div>
           )}
         </div>
@@ -131,7 +167,9 @@ const dispatch = useDispatch()
           {userOrder.isPaid || success ? (
             <div className={classes.statusSuccess}>
               Paid on &nbsp;
-              <Moment format="DD/MM/YY">{userOrder.isPaid ? userOrder.paidAt : new Date()}</Moment>
+              <Moment format="DD/MM/YY">
+                {userOrder.isPaid ? userOrder.paidAt : new Date()}
+              </Moment>
             </div>
           ) : (
             <div className={classes.statusDanger}>Not Paid</div>
@@ -194,7 +232,7 @@ const dispatch = useDispatch()
           </div>
         </div>
         <div className={classes.paymentBtn}>
-          {!userOrder.isPaid  ? (
+          {!userOrder.isPaid ? (
             userOrder.paymentMethod === 'PayPal' ? (
               <div className={classes.paypalBtn}>Paypall Button</div>
             ) : (
@@ -214,32 +252,35 @@ const dispatch = useDispatch()
                 document={<OrderPdfScreen order={userOrder} />}
                 fileName={`Lineshop invoice${userOrder._id}`}
               >
-                {({ loading }) =>
+                {/* {({ loading }) =>
                   loading ? (
-                    'Loading'
+                    <div className={classes.download}>Loading</div>
                   ) : (
                     <div className={classes.download}>Download Order</div>
                   )
-                }
+                } */}
+                <div className={classes.download}>Download Order</div>
               </PDFDownloadLink>
 
-              {user && user.isAdmin && (
+              {loadedUser && loadedUser.role === 'admin' && (
                 <div className={classes.adminBtn}>
                   <button
-                    className={classes.payBtn}
-                    disabled={order.isPaid}
-                    onClick={payHandler}
+                    className={classes.backBtn}
+                    onClick={() => router.back()}
                   >
-                    Paid
+                    Back
                   </button>
                   <button
                     className={classes.deliverBtn}
                     disabled={order.isDelivered}
-                    onClick={deliverHandler}
+                    onClick={() => deliverHandler(order._id)}
                   >
                     Delivered
                   </button>
-                  <button className={classes.deleteBtn} onClick={deleteHandler}>
+                  <button
+                    className={classes.deleteBtn}
+                    onClick={() => deleteHandler(order._id)}
+                  >
                     Delete
                   </button>
                 </div>

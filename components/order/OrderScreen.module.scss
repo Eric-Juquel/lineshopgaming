@@ -326,14 +326,17 @@
   display: flex;
   justify-content: space-evenly;
 
-  .payBtn,
+  .backBtn,
   .deliverBtn,
   .deleteBtn {
     width: 8rem;
     height: 3rem;
   }
 
-  .payBtn,
+  .backBtn {
+    @include btnFlat($color-blue-mid);
+  }
+
   .deliverBtn {
     @include btnFlat($color-success);
   }
