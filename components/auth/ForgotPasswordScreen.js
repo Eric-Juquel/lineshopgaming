@@ -41,7 +41,7 @@ const ForgotPasswordScreen = () => {
   return (
     <div className={classes.container}>
       <h1>Forgot Password</h1>
-      <p >This component use my mailtrap.io testing on demo and will not send you any email</p>
+      <p >This component use my mailtrap.io testing on demo and will not send you any email.</p>
       <div className={classes.message}>{error && <p>{error}</p>}</div>
       <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
         <div className={classes.formGroup}>
