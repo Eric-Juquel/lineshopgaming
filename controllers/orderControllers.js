@@ -17,11 +17,24 @@ export const userOrders = async (req, res) => {
 // @desc   Get all orders
 // @route  GET /api/admin/orders
 // @acces  Admin
-export const getOrders = async (req, res) => {
-  const orders = await Order.find({}).populate('user', 'id firstName lastName');
+export const allOrders = async (req, res) => {
+  const resPerPage = 12;
+  const currentPage = Number(req.query.page) || 1;
+  const ordersCount = await Order.countDocuments();
+
+  const orders = await Order.find()
+    .populate('user', 'id firstName lastName')
+    .limit(resPerPage)
+    .skip(resPerPage * (currentPage - 1));
+
+  console.log('orders', orders);
 
   res.json({
     success: true,
+    ordersCount,
+    resPerPage,
+    currentPage,
+    numOfPages: Math.ceil(ordersCount / resPerPage),
     orders: orders.reverse(),
   });
 };
@@ -97,8 +110,6 @@ export const payOrder = async (req, res, next) => {
   );
   res.status(201).json({ message: 'Order Paid' });
 };
-
-
 
 // @desc   Update order to delivered
 // @route  PUT /api/admin/orders/:id/deliver

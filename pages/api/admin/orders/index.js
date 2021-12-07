@@ -1,7 +1,7 @@
 import nc from 'next-connect';
 import dbConnect from '../../../../config/dbConnect';
 
-import { getOrders } from '../../../../controllers/orderControllers';
+import { allOrders } from '../../../../controllers/orderControllers';
 
 import {
   isAuthenticatedUser,
@@ -13,6 +13,6 @@ const handler = nc({ onError });
 
 dbConnect();
 
-handler.use(isAuthenticatedUser, authorizeRoles('admin')).get(getOrders);
+handler.use(isAuthenticatedUser, authorizeRoles('admin')).get(allOrders);
 
 export default handler;

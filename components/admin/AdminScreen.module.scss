@@ -1,0 +1,97 @@
+@import '../../styles/sass/variables';
+@import '../../styles/sass/mixins';
+
+.container {
+  width: 90%;
+  height: 100%;
+  overflow-y: auto;
+
+  @include container;
+
+  @media screen and (max-width: $bp-mobile-land) {
+    padding: 1rem;
+  }
+
+  h1 {
+    height: 10%;
+    text-align: start;
+
+    @media screen and (min-width: $bp-mobile-vert) and (max-width: $bp-mobile-land) {
+      font-size: 2rem;
+    }
+  }
+}
+
+.orders {
+  height: 80%;
+}
+
+.orderTable {
+  @include tableScroll;
+}
+
+.row,
+.entitled {
+  width: 100%;
+  display: grid;
+  grid-template-columns: [id-start]24%[id-end name-start] 19% [name-end date-start]14%[date-end total-start]15%[total-end paid-start]14%[paid-end deliver-start]14%[deliver-end];
+  // grid-template-rows: repeat(auto-fit, 5rem);
+
+  justify-items: stretch;
+
+  .cell {
+    @include tableCel;
+    @include flexCenter;
+  }
+}
+
+.entitled {
+  border-bottom: 1px solid $color-purple-mid;
+  color: $color-blue-light;
+
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+.row {
+  border-top: 1px solid $color-purple-mid;
+
+  &:hover {
+    & .cell {
+      background-color: rgba($color-secondary, 0.7);
+    }
+  }
+
+  .cell {
+    svg {
+      fill: $color-danger;
+      margin: auto;
+    }
+
+    button {
+      width: 15rem;
+      height: 3rem;
+      margin: auto;
+      @include btnFlat;
+
+      @media screen and (max-width: $bp-mobile) {
+        width: 6rem;
+      }
+
+      svg {
+        fill: $color-yellow-light;
+        font-size: 2.5rem;
+        @media screen and (min-width: $bp-mobile) {
+          display: none;
+        }
+      }
+
+      p {
+        @media screen and (max-width: $bp-mobile) {
+          display: none;
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import classes from './Paginate.module.scss';
 
 const Paginate = ({
+  items,
   pages,
   page,
   itemsPerPage,
@@ -11,7 +12,6 @@ const Paginate = ({
   keyword = '',
   scrollToTop,
 }) => {
-  
   return (
     pages > 1 && (
       <div className={classes.pages}>
@@ -19,11 +19,15 @@ const Paginate = ({
           <Link
             key={p + 1}
             href={
-              !isAdmin
-                ? keyword
-                  ? `/products/search/${keyword}/?page=${p + 1}`
-                  : `/products?page=${p + 1}`
-                : `/admin/productlist?page=${p + 1}`
+              items === 'products'
+                ? !isAdmin
+                  ? keyword
+                    ? `/products/search/${keyword}/?page=${p + 1}`
+                    : `/products?page=${p + 1}`
+                  : `/admin/productlist?page=${p + 1}`
+                : items === 'orders'
+                ? `/admin/orders?page=${p + 1}`
+                : '/'
             }
           >
             <a

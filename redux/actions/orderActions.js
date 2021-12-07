@@ -165,28 +165,41 @@ export const userOrders = (authCookie, req) => async (dispatch) => {
   }
 };
 
-export const listOrders = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: ORDER_LIST_REQUEST,
-    });
+export const listOrders =
+  (authCookie, req, page = 1) =>
+  async (dispatch) => {
+    try {
+      // dispatch({
+      //   type: ORDER_LIST_REQUEST,
+      // });
 
-    const { data } = await axios.get(`/api/admin/orders`);
+      const { origin } = absoluteUrl(req);
 
-    dispatch({
-      type: ORDER_LIST_SUCCESS,
-      payload: data.orders,
-    });
-  } catch (error) {
-    dispatch({
-      type: ORDER_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const config = {
+        headers: {
+          cookie: authCookie,
+        },
+      };
+
+      const { data } = await axios.get(
+        `${origin}/api/admin/orders?page=${page}`,
+        config
+      );
+
+      dispatch({
+        type: ORDER_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ORDER_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const deleteOrder = (id) => async (dispatch) => {
   try {
@@ -194,12 +207,11 @@ export const deleteOrder = (id) => async (dispatch) => {
       type: ORDER_DELETE_REQUEST,
     });
 
-    const {data} = await axios.delete(`/api/admin/orders/${id}/delete`);
-
+    const { data } = await axios.delete(`/api/admin/orders/${id}/delete`);
 
     dispatch({
       type: ORDER_DELETE_SUCCESS,
-      payload:data.message
+      payload: data.message,
     });
   } catch (error) {
     dispatch({

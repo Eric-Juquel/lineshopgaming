@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import Footer from './footer/Footer';
 import Header from './header/Header';
-import ShootingStars from './ShootingStars';
+// import ShootingStars from './ShootingStars';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CookieConsent, { Cookies } from "react-cookie-consent";
