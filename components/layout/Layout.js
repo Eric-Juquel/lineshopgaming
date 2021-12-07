@@ -6,7 +6,7 @@ import Header from './header/Header';
 import ShootingStars from './ShootingStars';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import CookieConsent, { Cookies } from "react-cookie-consent";
+import CookieConsent, { Cookies } from "react-cookie-consent";
 
 const Layout = (props) => {
   //   const [session] = useSession();
@@ -27,7 +27,7 @@ const Layout = (props) => {
         <Header />
         <ToastContainer position="bottom-right" style={{ fontSize: '1.8rem' }} />
         <main className="main">{props.children}</main>
-        {/* <CookieConsent  style={{fontSize:"20px"}}>This website uses cookies to enhance the user experience.</CookieConsent> */}
+        <CookieConsent  style={{fontSize:"20px"}}>This website uses cookies to enhance the user experience.</CookieConsent>
         <Footer />
       </div>
     </>

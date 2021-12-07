@@ -19,6 +19,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <meta name="viewport" content="initial-scale=1, width=device-width" />
           <meta property="og:image" content="/images/logo/logo2.png" />
           <link rel="icon" href="/logo111.ico" />
+          <link rel="stylesheet" href='https://fonts.googleapis.com/css2?family=Audiowide&family=Montserrat&family=Roboto&display=swap'/>
         </Head>
         <Component {...pageProps} />
       </Layout>
