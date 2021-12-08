@@ -27,8 +27,6 @@ export const allOrders = async (req, res) => {
     .limit(resPerPage)
     .skip(resPerPage * (currentPage - 1));
 
-  console.log('orders', orders);
-
   res.json({
     success: true,
     ordersCount,
@@ -42,11 +40,22 @@ export const allOrders = async (req, res) => {
 // @desc   Get order by ID
 // @route  GET /api/auth/orders/:id
 // @acces  Private
-export const orderDetails = async (req, res) => {
+export const orderDetails = async (req, res, next) => {
+  const authUser = req.user;
+
   const order = await Order.findById(req.query.orderID).populate(
     'user',
-    'firstName lastName email role'
+    'firstName lastName email role _id'
   );
+
+  if (!order) {
+    return next(new ErrorHandler('Order not found ', 404));
+  }
+
+  if (authUser.role !== 'admin' && authUser.email !== order.user.email) {
+    console.log('Error');
+    return next(new ErrorHandler('User not authorize for this order', 403));
+  }
 
   res.status(200).json({
     success: true,

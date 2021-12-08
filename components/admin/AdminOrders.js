@@ -4,10 +4,9 @@ import Moment from 'react-moment';
 import Link from 'next/link';
 import { GiSplitCross } from 'react-icons/gi';
 
-const AdminOrders = ({ orders, ref }) => {
+const AdminOrders = ({ orders}) => {
   const [sort, setSort] = useState('');
 
-  console.log('orders', orders);
 
   return (
     <div className={classes.orderTable}>
@@ -30,7 +29,7 @@ const AdminOrders = ({ orders, ref }) => {
         </h4>
       </div>
 
-      <div className={classes.items} ref={ref}>
+      <div className={classes.items} >
         {orders.length === 0 ? (
           <h4>No Current Order</h4>
         ) : (

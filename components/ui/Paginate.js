@@ -3,7 +3,7 @@ import Link from 'next/link';
 import classes from './Paginate.module.scss';
 
 const Paginate = ({
-  items,
+  label,
   pages,
   page,
   itemsPerPage,
@@ -19,13 +19,13 @@ const Paginate = ({
           <Link
             key={p + 1}
             href={
-              items === 'products'
-                ? !isAdmin
-                  ? keyword
-                    ? `/products/search/${keyword}/?page=${p + 1}`
-                    : `/products?page=${p + 1}`
-                  : `/admin/productlist?page=${p + 1}`
-                : items === 'orders'
+              label === 'products'
+                ? keyword
+                  ? `/products/search/${keyword}/?page=${p + 1}`
+                  : `/products?page=${p + 1}`
+                : label === 'productsList'
+                ? `/admin/products?page=${p + 1}`
+                : label === 'orders'
                 ? `/admin/orders?page=${p + 1}`
                 : '/'
             }

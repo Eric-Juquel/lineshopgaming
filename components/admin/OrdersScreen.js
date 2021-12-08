@@ -6,9 +6,8 @@ import Spinner from '../ui/Spinner';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { listOrders } from '../../redux/actions/orderActions';
 import { toast } from 'react-toastify';
-import Paginate from '../products/Paginate';
+import Paginate from '../ui/Paginate';
 
 const OrdersScreen = () => {
   const dispatch = useDispatch();

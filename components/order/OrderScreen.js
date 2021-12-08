@@ -26,6 +26,7 @@ import {
   ORDER_DELIVER_RESET,
 } from '../../redux/constants/orderConstants';
 import { toast } from 'react-toastify';
+import ErrorComponent from '../ui/ErrorComponent';
 
 const OrderScreen = () => {
   const router = useRouter();
@@ -34,9 +35,9 @@ const OrderScreen = () => {
   const [mounted, setMounted] = useState(false);
   const [userOrder, setUserOrder] = useState(null);
   const [itemsPrice, setItemsPrice] = useState(0);
+  const [user, setUser] = useState(null);
 
-  const { order } = useSelector((state) => state.orderDetails);
-  const { user } = order;
+  const { order, error } = useSelector((state) => state.orderDetails);
 
   const { order: newOrder } = useSelector((state) => state.newOrder);
 
@@ -53,6 +54,7 @@ const OrderScreen = () => {
 
   useEffect(() => {
     if (order) {
+      setUser(order.user);
       setUserOrder(order);
     }
     if (newOrder) {
@@ -96,7 +98,6 @@ const OrderScreen = () => {
     newOrder,
     userOrder,
     success,
-    user,
     successDeliver,
     successDelete,
     errorDelete,
@@ -118,6 +119,8 @@ const OrderScreen = () => {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
+
+  if (error) return <ErrorComponent err={error} />;
 
   return (
     <div className={classes.container}>

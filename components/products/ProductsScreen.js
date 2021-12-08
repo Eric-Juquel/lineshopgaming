@@ -6,7 +6,7 @@ import classes from './ProductsScreen.module.scss';
 import ProductCard from './ProductCard';
 import Spinner from '../ui/Spinner';
 
-import Paginate from './Paginate';
+import Paginate from '../ui/Paginate';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';

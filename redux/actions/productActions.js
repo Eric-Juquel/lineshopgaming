@@ -213,8 +213,6 @@ export const createProductReview = (productId, review) => async (dispatch) => {
   }
 };
 
-
-
 //Clear Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });

@@ -73,6 +73,7 @@ export const getOrderDetails = (authCookie, req, id) => async (dispatch) => {
       payload: data.order,
     });
   } catch (error) {
+    console.log(error.response.data.message)
     dispatch({
       type: ORDER_DETAILS_FAIL,
       payload:
