@@ -1,16 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 import classes from './AdminScreen.module.scss';
-import AdminProducts from './AdminProducts';
+import AdminTable from './AdminTable';
 import Spinner from '../ui/Spinner';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { clearErrors } from '../../redux/actions/productActions';
 
 import { toast } from 'react-toastify';
 
 const ProductsScreen = () => {
   const dispatch = useDispatch();
-  const containerRef = useRef(null);
 
   const {
     products,
@@ -22,52 +22,37 @@ const ProductsScreen = () => {
     loading,
   } = useSelector((state) => state.productsList);
 
-  const cellsRaw = [
-    { label: 'ID' },
-    { label: 'NAME', value: 'name' },
-    { label: 'DATE', value: 'cretaedAt' },
-    { label: 'PRICE', value: 'price' },
-    { label: 'UPDATED', value: 'updatedAt' },
-    { label: 'ACTIONS' },
-  ];
-
-  const productsRaws = products.map(product => {
-      return {
-          id:{
-              type:"string",
-              value:product._id
-          },
-          name:{
-              type:"string",
-              value:product.name
-          },
-          createdAt:{
-              type:"date",
-              value:product.createdAt
-          },
-          price:{
-              type:"price",
-              value:product.price
-          },
-          updatedAt:{
-              type:"date",
-              value:product.updatedAt
-          },
-          actions:{
-              type:"action",
-              value:["update", "delete"]
-          }
-      }
-  })
-
-  
+  const raws = products.map((product) => {
+    return [
+      { key: 'id', type: 'string', label: 'ID', value: product._id },
+      { key: 'name', type: 'string', label: 'NAME', value: product.name },
+      {
+        key: 'createdAt',
+        type: 'date',
+        label: 'DATE',
+        value: product.createdAt,
+      },
+      { key: 'price', type: 'price', label: 'PRICE', value: product.price },
+      {
+        key: 'updatedAt',
+        type: 'date',
+        label: 'UPDATED',
+        value: product.updatedAt,
+      },
+      {
+        key: 'actions',
+        type: 'action',
+        label: 'ACTIONS',
+        value: ['update', 'delete'],
+      },
+    ];
+  });
 
   const productsTableFormat = {
-    title: 'Products',
-    productsRaws
+    title: 'products',
+    link: 'products',
+    raws,
   };
-
-console.log(productsTableFormat)
 
   useEffect(() => {
     if (error) {
@@ -77,15 +62,14 @@ console.log(productsTableFormat)
   }, [dispatch, error]);
 
   return (
-    <div className={classes.container} ref={containerRef}>
+    <div className={classes.container}>
       <h1>Products</h1>
       <div className={classes.products}>
         {loading ? (
           <Spinner />
         ) : (
-          <AdminProducts
+          <AdminTable
             items={productsTableFormat}
-            cellsRaw={cellsRaw}
             label="productsList"
             resPerPage={resPerPage}
             itemsCount={productsCount}

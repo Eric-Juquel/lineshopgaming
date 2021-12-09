@@ -23,17 +23,16 @@
 }
 
 .orders,
-.products {
+.products,
+.users {
   height: 90%;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.orderTable,
 .itemTable {
-  width:100%;
+  width: 100%;
   @include tableScroll;
 }
 
@@ -70,9 +69,17 @@
   }
 
   .cell {
-    svg {
-      fill: $color-danger;
+    .success {
       margin: auto;
+      color: $color-success;
+    }
+    .danger {
+      margin: auto;
+      color: $color-danger;
+    }
+    .neutral {
+      margin: auto;
+      color: $color-blue-mid;
     }
 
     button {

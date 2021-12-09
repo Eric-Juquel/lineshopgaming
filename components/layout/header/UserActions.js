@@ -106,7 +106,7 @@ const UserActions = ({ user }) => {
                     src={user.avatar.url}
                     alt={`${user.name}'s avatar`}
                     width={55}
-                    height={55}
+                    height={57}
                   />
                 ) : (
                   <div className={classes.noAvatar}>

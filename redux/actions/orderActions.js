@@ -170,9 +170,9 @@ export const listOrders =
   (authCookie, req, page = 1) =>
   async (dispatch) => {
     try {
-      // dispatch({
-      //   type: ORDER_LIST_REQUEST,
-      // });
+      dispatch({
+        type: ORDER_LIST_REQUEST,
+      });
 
       const { origin } = absoluteUrl(req);
 

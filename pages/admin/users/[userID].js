@@ -1,27 +1,27 @@
 import Head from 'next/head';
 import { getSession } from 'next-auth/client';
 
-import OrdersScreen from '../../../components/admin/OrdersScreen';
+import UserDetailsScreen from '../../../components/admin/UserDetailsScreen';
 
-import { listOrders } from '../../../redux/actions/orderActions';
+import { getUserDetails } from '../../../redux/actions/userActions';
 
 import { wrapper } from '../../../redux/store';
 
-export default function AdminOrdersPage() {
+export default function AdminUserssPage() {
   return (
     <>
       <Head>
-        <title>LineShop | Admin Orders</title>
-        <meta name="description" content="All current orders" />
+        <title>LineShop | User Details</title>
+        <meta name="description" content="All Users" />
       </Head>
-      <OrdersScreen />
+      <UserDetailsScreen />
     </>
   );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, query }) => {
+    async ({ req, params }) => {
       const session = await getSession({ req });
 
       if (!session) {
@@ -42,7 +42,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(listOrders(req.headers.cookie, req, query.page));
+      await store.dispatch(
+        getUserDetails(req.headers.cookie, req, params.userID)
+      );
 
       return {
         props: { session },

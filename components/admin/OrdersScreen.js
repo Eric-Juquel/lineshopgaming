@@ -1,17 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 import classes from './AdminScreen.module.scss';
-import AdminOrders from './AdminOrders';
 import Spinner from '../ui/Spinner';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import { toast } from 'react-toastify';
-import Paginate from '../ui/Paginate';
+import AdminTable from './AdminTable';
 
 const OrdersScreen = () => {
   const dispatch = useDispatch();
-  const containerRef = useRef(null);
 
   const {
     orders,
@@ -23,36 +21,63 @@ const OrdersScreen = () => {
     loading,
   } = useSelector((state) => state.ordersList);
 
-  useEffect(() => {
-    // dispatch(listOrders());
+  const raws = orders.map((order) => {
+    return [
+      { key: 'id', type: 'string', label: 'ID', value: order._id },
+      {
+        key: 'name',
+        type: 'string',
+        label: 'NAME',
+        value: `${order.user.firstName} ${order.user.lastName}`,
+      },
+      { key: 'createdAt', type: 'date', label: 'DATE', value: order.createdAt },
+      { key: 'price', type: 'price', label: 'TOTAL', value: order.totalPrice },
+      {
+        key: 'paidAt',
+        type: 'checkDate',
+        label: 'PAID',
+        check: order.isPaid,
+        value: order.paidAt,
+      },
+      {
+        key: 'deliveredAt',
+        type: 'checkDate',
+        label: 'DELIVERED',
+        check: order.isDelivered,
+        value: order.deliveredAt,
+      },
+    ];
+  });
 
+  const ordersTableFormat = {
+    title: 'orders',
+    link: 'auth',
+    raws,
+  };
+
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
   }, [dispatch, error]);
 
-  const scrollToTopHandler = () => {
-    setTimeout(() => {
-      containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 200);
-  };
-
   return (
-    <div className={classes.container} ref={containerRef}>
+    <div className={classes.container}>
       <h1>Orders</h1>
       <div className={classes.orders}>
-        {loading ? <Spinner /> : <AdminOrders orders={orders} />}
-      </div>
-      <div className={classes.paginate}>
-        <Paginate
-          items="orders"
-          pages={numOfPages}
-          page={currentPage}
-          itemsPerPage={resPerPage}
-          totalItems={ordersCount}
-          scrollToTop={scrollToTopHandler}
-        />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <AdminTable
+            items={ordersTableFormat}
+            label="orders"
+            resPerPage={resPerPage}
+            itemsCount={ordersCount}
+            currentPage={currentPage}
+            numOfPages={numOfPages}
+          />
+        )}
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ export const userOrders = async (req, res) => {
 // @route  GET /api/admin/orders
 // @acces  Admin
 export const allOrders = async (req, res) => {
-  const resPerPage = 12;
+  const resPerPage = 9;
   const currentPage = Number(req.query.page) || 1;
   const ordersCount = await Order.countDocuments();
 
@@ -38,7 +38,7 @@ export const allOrders = async (req, res) => {
 };
 
 // @desc   Get order by ID
-// @route  GET /api/auth/orders/:id
+// @route  GET /api/auth/orders/:orderID
 // @acces  Private
 export const orderDetails = async (req, res, next) => {
   const authUser = req.user;

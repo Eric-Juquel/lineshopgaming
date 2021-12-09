@@ -28,6 +28,9 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
 } from '../constants/userConstants.js';
 
 export const authReducer = (state = { user: null }, action) => {
@@ -166,7 +169,7 @@ export const forgotPasswordReducer = (state = {}, action) => {
   }
 };
 
-export const userListReducer = (state = { users: [] }, action) => {
+export const usersListReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case USER_LIST_REQUEST:
       return {
@@ -175,7 +178,11 @@ export const userListReducer = (state = { users: [] }, action) => {
     case USER_LIST_SUCCESS:
       return {
         loading: false,
-        users: action.payload,
+        users: action.payload.users,
+        usersCount: action.payload.usersCount,
+        resPerPage: action.payload.resPerPage,
+        currentPage: action.payload.currentPage,
+        numOfPages: action.payload.numOfPages,
       };
     case USER_LIST_FAIL:
       return {
@@ -188,6 +195,28 @@ export const userListReducer = (state = { users: [] }, action) => {
       return state;
   }
 };
+
+export const userDetailsReducer = (state = {user: {}}, action)  => {
+  switch (action.type) {
+    case USER_DETAILS_REQUEST:
+      return {
+        loading: true,
+      };
+    case USER_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        user: action.payload,
+      };
+    case USER_DETAILS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 
 export const userDeleteReducer = (state = {}, action) => {
   switch (action.type) {

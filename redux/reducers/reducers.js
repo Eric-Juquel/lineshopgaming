@@ -23,6 +23,8 @@ import {
   forgotPasswordReducer,
   loadedUserReducer,
   updateProfileReducer,
+  userDetailsReducer,
+  usersListReducer,
 } from './userReducers';
 
 const reducer = combineReducers({
@@ -33,6 +35,8 @@ const reducer = combineReducers({
   loadedUser: loadedUserReducer,
   updateProfile: updateProfileReducer,
   forgotPassword: forgotPasswordReducer,
+  usersList:usersListReducer,
+  userDetails:userDetailsReducer,
   userOrders: userOrdersReducer,
   orderDetails: orderDetailsReducer,
   newOrder: newOrderReducer,

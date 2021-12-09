@@ -1,7 +1,7 @@
 import User from '../models/user';
 import cloudinary from 'cloudinary';
 import absoluteUrl from 'next-absolute-url';
-import crypto from 'crypto'
+import crypto from 'crypto';
 
 import sendEmail from '../utils/sendEmail';
 import ErrorHandler from '../utils/errorHandler';
@@ -179,4 +179,82 @@ export const resetPassword = async (req, res, next) => {
     success: true,
     message: 'Password updated successfully',
   });
+};
+
+// @desc   Get all users
+// @route  GET /api/admin/users
+// @acces  Private/Admin
+export const allUsers = async (req, res) => {
+  const resPerPage = 9;
+  const currentPage = Number(req.query.page) || 1;
+  const usersCount = await User.countDocuments();
+
+  const users = await User.find()
+    .limit(resPerPage)
+    .skip(resPerPage * (currentPage - 1));
+
+  res.status(200).json({
+    success: true,
+    usersCount,
+    resPerPage,
+    currentPage,
+    numOfPages: Math.ceil(usersCount / resPerPage),
+    users: users.reverse(),
+  });
+};
+
+// @desc   Get user by ID
+// @route  GET /api/admin/users/:userID
+// @acces  Private/Admin
+export const userDetails = async (req, res, next) => {
+  const user = await User.findById(req.query.userID).select('-password');
+  if (!user) {
+    return next(new ErrorHandler('User not found with this ID', 404));
+  }
+  res.status(200).json({
+    success: true,
+    user,
+  });
+};
+
+// @desc   delete user
+// @route  DELETE /api/admin/users/:userID
+// @acces  Private/Admin
+export const deleteUser = async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    await user.remove();
+    res.json({ message: 'User removed' });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+};
+
+// @desc   Update user
+// @route  PUT/api/admin/users/:userID
+// @acces  Private/Admin
+export const updateUser = async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    user.firstName = req.body.firstName || user.firstName;
+    user.lastName = req.body.lastName || user.lastName;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin;
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
 };
