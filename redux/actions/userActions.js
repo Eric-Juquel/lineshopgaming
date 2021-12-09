@@ -31,6 +31,9 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
+  USER_ROLE_REQUEST,
+  USER_ROLE_SUCCESS,
+  USER_ROLE_FAIL,
 } from '../constants/userConstants';
 
 // Register User
@@ -171,39 +174,41 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
   }
 };
 
-export const listUsers = (authCookie, req, page= 1) => async (dispatch) => {
-  try {
-    dispatch({
-      type: USER_LIST_REQUEST,
-    });
+export const listUsers =
+  (authCookie, req, page = 1) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: USER_LIST_REQUEST,
+      });
 
-    const { origin } = absoluteUrl(req);
+      const { origin } = absoluteUrl(req);
 
-    const config = {
-      headers: {
-        cookie: authCookie,
-      },
-    };
+      const config = {
+        headers: {
+          cookie: authCookie,
+        },
+      };
 
-    const { data } = await axios.get(
-      `${origin}/api/admin/users?page=${page}`,
-      config
-    );
+      const { data } = await axios.get(
+        `${origin}/api/admin/users?page=${page}`,
+        config
+      );
 
-    dispatch({
-      type: USER_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: USER_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: USER_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: USER_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const getUserDetails = (authCookie, req, id) => async (dispatch) => {
   try {
@@ -219,10 +224,7 @@ export const getUserDetails = (authCookie, req, id) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(
-      `${origin}/api/admin/users/${id}`,
-      config
-    );
+    const { data } = await axios.get(`${origin}/api/admin/users/${id}`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -269,42 +271,35 @@ export const getUserDetails = (authCookie, req, id) => async (dispatch) => {
 //   }
 // };
 
-// export const updateUser = (user) => async (dispatch, getState) => {
-//   try {
-//     dispatch({
-//       type: USER_UPDATE_REQUEST,
-//     });
+export const updateUserRole = (roleData, userID) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_ROLE_REQUEST,
+    });
 
-//     const {
-//       userLogin: { userInfo },
-//     } = getState();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
 
-//     const config = {
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${userInfo.token}`,
-//       },
-//     };
+    const { data } = await axios.put(
+      `/api/admin/users/${userID}`,
+      roleData,
+      config
+    );
 
-//     const { data } = await axios.put(`/api/users/${user._id}`, user, config);
-
-//     dispatch({ type: USER_UPDATE_SUCCESS });
-
-//     dispatch({
-//       type: USER_DETAILS_SUCCESS,
-//       payload: data,
-//     });
-//     dispatch({ type: USER_DETAILS_RESET });
-//   } catch (error) {
-//     dispatch({
-//       type: USER_UPDATE_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     });
-//   }
-// };
+    dispatch({ type: USER_ROLE_SUCCESS, payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: USER_ROLE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 //Clear Errors
 export const clearErrors = () => async (dispatch) => {

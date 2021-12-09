@@ -76,7 +76,7 @@ const ProductScreen = () => {
 
         <div className={classes.paginate}>
           <Paginate
-            items="products"
+            label="products"
             pages={numOfPages}
             page={currentPage}
             itemsPerPage={resPerPage}

@@ -1,62 +1,48 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import classes from './UserDetailsScreen.module.scss';
-import Moment from 'react-moment';
-
-import Image from 'next/image';
 
 import { IoIosReturnLeft } from 'react-icons/io';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserDetails, clearErrors } from '../../redux/actions/userActions';
+import { clearErrors, getUserDetails } from '../../redux/actions/userActions';
+import UserCard from './UserCard';
+import UserRoleForm from './UserRoleForm';
+import { toast } from 'react-toastify';
 // import { USER_UPDATE_RESET } from "../../../constants/userConstants";
 
-const UserDetailsScreen = () => {
+const UserDetailsScreen = ({ rolesOptions }) => {
   const dispatch = useDispatch();
-  const [role, setRole] = useState('');
 
   const { user, loading, error } = useSelector((state) => state.userDetails);
+  const { success, error: roleError } = useSelector((state) => state.userRole);
 
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+    if (roleError) {
+      toast.error(roleError);
+    }
+    if (success) {
+      toast.success(success);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error, roleError, success]);
 
   return (
     <div className={classes.container}>
       <div className={classes.profile}>
         <h1>User Profile</h1>
-        <div className={classes.userCard}>
-          <div className={classes.userInfo}>
-            <div className={classes.raw}>
-              <h6>First name:</h6>
-              <p>{user.firstName}</p>
-            </div>
-            <div className={classes.raw}>
-              <h6>last name:</h6>
-              <p>{user.lastName}</p>
-            </div>
-            <div className={classes.raw}>
-              <h6>Register:</h6>
-              <p>
-                <Moment format="DD/MM/YY">{user.createdAt}</Moment>
-              </p>
-            </div>
-            <div className={classes.raw}>
-              <h6>Email:</h6>
-              <a href={`mailto:${user.email}`} title="send email">
-                {user.email}
-              </a>
-            </div>
-          </div>
-          <div className={classes.avatar}>
-            <Image src={user.avatar.url} width={80} height={90} />
-          </div>
-        </div>
+        <UserCard user={user} />
       </div>
       <div className={classes.role}>
         <h1>Rôle</h1>
+        <UserRoleForm
+          rolesOptions={rolesOptions}
+          userRole={user.role}
+          userID={user._id}
+        />
       </div>
       <div className={classes.orders}>
         <h1>Orders</h1>

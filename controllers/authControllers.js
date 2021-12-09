@@ -232,29 +232,35 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// @desc   Update user
+// @desc   Update user role
 // @route  PUT/api/admin/users/:userID
 // @acces  Private/Admin
-export const updateUser = async (req, res) => {
-  const user = await User.findById(req.params.id);
+export const updateUserRole = async (req, res, next) => {
+  const user = await User.findById(req.query.userID);
 
-  if (user) {
-    user.firstName = req.body.firstName || user.firstName;
-    user.lastName = req.body.lastName || user.lastName;
-    user.email = req.body.email || user.email;
-    user.isAdmin = req.body.isAdmin;
-
-    const updatedUser = await user.save();
-
-    res.json({
-      _id: updatedUser._id,
-      firstName: updatedUser.firstName,
-      lastName: updatedUser.lastName,
-      email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
-    });
-  } else {
-    res.status(404);
-    throw new Error('User not found');
+  if (!user) {
+    return next(new ErrorHandler('User not found with this ID', 404));
   }
+
+  user.role = req.body.userRole || user.role;
+
+  await user.save();
+
+  res.json({
+    success: true,
+    message: `User role updated to ${user.role}`,
+  });
+};
+
+// @desc   Get users role from User Model
+// @route  PUT/api/admin/users/roles
+// @acces  Admin
+
+export const rolesOptions = async (req, res) => {
+  const options = await User.schema.path('role').enumValues;
+
+  res.status(200).json({
+    success: true,
+    options,
+  });
 };

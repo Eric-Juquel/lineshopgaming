@@ -10,7 +10,7 @@
 
   display: grid;
   grid-template-columns: 40% 50%;
-  grid-template-rows: 55% 35%;
+  grid-template-rows: 50% 40%;
   grid-gap: 10%;
   padding: 2rem;
 
@@ -31,11 +31,16 @@
   grid-row: 1/2;
 
   .userCard {
-    width: 100%;
-    height: 95%;
+    background: $color-secondary-trans;
+    box-shadow: $box-shadow-dark;
+    border-radius: 10px;
+    width: 45rem;
+    height: 25rem;
+    margin: 4rem auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem;
 
     .userInfo {
       height: 60%;
@@ -46,8 +51,8 @@
       align-items: flex-start;
 
       p {
-          margin-left:1.4rem;
-          font-weight:600;
+        margin-left: 1.4rem;
+        font-weight: 600;
       }
 
       a {
@@ -67,18 +72,37 @@
   }
 
   .avatar {
-      width:40%;
-      @include flexCenter;
+    width: 40%;
+    @include flexCenter;
 
-      img {
-          border-radius:5px;
-      }
+    img {
+      border-radius: 5px;
+    }
   }
 }
 
 .role {
   grid-column: 1 / 2;
   grid-row: 2/3;
+
+  form {
+    width: 100%;
+    height: 10rem;
+    margin: 5rem auto;
+
+    .radioGroup {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    button {
+        width:10rem;
+        height:3rem;
+        @include btn3d($color-purple-light);
+    }
+  }
 }
 
 .orders {
