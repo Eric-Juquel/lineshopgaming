@@ -8,9 +8,8 @@ import Spinner from '../ui/Spinner';
 
 import Paginate from '../ui/Paginate';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import { toast } from 'react-toastify';
-import router from 'next/router';
 
 const ProductScreen = () => {
   const router = useRouter();

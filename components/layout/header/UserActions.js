@@ -120,7 +120,7 @@ const UserActions = ({ user }) => {
       )}
 
       <div className={classes.burger}>
-        <BurgerNavigation />
+        <BurgerNavigation user={user}/>
       </div>
     </div>
   );

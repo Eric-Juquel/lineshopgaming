@@ -2,7 +2,7 @@ import { useState } from "react";
 import classes from "./BurgerNavigation.module.scss";
 import Navigation from "./Navigation";
 
-const BurgerNavigation = () => {
+const BurgerNavigation = ({user}) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const checkHandler = () => {
@@ -23,7 +23,7 @@ const BurgerNavigation = () => {
       </label>
       <div className={classes.background}></div>
       <div className={classes.navbar}>
-        <Navigation setIsChecked={setIsChecked} isChecked={isChecked}/>
+        <Navigation setIsChecked={setIsChecked} isChecked={isChecked} user={user}/>
       </div>
     </div>
   );

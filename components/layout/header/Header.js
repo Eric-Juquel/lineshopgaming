@@ -9,7 +9,7 @@ import Searchbar from './Searchbar';
 import UserActions from './UserActions';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUser, clearErrors } from '../../../redux/actions/userActions';
+import { loadUser } from '../../../redux/actions/userActions';
 
 const Header = () => {
   const dispatch = useDispatch();
