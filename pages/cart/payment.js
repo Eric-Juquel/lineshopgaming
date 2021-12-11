@@ -1,17 +1,20 @@
 import Head from 'next/head';
+import axios from 'axios';
+import absoluteUrl from 'next-absolute-url';
+
 import PaymentScreen from '../../components/cart/PaymentScreen';
 
 import { setCartFromStorage } from '../../redux/actions/cartActions';
 import { wrapper } from '../../redux/store';
 
-export default function paymentPage() {
+export default function paymentPage({ paymentOptions }) {
   return (
     <>
       <Head>
         <title>LineShop | Payment Method</title>
         <meta name="description" content="User Payment Method form" />
       </Head>
-      <PaymentScreen />
+      <PaymentScreen paymentOptions={paymentOptions} />
     </>
   );
 }
@@ -37,5 +40,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       await store.dispatch(setCartFromStorage());
+
+      //Get payment options from Order model
+      const { origin } = absoluteUrl(req);
+
+      const { data } = await axios.get(`${origin}/api/orders/paymentMethods`);
+
+      return {
+        props: { paymentOptions: data.options },
+      };
     }
 );

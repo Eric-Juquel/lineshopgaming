@@ -78,10 +78,9 @@ const PlaceOrderScreen = () => {
       totalPrice: totalPrice,
     };
 
-
     dispatch(newOrder(orderPayload));
 
-    dispatch(saveOrder(orderPayload))
+    dispatch(saveOrder(orderPayload));
   };
 
   if (!cartItems || !shippingAddress || !paymentMethod) return <Spinner />;
@@ -109,7 +108,7 @@ const PlaceOrderScreen = () => {
           </p>
         </div>
         <div className={classes.payment}>
-          <h2>Payment Method</h2>
+          <h2>Payment </h2>
           <p>
             <strong>Method:</strong>
             {paymentMethod}

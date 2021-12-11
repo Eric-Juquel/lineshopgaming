@@ -3,7 +3,7 @@ import RadioBtn from '../forms/RadioBtn';
 import classes from './UserDetailsScreen.module.scss';
 
 import { useDispatch } from 'react-redux';
-import { clearErrors, updateUserRole } from '../../redux/actions/userActions';
+import {  updateUserRole } from '../../redux/actions/userActions';
 
 const UserRoleForm = ({ userID, userRole, rolesOptions }) => {
   const dispatch = useDispatch();

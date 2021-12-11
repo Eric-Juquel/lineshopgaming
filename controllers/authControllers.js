@@ -253,7 +253,7 @@ export const updateUserRole = async (req, res, next) => {
 };
 
 // @desc   Get users role from User Model
-// @route  PUT/api/admin/users/roles
+// @route  GET/api/admin/users/roles
 // @acces  Admin
 
 export const rolesOptions = async (req, res) => {

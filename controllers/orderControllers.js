@@ -156,3 +156,16 @@ export const deleteOrder = async (req, res) => {
   await order.remove();
   res.status(200).json({ message: 'Order removed' });
 };
+
+// @desc   Get payment Methods from Order Model
+// @route  GET/api/admin/users/roles
+// @acces  Admin
+
+export const paymentOptions = async (req, res) => {
+  const options = await Order.schema.path('paymentMethod').enumValues;
+
+  res.status(200).json({
+    success: true,
+    options,
+  });
+};

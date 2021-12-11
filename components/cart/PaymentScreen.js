@@ -1,31 +1,36 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import classes from './PaymentScreen.module.scss';
+
+import { useForm } from 'react-hook-form';
+import RadioBtn from '../forms/RadioBtn';
+
 import CheckoutSteps from './CheckoutSteps';
 import Cookies from 'js-cookie';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { savePaymentMethod } from '../../redux/actions/cartActions';
 
-const PaymentScreen = () => {
+const PaymentScreen = ({ paymentOptions }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { register, handleSubmit } = useForm();
 
   const { paymentMethod } = useSelector((state) => state.cart);
 
-  const [payment, setPayment] = useState(
-    paymentMethod ? paymentMethod : 'Stripe'
-  );
-
   useEffect(() => {
-    Cookies.set('paymentMethod', JSON.stringify(paymentMethod), {
-      expires: 1 / 24,
-    },{sameSite:"strict"});
+    Cookies.set(
+      'paymentMethod',
+      JSON.stringify(paymentMethod),
+      {
+        expires: 1 / 24,
+      },
+      { sameSite: 'strict' }
+    );
   }, [paymentMethod]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(savePaymentMethod(payment));
+  const submitHandler = (data) => {
+    dispatch(savePaymentMethod(data.paymentMethod));
     router.push('/cart/placeOrder');
   };
 
@@ -33,38 +38,28 @@ const PaymentScreen = () => {
     <div className={classes.container}>
       <CheckoutSteps step1 step2 step3 />
       <h1>Payment Method</h1>
-      <form className={classes.form} onSubmit={submitHandler}>
+      <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
         <h2>Select Method</h2>
         <div className={classes.radioGroup}>
-          <input
-            type="radio"
-            className={classes.input}
-            id="paypal"
-            name="payment"
-            value="PayPal"
-            checked={payment === 'PayPal'}
-            disabled
-            onChange={(e) => setPayment(e.target.value)}
-          />
-          <label htmlFor="paypal" className={classes.label}>
-            <span className={classes.radioButton}></span>
-            PayPal (currently not available)
-          </label>
-        </div>
-        <div className={classes.radioGroup}>
-          <input
-            type="radio"
-            className={classes.input}
-            id="stripe"
-            name="payment"
-            value="Stripe"
-            checked={payment === 'Stripe'}
-            onChange={(e) => setPayment(e.target.value)}
-          />
-          <label htmlFor="stripe" className={classes.label}>
-            <span className={classes.radioButton}></span>
-            Stripe
-          </label>
+          {paymentOptions.map((payment) => {
+            console.log('payment', payment);
+            return (
+              <RadioBtn
+                key={payment}
+                register={register}
+                name="paymentMethod"
+                value={payment}
+                label={payment}
+                checked={paymentMethod === payment}
+                disabled={payment === 'Paypal'}
+                message={
+                  payment === 'Paypal'
+                    ? 'Paypal is is temporarily deactivated'
+                    : null
+                }
+              />
+            );
+          })}
         </div>
         <div className={classes.continue}>
           <button className={classes.btn} type="submit">

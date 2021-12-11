@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
-import crypto from 'crypto'
+import crypto from 'crypto';
 
 const userSchema = new mongoose.Schema(
   {
@@ -43,6 +43,7 @@ const userSchema = new mongoose.Schema(
       enum: {
         values: ['user', 'admin', 'none'],
       },
+      required: true,
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
