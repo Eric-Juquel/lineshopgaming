@@ -3,24 +3,22 @@ import RadioBtn from '../forms/RadioBtn';
 import classes from './UserDetailsScreen.module.scss';
 
 import { useDispatch } from 'react-redux';
-import {  updateUserRole } from '../../redux/actions/userActions';
+import { updateUserRole } from '../../redux/actions/userActions';
 
 const UserRoleForm = ({ userID, userRole, rolesOptions }) => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
-  console.log('userRole',userRole)
-
+  console.log('userRole', userRole);
 
   const submitHandler = (data) => {
-    dispatch(updateUserRole( data,userID))
+    dispatch(updateUserRole(data, userID));
   };
 
   return (
-    <form  onSubmit={handleSubmit(submitHandler)}>
+    <form onSubmit={handleSubmit(submitHandler)}>
       <div className={classes.radioGroup}>
         {rolesOptions.map((role) => {
-          console.log('role', role)
           return (
             <RadioBtn
               key={role}

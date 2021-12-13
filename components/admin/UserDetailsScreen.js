@@ -2,18 +2,22 @@ import { useEffect } from 'react';
 import classes from './UserDetailsScreen.module.scss';
 
 import BackBtn from '../ui/BackBtn';
+import Spinner from '../ui/Spinner';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, getUserDetails } from '../../redux/actions/userActions';
+import { clearErrors } from '../../redux/actions/userActions';
 import UserCard from './UserCard';
 import UserRoleForm from './UserRoleForm';
 import { toast } from 'react-toastify';
-// import { USER_UPDATE_RESET } from "../../../constants/userConstants";
+import UserOrders from './UserOrders';
+import { USER_ROLE_RESET } from '../../redux/constants/userConstants';
 
 const UserDetailsScreen = ({ rolesOptions }) => {
   const dispatch = useDispatch();
 
-  const { user, loading, error } = useSelector((state) => state.userDetails);
+  const { user, userOrders, loading, error } = useSelector(
+    (state) => state.userDetails
+  );
   const { success, error: roleError } = useSelector((state) => state.userRole);
 
   useEffect(() => {
@@ -27,8 +31,11 @@ const UserDetailsScreen = ({ rolesOptions }) => {
     if (success) {
       toast.success(success);
       dispatch(clearErrors());
+      dispatch({ type: USER_ROLE_RESET });
     }
   }, [dispatch, error, roleError, success]);
+
+  if (loading) return <Spinner />;
 
   return (
     <div className={classes.container}>
@@ -46,6 +53,7 @@ const UserDetailsScreen = ({ rolesOptions }) => {
       </div>
       <div className={classes.orders}>
         <h1>Orders</h1>
+        <UserOrders orders={userOrders} />
         <div className={classes.back}>
           <BackBtn />
         </div>

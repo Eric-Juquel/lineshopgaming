@@ -12,6 +12,7 @@ import { FaRegEdit } from 'react-icons/fa';
 import { GiEmptyMetalBucketHandle } from 'react-icons/gi';
 
 import Paginate from '../ui/Paginate';
+import BackBtn from '../ui/BackBtn';
 
 const AdminTable = ({
   items,
@@ -67,16 +68,20 @@ const AdminTable = ({
                   <div className={classes.row}>
                     {raw.map((cell) => {
                       return (
-                        <div className={classes.cell} key={cell.value}>
+                        <div className={classes.cell} key={cell.key}>
                           {cell.type === 'string' ? (
                             cell.value
                           ) : cell.type === 'date' ? (
                             <Moment format="DD/MM/YY">{cell.value}</Moment>
                           ) : cell.type === 'checkDate' ? (
                             cell.check ? (
-                              <Moment format="DD/MM/YY">{cell.value}</Moment>
+                              <span className={classes.success}>
+                                <Moment format="DD/MM/YY">{cell.value}</Moment>
+                              </span>
                             ) : (
-                              <GiSplitCross />
+                              <span className={classes.danger}>
+                                <GiSplitCross />
+                              </span>
                             )
                           ) : cell.type === 'price' ? (
                             `${new Intl.NumberFormat().format(cell.value)} €`
@@ -118,6 +123,9 @@ const AdminTable = ({
           totalItems={itemsCount}
           scrollToTop={scrollToTopHandler}
         />
+      </div>
+      <div className={classes.back}>
+        <BackBtn />
       </div>
     </>
   );

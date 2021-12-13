@@ -256,9 +256,7 @@ export const userRoleReducer = (state = {}, action) => {
         error: action.payload,
       };
     case USER_ROLE_RESET:
-      return {
-        user: {},
-      };
+      return {};
     default:
       return state;
   }

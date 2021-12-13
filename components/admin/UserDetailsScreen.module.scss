@@ -98,9 +98,9 @@
     }
 
     button {
-        width:10rem;
-        height:3rem;
-        @include btn3d($color-purple-light);
+      width: 10rem;
+      height: 3rem;
+      @include btn3d($color-purple-light);
     }
   }
 }
@@ -108,11 +108,57 @@
 .orders {
   grid-column: 2 / 2;
   grid-row: 1/3;
-  display:flex;
+  display: flex;
   flex-direction: column;
-  justify-content:space-between;
+  justify-content: space-between;
+
+  .orderTable {
+    width:100%;
+    @include tableScroll;
+    margin-top:0;
+  }
+
+  .row,
+  .entitled {
+    width: 100%;
+    display: grid;
+    grid-template-columns: [date-start]25%[date-end total-start]25%[total-end paid-start]25%[paid-end deliver-start]25%[deliver-end];
+
+    justify-items: stretch;
+
+    .cell {
+      @include tableCel;
+      @include flexCenter;
+    }
+  }
+
+  .entitled {
+    border-bottom: 1px solid $color-purple-mid;
+    color: $color-blue-light;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .row {
+    border-top: 1px solid $color-purple-mid;
+
+    &:hover {
+      & .cell {
+        background-color: rgba($color-secondary, 0.7);
+      }
+    }
+
+    .cell {
+      svg {
+        fill: $color-danger;
+        margin: auto;
+      }
+    }
+  }
 }
 
 .back {
-  align-self:flex-end;
+  align-self: flex-end;
 }
