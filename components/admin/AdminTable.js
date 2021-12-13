@@ -62,7 +62,7 @@ const AdminTable = ({
         <div className={classes.items} ref={containerRef}>
           {itemRaws.map((raw) => {
             return (
-              <Link href={`/${link}/${raw[0].value}`}>
+              <Link key={raw[0].value} href={`/${link}/${raw[0].value}`}>
                 <a key={raw[0].value}>
                   <div className={classes.row}>
                     {raw.map((cell) => {

@@ -41,6 +41,7 @@ const ProductsGallery = ({ products }) => {
                     alt={product.name}
                     className="gallery__img"
                   />
+                  
                 </a>
               </Link>
             ))}

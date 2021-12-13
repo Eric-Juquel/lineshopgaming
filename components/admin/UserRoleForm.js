@@ -9,7 +9,8 @@ const UserRoleForm = ({ userID, userRole, rolesOptions }) => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
-  
+  console.log('userRole',userRole)
+
 
   const submitHandler = (data) => {
     dispatch(updateUserRole( data,userID))
@@ -19,6 +20,7 @@ const UserRoleForm = ({ userID, userRole, rolesOptions }) => {
     <form  onSubmit={handleSubmit(submitHandler)}>
       <div className={classes.radioGroup}>
         {rolesOptions.map((role) => {
+          console.log('role', role)
           return (
             <RadioBtn
               key={role}

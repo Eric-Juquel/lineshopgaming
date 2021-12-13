@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import classes from './UserDetailsScreen.module.scss';
 
-import { IoIosReturnLeft } from 'react-icons/io';
+import BackBtn from '../ui/BackBtn';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, getUserDetails } from '../../redux/actions/userActions';
@@ -46,6 +46,9 @@ const UserDetailsScreen = ({ rolesOptions }) => {
       </div>
       <div className={classes.orders}>
         <h1>Orders</h1>
+        <div className={classes.back}>
+          <BackBtn />
+        </div>
       </div>
     </div>
   );

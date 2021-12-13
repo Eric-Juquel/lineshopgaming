@@ -1,4 +1,5 @@
 import User from '../models/user';
+import Order from '../models/order'
 import cloudinary from 'cloudinary';
 import absoluteUrl from 'next-absolute-url';
 import crypto from 'crypto';
@@ -203,7 +204,7 @@ export const allUsers = async (req, res) => {
   });
 };
 
-// @desc   Get user by ID
+// @desc   Get userDetails by userID
 // @route  GET /api/admin/users/:userID
 // @acces  Private/Admin
 export const userDetails = async (req, res, next) => {
@@ -211,9 +212,14 @@ export const userDetails = async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler('User not found with this ID', 404));
   }
+
+  const userOrders = await Order.find({user: req.query.userID})
+
+
   res.status(200).json({
     success: true,
     user,
+    userOrders
   });
 };
 
@@ -252,7 +258,7 @@ export const updateUserRole = async (req, res, next) => {
   });
 };
 
-// @desc   Get users role from User Model
+// @desc   Get users role options from User Model
 // @route  GET/api/admin/users/roles
 // @acces  Admin
 

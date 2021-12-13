@@ -1,0 +1,17 @@
+@import "../../styles/sass/mixins";
+@import "../../styles/sass/variables";
+
+.backBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15rem;
+    height: 5rem;
+    margin: auto;
+    @include btn3d($color-blue-light);
+
+    svg {
+        font-size: 2.5rem;
+        margin: 2px 5px 0 -2px;
+      }
+}

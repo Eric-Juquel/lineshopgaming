@@ -1,6 +1,14 @@
 import classes from './CustomInputs.module.scss';
 
-const RadioBtn = ({ register, label, name, value, checked, disabled, message}) => {
+const RadioBtn = ({
+  register,
+  label,
+  name,
+  value,
+  checked,
+  disabled,
+  message,
+}) => {
   return (
     <div className={classes.radio}>
       <input

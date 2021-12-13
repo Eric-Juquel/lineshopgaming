@@ -174,6 +174,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
   }
 };
 
+// Admin list users action
 export const listUsers =
   (authCookie, req, page = 1) =>
   async (dispatch) => {
@@ -210,6 +211,7 @@ export const listUsers =
     }
   };
 
+// Admin get single user detail
 export const getUserDetails = (authCookie, req, id) => async (dispatch) => {
   try {
     dispatch({
@@ -228,7 +230,7 @@ export const getUserDetails = (authCookie, req, id) => async (dispatch) => {
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
-      payload: data.user,
+      payload: data,
     });
   } catch (error) {
     dispatch({

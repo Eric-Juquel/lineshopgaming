@@ -108,4 +108,11 @@
 .orders {
   grid-column: 2 / 2;
   grid-row: 1/3;
+  display:flex;
+  flex-direction: column;
+  justify-content:space-between;
+}
+
+.back {
+  align-self:flex-end;
 }
