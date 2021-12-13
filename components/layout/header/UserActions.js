@@ -109,9 +109,15 @@ const UserActions = ({ user }) => {
                     height={57}
                   />
                 ) : (
-                  <div className={classes.noAvatar}>
-                    {user.firstName.substring(0, 1)}
-                  </div>
+                  // <div className={classes.noAvatar}>
+                  //   {user.firstName.substring(0, 1)}
+                  // </div>
+                  <Image
+                    src="https://res.cloudinary.com/ericjuquel94/image/upload/v1639416363/LineShop/avatars/default_user_orizni.png"
+                    alt="default avatar"
+                    width={55}
+                    height={57}
+                  />
                 )}
               </div>
             </a>
@@ -120,7 +126,7 @@ const UserActions = ({ user }) => {
       )}
 
       <div className={classes.burger}>
-        <BurgerNavigation user={user}/>
+        <BurgerNavigation user={user} />
       </div>
     </div>
   );

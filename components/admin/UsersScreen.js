@@ -39,10 +39,12 @@ const UsersScreen = () => {
         value: user.role,
       },
       {
-        key: 'action',
-        type: 'action',
-        label: 'ACTION',
-        value: ['rôle', 'delete'],
+        key: 'avatar',
+        type: 'avatar',
+        label: 'AVATAR',
+        value: user.avatar
+          ? user.avatar.url
+          : 'https://res.cloudinary.com/ericjuquel94/image/upload/v1639416363/LineShop/avatars/default_user_orizni.png',
       },
     ];
   });

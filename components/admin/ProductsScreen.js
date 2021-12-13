@@ -40,10 +40,10 @@ const ProductsScreen = () => {
         value: product.updatedAt,
       },
       {
-        key: 'actions',
-        type: 'action',
-        label: 'ACTIONS',
-        value: ['update', 'delete'],
+        key: 'countInStock',
+        type: 'string',
+        label: 'IN STOCK',
+        value: product.countInStock,
       },
     ];
   });

@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import classes from './AdminScreen.module.scss';
 import Moment from 'react-moment';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { GiSplitCross } from 'react-icons/gi';
 import { FaUserGraduate } from 'react-icons/fa';
@@ -47,7 +48,7 @@ const AdminTable = ({
         <div className={classes.entitled}>
           {itemRaws[0].map((item) => (
             <h4
-              key={item.value}
+              key={item.key}
               className={classes.cell}
               onClick={
                 item.key !== 'id' && item.key !== 'actions'
@@ -64,11 +65,16 @@ const AdminTable = ({
           {itemRaws.map((raw) => {
             return (
               <Link key={raw[0].value} href={`/${link}/${raw[0].value}`}>
-                <a key={raw[0].value}>
+                <a>
                   <div className={classes.row}>
                     {raw.map((cell) => {
                       return (
-                        <div className={classes.cell} key={cell.key}>
+                        <div
+                          className={`${classes.cell} ${
+                            cell.type === 'avatar' ? classes.avatar : null
+                          }`}
+                          key={cell.key}
+                        >
                           {cell.type === 'string' ? (
                             cell.value
                           ) : cell.type === 'date' ? (
@@ -99,10 +105,15 @@ const AdminTable = ({
                                 <FaUserLock />
                               </span>
                             )
-                          ) : cell.type === 'action' ? (
-                            cell.value.map((action, i) => (
-                              <span key={action[i]}>{action}/</span>
-                            ))
+                          ) : cell.type === 'avatar' ? (
+                            <span className={classes.image}>
+                              <Image
+                                src={cell.value}
+                                alt="user's avatar"
+                                width={30}
+                                height={30}
+                              />
+                            </span>
                           ) : null}
                         </div>
                       );
