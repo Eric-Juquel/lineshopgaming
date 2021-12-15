@@ -49,7 +49,7 @@ const AdminTable = ({
           {itemRaws[0].map((item) => (
             <h4
               key={item.key}
-              className={classes.cell}
+              className={classes.title}
               onClick={
                 item.key !== 'id' && item.key !== 'actions'
                   ? () => setSort(item.key)
@@ -65,7 +65,7 @@ const AdminTable = ({
           {itemRaws.map((raw) => {
             return (
               <Link key={raw[0].value} href={`/${link}/${raw[0].value}`}>
-                <a>
+                <a title={`View ${title} details and edit`}>
                   <div className={classes.row}>
                     {raw.map((cell) => {
                       return (

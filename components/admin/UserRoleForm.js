@@ -9,8 +9,6 @@ const UserRoleForm = ({ userID, userRole, rolesOptions }) => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
-  console.log('userRole', userRole);
-
   const submitHandler = (data) => {
     dispatch(updateUserRole(data, userID));
   };

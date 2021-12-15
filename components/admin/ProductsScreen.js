@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 import classes from './AdminScreen.module.scss';
 import AdminTable from './AdminTable';
@@ -8,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors } from '../../redux/actions/productActions';
 
 import { toast } from 'react-toastify';
+import { FaPlusCircle } from 'react-icons/fa';
 
 const ProductsScreen = () => {
   const dispatch = useDispatch();
@@ -42,7 +44,7 @@ const ProductsScreen = () => {
       {
         key: 'countInStock',
         type: 'string',
-        label: 'IN STOCK',
+        label: 'STOCK',
         value: product.countInStock,
       },
     ];
@@ -61,9 +63,22 @@ const ProductsScreen = () => {
     }
   }, [dispatch, error]);
 
+  const createProductHandler = () => {
+    console.log('create');
+  };
+
   return (
     <div className={classes.container}>
-      <h1>Products</h1>
+      <div className={classes.productsHeader}>
+        <h1>Products</h1>
+        <Link href='/admin/products/create'>
+          <a className={classes.createBtn}>
+            <FaPlusCircle />
+            NEW PRODUCT
+          </a>
+        </Link>
+      </div>
+
       <div className={classes.products}>
         {loading ? (
           <Spinner />

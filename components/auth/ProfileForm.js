@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import Spinner from '../ui/Spinner';
 import TextField from '../forms/TextField';
-import UploadAvatarField from '../forms/UploadAvatarField';
+import UploadField from '../forms/UploadField';
 // import { uploadAvatar } from '../../lib/user-actions';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -109,7 +109,7 @@ const ProfileForm = ({ user }) => {
           />
         </div>
         <div className={`${classes.formGroup} ${classes.upload}`}>
-          <UploadAvatarField
+          <UploadField
             type="file"
             error={errors}
             inputwidth="100%"
@@ -121,7 +121,7 @@ const ProfileForm = ({ user }) => {
             loading={uploading}
             image={previewAvatar ? previewAvatar.url : ''}
             firstName={firstName}
-            setAvatar={setAvatar}
+            setImage={setAvatar}
           />
         </div>
         <div className={classes.formGroup}>

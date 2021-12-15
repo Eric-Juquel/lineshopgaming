@@ -110,7 +110,7 @@
   }
 
   &:active {
-    transform: translateY(.2rem);
+    transform: translateY(0.2rem);
   }
 
   &:disabled {
@@ -196,8 +196,9 @@
   box-shadow: $box-shadow-dark;
   margin: auto;
 
-  & .entitled .cell {
-    @media screen and (max-width: $bp-mobile-vert) {
+  h4 {
+    height: 5rem;
+    @media screen and (max-width: $bp-mobile-land) {
       font-size: 1.6rem;
     }
 
@@ -206,7 +207,7 @@
     }
   }
 
-  & .items {
+  .items {
     overflow-y: auto;
     scrollbar-width: none;
 
@@ -216,7 +217,7 @@
 
     @media screen and (max-width: $bp-mobile-small) {
       font-size: 1.3rem;
-      font-weight:600;
+      font-weight: 600;
     }
   }
 }

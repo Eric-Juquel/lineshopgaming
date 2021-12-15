@@ -31,6 +31,26 @@
   justify-content: space-between;
 }
 
+.productsHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .createBtn {
+    @include btn3d($color-yellow-light);
+    height: 4rem;
+    width: 18rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    & svg {
+      font-size: 2rem;
+    }
+  }
+}
+
 .itemTable {
   width: 100%;
   @include tableScroll;
@@ -46,6 +66,10 @@
 
   .cell {
     @include tableCel;
+    @include flexCenter;
+  }
+
+  .title {
     @include flexCenter;
   }
 }

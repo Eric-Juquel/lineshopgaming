@@ -4,7 +4,7 @@ import { BsUpload } from 'react-icons/bs';
 import Spinner from '../ui/Spinner';
 import Image from 'next/image';
 
-const UploadAvatarField = ({
+const UploadField = ({
   type,
   inputwidth,
   inputheight,
@@ -15,8 +15,7 @@ const UploadAvatarField = ({
   mandatory,
   loading,
   image,
-  firstName,
-  setAvatar,
+  setImage,
 }) => {
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -40,7 +39,7 @@ const UploadAvatarField = ({
             const file = e.target.files[0];
             const reader = new FileReader();
             reader.onloadend = () => {
-              setAvatar(reader.result);
+              setImage(reader.result);
               setPreviewImage(reader.result);
             };
             reader.readAsDataURL(file);
@@ -60,22 +59,20 @@ const UploadAvatarField = ({
       <label htmlFor={name} className={classes.label}>
         {label}
       </label>
-      <div className={classes.avatar}>
+      <div className={classes.previewImage}>
         {previewImage ? (
           <img src={previewImage} />
         ) : image ? (
           <Image
             src={image}
-            alt={`${firstName}'s avatar`}
+            alt={'preview image'}
             width={35}
             height={35}
           />
-        ) : (
-          <div className={classes.noAvatar}>{firstName.substring(0, 1)}</div>
-        )}
+        ) : null}
       </div>
     </div>
   );
 };
 
-export default UploadAvatarField;
+export default UploadField;

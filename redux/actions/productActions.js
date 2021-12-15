@@ -108,37 +108,37 @@ export const getProductDetails = (req, id) => async (dispatch) => {
 //   }
 // };
 
-// export const createProduct = () => async (dispatch, getState) => {
-//   try {
-//     dispatch({
-//       type: PRODUCT_CREATE_REQUEST,
-//     });
+export const createProduct = (productData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PRODUCT_CREATE_REQUEST,
+    });
 
-//     const {
-//       userLogin: { userInfo },
-//     } = getState();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.post(
+      `/api/admin/products`,
+      productData,
+      config
+    );
 
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${userInfo.token}`,
-//       },
-//     };
-//     const { data } = await axios.post(`/api/products`, {}, config);
-
-//     dispatch({
-//       type: PRODUCT_CREATE_SUCCESS,
-//       payload: data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: PRODUCT_CREATE_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     });
-//   }
-// };
+    dispatch({
+      type: PRODUCT_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 // export const updateProduct = (product) => async (dispatch, getState) => {
 //   try {

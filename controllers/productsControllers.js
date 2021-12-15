@@ -1,7 +1,16 @@
 import Product from '../models/product';
 
+import cloudinary from 'cloudinary';
+
 import ErrorHandler from '../utils/errorHandler';
 import APIFeatures from '../utils/apiFeatures';
+
+// Setting up cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
 
 // @desc   Fetch all products
 // @route  Get  /api/products
@@ -85,4 +94,61 @@ export const createProductReview = async (req, res, next) => {
   res.status(201).json({
     message: 'review added',
   });
+};
+
+// @desc   Create a new product
+// @route  POST /api/admin/products
+// @acces  Admin
+export const newProduct = async (req, res) => {
+  console.log('user', req.user);
+
+  const { name, brand, category, price, countInStock, description } = req.body;
+
+  const result = await cloudinary.v2.uploader.upload(req.body.image, {
+    folder: category === 'Game' ? 'Lineshop/games' : 'Lineshop/consoles',
+  });
+
+  const product = await Product.create({
+    name,
+    brand,
+    category,
+    price,
+    countInStock,
+    description,
+    image: {
+      public_id: result.public_id,
+      url: result.secure_url,
+    },
+  });
+
+  res.status(201).json({
+    success: `New Product ${name} created`,
+    product,
+  });
+};
+
+// @desc   Update a product
+// @route  PUT /api/products/:id
+// @acces  Private/Admin
+export const updateProduct = async (req, res) => {
+  const { name, price, description, image, brand, category, countInStock } =
+    req.body;
+
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    product.name = name;
+    product.price = price;
+    product.description = description;
+    product.image = image;
+    product.brand = brand;
+    product.category = category;
+    product.countInStock = countInStock;
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
 };
