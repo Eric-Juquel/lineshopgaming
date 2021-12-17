@@ -3,6 +3,8 @@ import classes from './ProductFormScreen.module.scss';
 
 import { useRouter } from 'next/router';
 
+import { GiEmptyMetalBucketHandle } from 'react-icons/gi';
+
 import { useForm } from 'react-hook-form';
 import TextField from '../forms/TextField';
 import TextareaField from '../forms/Textarea';
@@ -13,7 +15,11 @@ import ErrorComponent from '../ui/ErrorComponent';
 import BackBtn from '../ui/BackBtn';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, createProduct } from '../../redux/actions/productActions';
+import {
+  clearErrors,
+  createProduct,
+  updateProduct,
+} from '../../redux/actions/productActions';
 import {
   PRODUCT_CREATE_RESET,
   PRODUCT_UPDATE_RESET,
@@ -25,33 +31,91 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
+
+  const {
+    loading: loadingDetails,
+    error: errorDetails,
+    product,
+  } = useSelector((state) => state.productDetails);
 
   const { loading, success, error } = useSelector((state) => state.newProduct);
 
   const {
+    success: successUpdate,
+    errorUpdate,
+    loading: loadingUpdate,
+  } = useSelector((state) => state.productUpdate);
+
+  const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     control,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: product.name || '',
+      price: product.price || '',
+      brand: product.brand || '',
+      countInStock: product.countInStock || '',
+      category: {
+        value: product.category || null,
+        label: product.category || null,
+      },
+      description: product.description || '',
+    },
+  });
 
-  console.log('errors', errors);
+  const catOptions = categoriesOptions.map((option) => {
+    return {
+      label: option,
+      value: option,
+    };
+  });
+
+  // const resetForm = () => {
+  //   reset()
+  //   setImage('')
+  // }
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors);
+    if (product) {
+      setImage(product.image);
+    }
+    if (error || errorDetails || errorUpdate) {
+      toast.error(error || errorDetails || errorUpdate);
+      dispatch(clearErrors());
     }
     if (success) {
       toast.success(success);
       dispatch({ type: PRODUCT_CREATE_RESET });
+      reset();
+      setImage('');
     }
-  }, [dispatch, success, error]);
+    if (successUpdate) {
+      toast.success(successUpdate);
+      router.back();
+    }
+  }, [
+    product,
+    dispatch,
+    success,
+    error,
+    image,
+    errorDetails,
+    successUpdate,
+    errorUpdate,
+  ]);
+
+  const deleteHandler = () => {
+    console.log('delete');
+  };
 
   const submitHandler = (data) => {
     console.log('data', data);
     const productData = {
+      _id: product._id || undefined,
       name: data.name,
       price: data.price,
       brand: data.brand,
@@ -63,18 +127,23 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
     if (action === 'create') {
       dispatch(createProduct(productData));
     }
+    if (action === 'edit') {
+      dispatch(updateProduct(productData));
+    }
   };
-
-  const catOptions = categoriesOptions.map((option) => {
-    return {
-      label: option,
-      value: option,
-    };
-  });
 
   return (
     <div className={classes.container}>
-      <h1>{`${action} Product`} </h1>
+      <div className={classes.header}>
+        <h1>{`${action} Product`}</h1>
+        {action && action === 'edit' ? (
+          <button className={classes.deleteBtn} onClick={deleteHandler}>
+            <GiEmptyMetalBucketHandle />
+            Delete Product
+          </button>
+        ) : null}
+      </div>
+
       <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
         <div className={`${classes.formGroup} ${classes.name}`}>
           <TextField
@@ -115,7 +184,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
             placeholder="Browse image file"
             mandatory={true}
             // loading={uploading}
-            image=""
+            image={image}
             setImage={setImage}
           />
         </div>

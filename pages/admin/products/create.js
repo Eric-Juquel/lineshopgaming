@@ -2,26 +2,25 @@ import Head from 'next/head';
 import { getSession } from 'next-auth/client';
 
 import ProductFormScreen from '../../../components/admin/ProductFormScren';
-import capitalize from '../../../utils/capitalize';
 import axios from 'axios';
 import absoluteUrl from 'next-absolute-url';
 
-export default function ProductFormPage({ action, categoriesOptions }) {
+export default function createProductPage({ categoriesOptions }) {
   return (
     <>
       <Head>
-        <title>{`LineShop |  ${capitalize(action)} Product`}</title>
+        <title>LineShop | Create Product</title>
         <meta name="description" content="All current orders" />
       </Head>
       <ProductFormScreen
-        action={action}
+        action="create"
         categoriesOptions={categoriesOptions}
       />
     </>
   );
 }
 
-export const getServerSideProps = async ({ req, params }) => {
+export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
 
   if (!session) {
@@ -48,6 +47,6 @@ export const getServerSideProps = async ({ req, params }) => {
   const { data } = await axios.get(`${origin}/api/products/categories`);
 
   return {
-    props: { session, action: params.action, categoriesOptions: data.options },
+    props: { session, categoriesOptions: data.options },
   };
 };

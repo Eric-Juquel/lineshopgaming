@@ -6,10 +6,27 @@
   height: 95%;
   @include container;
 
-  h1 {
+  .header {
     height: 15%;
-    padding: 1rem;
-    text-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h1 {
+      padding: 1rem;
+      text-align: start;
+    }
+
+    .deleteBtn {
+      height: 3.5rem;
+      @include btnFlat($color-danger);
+      @include flexCenter;
+
+      svg {
+        font-size:2rem;
+        margin-right:.5rem
+      }
+    }
   }
 
   @media screen and (max-width: $bp-mobile-land) {
@@ -96,7 +113,6 @@
 
     @media screen and(max-width:$bp-mobile-vert) {
       min-width: 80%;
-      
     }
   }
 

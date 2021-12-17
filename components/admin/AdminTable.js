@@ -51,7 +51,7 @@ const AdminTable = ({
               key={item.key}
               className={classes.title}
               onClick={
-                item.key !== 'id' && item.key !== 'actions'
+                item.key !== 'id' && item.key !== 'avatar'
                   ? () => setSort(item.key)
                   : null
               }

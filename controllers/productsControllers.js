@@ -134,29 +134,57 @@ export const newProduct = async (req, res, next) => {
 };
 
 // @desc   Update a product
-// @route  PUT /api/products/:id
-// @acces  Private/Admin
-export const updateProduct = async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
+// @route  PUT /api/admin/products/:id
+// @acces  Admin
+export const updateProduct = async (req, res, next) => {
+  const { name, brand, category, price, countInStock, description, image } =
     req.body;
 
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.query.productID);
 
-  if (product) {
-    product.name = name;
-    product.price = price;
-    product.description = description;
-    product.image = image;
-    product.brand = brand;
-    product.category = category;
-    product.countInStock = countInStock;
-
-    const updatedProduct = await product.save();
-    res.json(updatedProduct);
-  } else {
-    res.status(404);
-    throw new Error('Product not found');
+  if (!product) {
+    return next(new ErrorHandler(`Product not found with this ID`, 404));
   }
+
+  //Update image
+  if (image !== '') {
+    if (product.image.public_id) {
+      const image_id = product.image.public_id;
+
+      // Delete product previous image
+      await cloudinary.v2.uploader.destroy(image_id);
+    }
+
+    const result = await cloudinary.v2.uploader.upload(image, {
+      folder: category === 'Game' ? 'Lineshop/games' : 'Lineshop/consoles',
+      width: '150',
+      crop: 'scale',
+    });
+
+    product.image = {
+      public_id: result.public_id,
+      url: result.secure_url,
+    };
+  }
+
+  await product.save();
+
+  res.status(200).json({
+    success: `Product ${product.name} updated`,
+  });
+};
+
+// @desc   Delete a product
+// @route  DELETE  /api/admin/products/:id
+// @acces  Admin
+export const deleteProduct = async (req, res, next) => {
+  const product = await Product.findById(req.query.productID);
+
+  if (!product) {
+    return next(new ErrorHandler('Product not found with this ID', 404));
+  }
+  await product.remove();
+  res.status(200).json({ success: `Product ${product.name} removed ` });
 };
 
 // @desc   Get products categories from Product Model

@@ -52,7 +52,7 @@ const ProductsScreen = () => {
 
   const productsTableFormat = {
     title: 'products',
-    link: 'products',
+    link: 'admin/products',
     raws,
   };
 
@@ -63,15 +63,11 @@ const ProductsScreen = () => {
     }
   }, [dispatch, error]);
 
-  const createProductHandler = () => {
-    console.log('create');
-  };
-
   return (
     <div className={classes.container}>
       <div className={classes.productsHeader}>
         <h1>Products</h1>
-        <Link href='/admin/products/create'>
+        <Link href="/admin/products/create">
           <a className={classes.createBtn}>
             <FaPlusCircle />
             NEW PRODUCT

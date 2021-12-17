@@ -18,7 +18,7 @@ import { toast } from 'react-toastify';
 
 const ProfileForm = ({ user }) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, formState:{errors} } = useForm();
 
   const [alert, setAlert] = useState({ status: '', text: '' });
 
@@ -108,7 +108,7 @@ const ProfileForm = ({ user }) => {
             mandatory={true}
           />
         </div>
-        <div className={`${classes.formGroup} ${classes.upload}`}>
+        <div className={`${classes.formGroup} `}>
           <UploadField
             type="file"
             error={errors}

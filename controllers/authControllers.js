@@ -1,5 +1,5 @@
 import User from '../models/user';
-import Order from '../models/order'
+import Order from '../models/order';
 import cloudinary from 'cloudinary';
 import absoluteUrl from 'next-absolute-url';
 import crypto from 'crypto';
@@ -206,36 +206,33 @@ export const allUsers = async (req, res) => {
 
 // @desc   Get userDetails by userID
 // @route  GET /api/admin/users/:userID
-// @acces  Private/Admin
+// @acces  Admin
 export const userDetails = async (req, res, next) => {
   const user = await User.findById(req.query.userID).select('-password');
   if (!user) {
     return next(new ErrorHandler('User not found with this ID', 404));
   }
 
-  const userOrders = await Order.find({user: req.query.userID})
-
+  const userOrders = await Order.find({ user: req.query.userID });
 
   res.status(200).json({
     success: true,
     user,
-    userOrders
+    userOrders,
   });
 };
 
 // @desc   delete user
 // @route  DELETE /api/admin/users/:userID
-// @acces  Private/Admin
-export const deleteUser = async (req, res) => {
-  const user = await User.findById(req.params.id);
+// @acces  Admin
+export const deleteUser = async (req, res, next) => {
+  const user = await User.findById(req.query.userID);
 
-  if (user) {
-    await user.remove();
-    res.json({ message: 'User removed' });
-  } else {
-    res.status(404);
-    throw new Error('User not found');
+  if (!user) {
+    return next(new ErrorHandler('User not found with this ID', 404));
   }
+  await user.remove();
+  res.status(200).json({ success: `User ${user.firstName} ${user.lastName} removed `});
 };
 
 // @desc   Update user role
@@ -248,7 +245,7 @@ export const updateUserRole = async (req, res, next) => {
     return next(new ErrorHandler('User not found with this ID', 404));
   }
 
-  if(user.email === 'admin@example.com') {
+  if (user.email === 'admin@example.com') {
     return next(new ErrorHandler('You can not set Owner Admin role', 403));
   }
 
