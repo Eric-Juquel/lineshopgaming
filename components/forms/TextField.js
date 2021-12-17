@@ -29,32 +29,31 @@ const TextField = ({
         style={{ width: inputwidth, height: inputheight }}
         type={showPassword}
         id={name}
-        // name={name}
+        name={name}
         placeholder={placeholder}
         defaultValue={defaultValue ? defaultValue : ''}
         step={step}
         min={0}
       />
-      
 
-      <label  className={classes.label}>
+      <label className={classes.label}>
         {label}
         {type === 'password' && (
-        <div className={classes.icon}>
-          {showPassword === 'password' ? (
-            <BsEyeFill onClick={seePassword} />
-          ) : (
-            <BsEyeSlashFill onClick={hidePassword} />
-          )}
-        </div>
-      )}
+          <div className={classes.icon}>
+            {showPassword === 'password' ? (
+              <BsEyeFill onClick={seePassword} />
+            ) : (
+              <BsEyeSlashFill onClick={hidePassword} />
+            )}
+          </div>
+        )}
       </label>
 
-      {/* {error[name] ? (
+      { error[name] ? (
         <div className={classes.error}>{label} is required</div>
       ) : (
         <div className={classes.error}>{""}</div>
-      )} */}
+      )}
     </div>
   );
 };

@@ -24,7 +24,7 @@ const ProfileForm = ({ user }) => {
 
   const [uploading, setUploading] = useState(false);
 
-  const { firstName, lastName, email, avatar:previewAvatar } = user;
+  const { firstName, lastName, email, avatar: previewAvatar } = user;
   const [avatar, setAvatar] = useState('');
 
   const { error, isUpdated, loading } = useSelector(
@@ -50,7 +50,7 @@ const ProfileForm = ({ user }) => {
       lastName: data.lastName,
       email: data.email,
       password: data.password,
-      avatar: avatar,
+      avatar,
     };
 
     if (data.password !== data.confirmPassword) {
@@ -114,6 +114,7 @@ const ProfileForm = ({ user }) => {
             error={errors}
             inputwidth="100%"
             inputheight="4rem"
+            frame="rounded"
             label="Avatar"
             name="avatar"
             placeholder="Upload Avatar"
@@ -152,7 +153,15 @@ const ProfileForm = ({ user }) => {
           />
         </div>
 
-        <button className={classes.updateBtn} type="submit">{loading ? <>Updating... <Spinner /></> : 'Update'}</button>
+        <button className={classes.updateBtn} type="submit">
+          {loading ? (
+            <>
+              Updating... <Spinner />
+            </>
+          ) : (
+            'Update'
+          )}
+        </button>
       </form>
     </>
   );

@@ -99,16 +99,23 @@ export const createProductReview = async (req, res, next) => {
 // @desc   Create a new product
 // @route  POST /api/admin/products
 // @acces  Admin
-export const newProduct = async (req, res) => {
-  console.log('user', req.user);
-
+export const newProduct = async (req, res, next) => {
   const { name, brand, category, price, countInStock, description } = req.body;
+
+  const productExists = await Product.findOne({ name });
+
+  if (productExists) {
+    return next(
+      new ErrorHandler(`Product already exists with the name ${name}`, 400)
+    );
+  }
 
   const result = await cloudinary.v2.uploader.upload(req.body.image, {
     folder: category === 'Game' ? 'Lineshop/games' : 'Lineshop/consoles',
   });
 
-  const product = await Product.create({
+  await Product.create({
+    user: req.user._id,
     name,
     brand,
     category,
@@ -123,7 +130,6 @@ export const newProduct = async (req, res) => {
 
   res.status(201).json({
     success: `New Product ${name} created`,
-    product,
   });
 };
 
@@ -151,4 +157,17 @@ export const updateProduct = async (req, res) => {
     res.status(404);
     throw new Error('Product not found');
   }
+};
+
+// @desc   Get products categories from Product Model
+// @route  GET/api/products/categories
+// @acces  Public
+
+export const categoriesOptions = async (req, res) => {
+  const options = await Product.schema.path('category').enumValues;
+
+  res.status(200).json({
+    success: true,
+    options,
+  });
 };

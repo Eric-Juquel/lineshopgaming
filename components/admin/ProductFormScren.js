@@ -13,21 +13,64 @@ import ErrorComponent from '../ui/ErrorComponent';
 import BackBtn from '../ui/BackBtn';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { createProduct } from '../../redux/actions/productActions';
+import { clearErrors, createProduct } from '../../redux/actions/productActions';
 import {
   PRODUCT_CREATE_RESET,
   PRODUCT_UPDATE_RESET,
 } from '../../redux/constants/productConstants';
+import SelectField from '../forms/SelectField';
+import { toast } from 'react-toastify';
 
-const ProductFormScreen = ({ action }) => {
+const ProductFormScreen = ({ action, categoriesOptions }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { register, handleSubmit } = useForm();
+  const [image, setImage] = useState();
+
+  const { loading, success, error } = useSelector((state) => state.newProduct);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
+
+  console.log('errors', errors);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors);
+    }
+    if (success) {
+      toast.success(success);
+      dispatch({ type: PRODUCT_CREATE_RESET });
+    }
+  }, [dispatch, success, error]);
 
   const submitHandler = (data) => {
     console.log('data', data);
+    const productData = {
+      name: data.name,
+      price: data.price,
+      brand: data.brand,
+      countInStock: data.countInStock,
+      category: data.category.label,
+      description: data.description,
+      image,
+    };
+    if (action === 'create') {
+      dispatch(createProduct(productData));
+    }
   };
+
+  const catOptions = categoriesOptions.map((option) => {
+    return {
+      label: option,
+      value: option,
+    };
+  });
 
   return (
     <div className={classes.container}>
@@ -37,7 +80,7 @@ const ProductFormScreen = ({ action }) => {
           <TextField
             type="text"
             register={register}
-            // error={errors}
+            error={errors}
             inputwidth="100%"
             inputheight="4rem"
             label="Name"
@@ -50,7 +93,7 @@ const ProductFormScreen = ({ action }) => {
           <TextField
             type="number"
             register={register}
-            // error={errors}
+            error={errors}
             inputwidth="100%"
             inputheight="4rem"
             label="Price"
@@ -60,37 +103,27 @@ const ProductFormScreen = ({ action }) => {
             step="0.01"
           />
         </div>
-        <div className={`${classes.formGroup} ${classes.image}`}>
-          <TextField
-            type="text"
-            register={register}
-            // error={errors}
-            inputwidth="100%"
-            inputheight="4rem"
-            label="Image Url"
-            name="imageUrl"
-            placeholder="Enter image url"
-            mandatory={false}
-          />
-        </div>
         <div className={`${classes.formGroup} ${classes.upload}`}>
           <UploadField
             type="file"
-            register={register}
-            // error={errors}
+            error={errors}
             inputwidth="100%"
             inputheight="4rem"
-            label="Image File"
-            name="imageFile"
+            frame="portrait"
+            label="Product Image"
+            name="productImage"
             placeholder="Browse image file"
+            mandatory={true}
             // loading={uploading}
+            image=""
+            setImage={setImage}
           />
         </div>
         <div className={`${classes.formGroup} ${classes.brand}`}>
           <TextField
             type="text"
             register={register}
-            // error={errors}
+            error={errors}
             inputwidth="100%"
             inputheight="4rem"
             label="Brand"
@@ -103,7 +136,7 @@ const ProductFormScreen = ({ action }) => {
           <TextField
             type="number"
             register={register}
-            // error={errors}
+            error={errors}
             inputwidth="100%"
             inputheight="4rem"
             label="In Stock"
@@ -113,23 +146,25 @@ const ProductFormScreen = ({ action }) => {
           />
         </div>
         <div className={`${classes.formGroup} ${classes.category}`}>
-          <TextField
-            type="text"
-            register={register}
-            // error={errors}
+          <SelectField
+            control={control}
+            error={errors}
             inputwidth="100%"
             inputheight="4rem"
             label="Category"
             name="category"
             placeholder="Enter Category"
+            options={catOptions}
+            menuPlacement="bottom"
+            isMulti={false}
             mandatory={true}
           />
         </div>
         <div className={`${classes.formGroup} ${classes.description}`}>
           <TextareaField
             register={register}
-            // error={errors}
-            rows={6}
+            error={errors}
+            rows={8}
             cols={10}
             inputwidth="100%"
             inputheight="100%"
@@ -140,11 +175,19 @@ const ProductFormScreen = ({ action }) => {
           />
         </div>
 
-        <button className={classes.submit} type="submit">
-          Update
-        </button>
-        <div className={classes.backBtn}>
-          <BackBtn />
+        <div className={classes.btnGroup}>
+          <button className={classes.submitBtn} type="submit">
+            {loading ? (
+              <>
+                Sending... <Spinner />
+              </>
+            ) : (
+              `${action}`
+            )}
+          </button>
+          <div className={classes.backBtn}>
+            <BackBtn />
+          </div>
         </div>
       </form>
     </div>

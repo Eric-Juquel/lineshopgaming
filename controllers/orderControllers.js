@@ -158,7 +158,7 @@ export const deleteOrder = async (req, res) => {
 };
 
 // @desc   Get payment Methods from Order Model
-// @route  GET/api/admin/users/roles
+// @route  GET/api/orders/paymentMethods
 // @acces  Admin
 
 export const paymentOptions = async (req, res) => {

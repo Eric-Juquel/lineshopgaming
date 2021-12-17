@@ -8,6 +8,7 @@ const UploadField = ({
   type,
   inputwidth,
   inputheight,
+  frame,
   label,
   name,
   placeholder,
@@ -59,7 +60,7 @@ const UploadField = ({
       <label htmlFor={name} className={classes.label}>
         {label}
       </label>
-      <div className={classes.previewImage}>
+      <div className={`${classes.previewImage} ${frame === 'rounded' ? classes.rounded : classes.portrait}`}>
         {previewImage ? (
           <img src={previewImage} />
         ) : image ? (

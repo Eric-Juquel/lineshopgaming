@@ -248,6 +248,10 @@ export const updateUserRole = async (req, res, next) => {
     return next(new ErrorHandler('User not found with this ID', 404));
   }
 
+  if(user.email === 'admin@example.com') {
+    return next(new ErrorHandler('You can not set Owner Admin role', 403));
+  }
+
   user.role = req.body.userRole || user.role;
 
   await user.save();

@@ -32,6 +32,18 @@
   }
 }
 
+//Disable number input arrows
+.input[type='number']::-webkit-inner-spin-button,
+.input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+//Custom placeholder
 .input:placeholder-shown + .label {
   opacity: 0;
   visibility: hidden;
@@ -47,6 +59,7 @@
   transition: all 0.3s;
 }
 
+//Custom Checkboxes
 .checkbox {
   height: 100%;
   display: flex;
@@ -89,13 +102,15 @@
   }
 }
 
+//custom Upload button
 .upload {
   position: relative;
+  display: flex;
+  justify-content: space-evenly;
 
   .input {
     height: 100%;
-    width: 40%;
-    // position: relative;
+    width: 15rem;
     opacity: 0;
     z-index: 2;
     cursor: pointer;
@@ -104,10 +119,16 @@
     &:hover + .btnUpload {
       filter: contrast(200%);
     }
+
+    @media screen and (max-width: $bp-mobile-land) {
+      position: absolute;
+      left: 0;
+      top: 80%;
+    }
   }
 
   .btnUpload {
-    width: 35%;
+    width: 15rem;
     height: 85%;
     @include centerElement;
     display: flex;
@@ -119,6 +140,12 @@
     color: rgba($color-grey-light-1, 0.8);
     background-image: linear-gradient(to top, rgb(49, 49, 49), rgb(99, 97, 97));
 
+    @media screen and (max-width: $bp-mobile-land) {
+      left:0;
+      top: 80%;
+      margin-left:8rem;
+    }
+
     svg {
       margin-right: 5%;
     }
@@ -128,28 +155,29 @@
     position: absolute;
     top: 25%;
     left: 0;
+
+    @media screen and (max-width: $bp-mobile-land) {
+      top: -2rem;
+    }
   }
 
   .previewImage {
     width: 20%;
     height: 100%;
-    right: 0;
-    margin-left: 80%;
+    position: absolute;
+    right:0;
 
-    img {
+    &.rounded img {
       height: 4rem;
       width: 4rem;
       border-radius: 100px;
     }
 
-    //   .noImagePreview {
-    //     text-transform: uppercase;
-    //     font-size: 3rem;
-    //     color: $color-secondary;
-    //     font-weight: 600;
-    //     background-color: $color-blue-light;
-    //     @include flexCenter;
-    //   }
+    &.portrait img {
+      height: 8rem;
+      width: 7rem;
+      transform: translateY(-25%);
+    }
   }
 }
 
@@ -165,6 +193,7 @@
   }
 }
 
+//Custom Radio input
 .radio {
   .input {
     display: none;
@@ -201,4 +230,9 @@
 
 .input:checked ~ .label .radioButton::after {
   opacity: 1;
+}
+
+.error {
+  color: $color-danger;
+  transform: translateY(-2rem);
 }

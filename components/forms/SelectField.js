@@ -46,15 +46,13 @@ const SelectField = ({
     valueContainer: (provided, state) => ({
       ...provided,
       maxHeight: state.isMulti === true ? '68px' : inputheight,
-      padding: '1.5rem',
+      // padding: '1.5rem',
       overflowY: state.isMulti === true ? 'auto' : 'hidden',
     }),
     placeholder: (provided, state) => ({
       ...provided,
       fontSize: '1.5rem',
       marginLeft: '1.5rem',
-      marginBottom: '1.5rem',
-
       color: 'rgb(54, 58, 63)',
     }),
     indicatorsContainer: (provided, state) => ({
@@ -63,8 +61,7 @@ const SelectField = ({
     }),
     singleValue: (provided, state) => ({
       ...provided,
-      minHeight: '30px',
-      marginTop:'-8px',
+      minHeight: '20px',
     }),
     menu: (provided, state) => ({
       ...provided,

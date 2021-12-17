@@ -93,7 +93,7 @@ const AdminTable = ({
                             `${new Intl.NumberFormat().format(cell.value)} €`
                           ) : cell.type === 'role' ? (
                             cell.value === 'user' ? (
-                              <span className={classes.danger}>
+                              <span className={classes.neutral}>
                                 <FaUserLock />
                               </span>
                             ) : cell.value === 'admin' ? (
@@ -101,7 +101,7 @@ const AdminTable = ({
                                 <FaUserGraduate />
                               </span>
                             ) : (
-                              <span className={classes.neutral}>
+                              <span className={classes.low}>
                                 <FaUserLock />
                               </span>
                             )
