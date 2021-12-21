@@ -8,7 +8,7 @@ const FlipCard = ({ product }) => {
       <div className={classes.flipcardinner}>
         <div className={classes.flipcardfront}>
           <div className={classes.image}>
-            <Image src={image} alt={name} layout="fill" />
+            <Image src={image.url || image} alt={name} layout="fill" />
           </div>
         </div>
         <div className={classes.flipcardback}>

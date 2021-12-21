@@ -162,7 +162,6 @@
 
   .previewImage {
     width: 20%;
-    height: 100%;
     position: absolute;
     right: 0;
 
@@ -172,10 +171,12 @@
       border-radius: 100px;
     }
 
-    &.portrait img {
-      height: 12rem !important;
-      width: 9rem !important;
-      transform: translateY(-20%);
+    &.portrait {
+      top: -3rem;
+      img {
+        height: 12rem !important;
+        width: 9rem !important;
+      }
     }
   }
 }

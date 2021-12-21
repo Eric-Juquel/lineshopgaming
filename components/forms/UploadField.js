@@ -20,8 +20,6 @@ const UploadField = ({
 }) => {
   const [previewImage, setPreviewImage] = useState(null);
 
-  
-
   return (
     <div
       className={classes.upload}
@@ -60,15 +58,19 @@ const UploadField = ({
       <label htmlFor={name} className={classes.label}>
         {label}
       </label>
-      <div className={`${classes.previewImage} ${frame === 'rounded' ? classes.rounded : classes.portrait}`}>
+      <div
+        className={`${classes.previewImage} ${
+          frame === 'rounded' ? classes.rounded : classes.portrait
+        }`}
+      >
         {previewImage ? (
           <img src={previewImage} />
         ) : image ? (
           <Image
-            src={image}
+            src={image.url || image}
             alt={'preview image'}
-            width={35}
-            height={35}
+            width={70}
+            height={90}
           />
         ) : null}
       </div>

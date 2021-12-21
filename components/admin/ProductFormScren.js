@@ -43,7 +43,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
 
   const {
     success: successUpdate,
-    errorUpdate,
+    error: errorUpdate,
     loading: loadingUpdate,
   } = useSelector((state) => state.productUpdate);
 
@@ -80,9 +80,6 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
   // }
 
   useEffect(() => {
-    if (product) {
-      setImage(product.image);
-    }
     if (error || errorDetails || errorUpdate) {
       toast.error(error || errorDetails || errorUpdate);
       dispatch(clearErrors());
@@ -102,7 +99,6 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
     dispatch,
     success,
     error,
-    image,
     errorDetails,
     successUpdate,
     errorUpdate,
@@ -113,7 +109,6 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
   };
 
   const submitHandler = (data) => {
-    console.log('data', data);
     const productData = {
       _id: product._id || undefined,
       name: data.name,
@@ -128,6 +123,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
       dispatch(createProduct(productData));
     }
     if (action === 'edit') {
+      console.log('productData', productData);
       dispatch(updateProduct(productData));
     }
   };
@@ -184,7 +180,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
             placeholder="Browse image file"
             mandatory={true}
             // loading={uploading}
-            image={image}
+            image={product.image ? product.image.url : ''}
             setImage={setImage}
           />
         </div>

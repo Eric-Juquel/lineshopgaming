@@ -37,7 +37,7 @@ const ProductsGallery = ({ products }) => {
               <Link key={product._id} href={`/products/${product._id}`}>
                 <a className={`gallery__item gallery__item--${index}`}>
                   <img
-                    src={product.image}
+                    src={product.image.url || product.image  }
                     alt={product.name}
                     className="gallery__img"
                   />

@@ -95,10 +95,10 @@ const ProductDetails = () => {
 
         <div className={classes.image}>
           <Image
-            src={product.image}
+            src={product.image.url || product.image}
             alt={product.name}
             width={250}
-            height={300}
+            height={350}
           />
         </div>
 

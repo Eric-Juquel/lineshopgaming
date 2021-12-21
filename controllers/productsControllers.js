@@ -35,7 +35,7 @@ export const allProducts = async (req, res) => {
     numOfPages: Math.ceil(filteredProductsCount / resPerPage),
     resPerPage,
     filteredProductsCount,
-    products,
+    products: products.reverse(),
   });
 };
 
@@ -157,8 +157,6 @@ export const updateProduct = async (req, res, next) => {
 
     const result = await cloudinary.v2.uploader.upload(image, {
       folder: category === 'Game' ? 'Lineshop/games' : 'Lineshop/consoles',
-      width: '150',
-      crop: 'scale',
     });
 
     product.image = {
@@ -167,7 +165,16 @@ export const updateProduct = async (req, res, next) => {
     };
   }
 
-  await product.save();
+  await product.save({
+    user: req.user._id,
+    name,
+    brand,
+    category,
+    price,
+    countInStock,
+    description,
+    image: product.image,
+  });
 
   res.status(200).json({
     success: `Product ${product.name} updated`,

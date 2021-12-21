@@ -18,7 +18,11 @@ import { toast } from 'react-toastify';
 
 const ProfileForm = ({ user }) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState:{errors} } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const [alert, setAlert] = useState({ status: '', text: '' });
 
@@ -53,6 +57,7 @@ const ProfileForm = ({ user }) => {
       avatar,
     };
 
+    console.log('data', userData);
     if (data.password !== data.confirmPassword) {
       setAlert({ status: 'error', text: 'Passwords do not match' });
     } else {

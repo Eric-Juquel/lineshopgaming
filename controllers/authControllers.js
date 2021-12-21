@@ -232,7 +232,9 @@ export const deleteUser = async (req, res, next) => {
     return next(new ErrorHandler('User not found with this ID', 404));
   }
   await user.remove();
-  res.status(200).json({ success: `User ${user.firstName} ${user.lastName} removed `});
+  res
+    .status(200)
+    .json({ success: `User ${user.firstName} ${user.lastName} removed ` });
 };
 
 // @desc   Update user role
