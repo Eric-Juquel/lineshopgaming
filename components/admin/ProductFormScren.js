@@ -119,7 +119,6 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
       dispatch(createProduct(productData));
     }
     if (action === 'edit') {
-      console.log('productData', productData);
       dispatch(updateProduct(productData));
     }
   };
