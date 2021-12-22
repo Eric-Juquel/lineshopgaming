@@ -19,6 +19,7 @@ import {
   clearErrors,
   createProduct,
   updateProduct,
+  deleteProduct,
 } from '../../redux/actions/productActions';
 import {
   PRODUCT_CREATE_RESET,
@@ -60,8 +61,8 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
       brand: product.brand || '',
       countInStock: product.countInStock || '',
       category: {
-        value: product.category || null,
-        label: product.category || null,
+        value: product.category || undefined,
+        label: product.category || undefined,
       },
       description: product.description || '',
     },
@@ -73,11 +74,6 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
       value: option,
     };
   });
-
-  // const resetForm = () => {
-  //   reset()
-  //   setImage('')
-  // }
 
   useEffect(() => {
     if (error || errorDetails || errorUpdate) {
@@ -105,7 +101,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
   ]);
 
   const deleteHandler = () => {
-    console.log('delete');
+    dispatch(deleteProduct(product._id));
   };
 
   const submitHandler = (data) => {
@@ -242,7 +238,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
 
         <div className={classes.btnGroup}>
           <button className={classes.submitBtn} type="submit">
-            {loading ? (
+            {loading || loadingUpdate ? (
               <>
                 Sending... <Spinner />
               </>
