@@ -187,7 +187,7 @@ const OrderScreen = () => {
               userOrder.orderItems.map((item) => (
                 <div key={item.product} className={classes.item}>
                   <Image
-                    src={item.image}
+                    src={item.image.url}
                     alt={item.name}
                     width={40}
                     height={55}

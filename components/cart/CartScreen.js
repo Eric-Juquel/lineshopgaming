@@ -60,7 +60,7 @@ const CartScreen = () => {
                 <div className={classes.item} key={item.product}>
                   <div className={classes.image}>
                     <Image
-                      src={item.image}
+                      src={item.image.url}
                       alt={item.name}
                       layout="fill"
                       objectFit="cover"
