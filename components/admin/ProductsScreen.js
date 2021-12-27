@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import classes from './AdminScreen.module.scss';
@@ -14,6 +14,8 @@ import { FaPlusCircle } from 'react-icons/fa';
 const ProductsScreen = () => {
   const dispatch = useDispatch();
 
+  const [sort, setSort] = useState('');
+
   const {
     products,
     resPerPage,
@@ -23,6 +25,12 @@ const ProductsScreen = () => {
     error,
     loading,
   } = useSelector((state) => state.productsList);
+
+  useEffect(() => {
+    if (sort) {
+      products.map((product) => console.log(product[sort]));
+    }
+  }, [sort]);
 
   const raws = products.map((product) => {
     return [
@@ -86,6 +94,7 @@ const ProductsScreen = () => {
             itemsCount={productsCount}
             currentPage={currentPage}
             numOfPages={numOfPages}
+            setSort={setSort}
           />
         )}
       </div>

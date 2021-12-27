@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import classes from './AdminScreen.module.scss';
 import Moment from 'react-moment';
 import Link from 'next/link';
@@ -22,9 +22,9 @@ const AdminTable = ({
   currentPage,
   numOfPages,
   label,
+  setSort,
 }) => {
   const containerRef = useRef();
-  const [sort, setSort] = useState('');
 
   const scrollToTopHandler = () => {
     setTimeout(() => {
