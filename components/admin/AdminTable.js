@@ -22,7 +22,10 @@ const AdminTable = ({
   currentPage,
   numOfPages,
   label,
+  sort,
   setSort,
+  order,
+  setOrder
 }) => {
   const containerRef = useRef();
 
@@ -40,6 +43,11 @@ const AdminTable = ({
 
   const { title, link, itemRaws } = table;
 
+  const setSortOptions = (key, order) => {
+    setSort(key);
+    setOrder(order === -1 ? 1 : -1);
+  };
+
   return itemRaws.length === 0 ? (
     <h4>No Current {title}</h4>
   ) : (
@@ -52,7 +60,7 @@ const AdminTable = ({
               className={classes.title}
               onClick={
                 item.key !== 'id' && item.key !== 'avatar'
-                  ? () => setSort(item.key)
+                  ? () => setSortOptions(item.key, order)
                   : null
               }
             >
@@ -133,6 +141,8 @@ const AdminTable = ({
           itemsPerPage={resPerPage}
           totalItems={itemsCount}
           scrollToTop={scrollToTopHandler}
+          sort={sort}
+          order={order}
         />
       </div>
       <div className={classes.back}>

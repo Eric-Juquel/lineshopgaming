@@ -10,6 +10,8 @@ const Paginate = ({
   totalItems,
   isAdmin = false,
   keyword = '',
+  sort='',
+  order=null,
   scrollToTop,
 }) => {
   return (
@@ -24,7 +26,7 @@ const Paginate = ({
                   ? `/products/search/${keyword}/?page=${p + 1}`
                   : `/products?page=${p + 1}`
                 : label === 'productsList'
-                ? `/admin/products?page=${p + 1}`
+                ? `/admin/products?sort=${sort}&order=${order}&page=${p + 1}`
                 : label === 'orders'
                 ? `/admin/orders?page=${p + 1}`
                 : label === 'users'

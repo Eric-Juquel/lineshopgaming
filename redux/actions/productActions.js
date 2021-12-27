@@ -25,7 +25,7 @@ import {
 
 // Get all products
 export const listProducts =
-  (req, currentPage = 1, keyword = '', category) =>
+  (req, currentPage = 1, keyword = '', category, sort, order) =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
@@ -35,6 +35,8 @@ export const listProducts =
       let link = `${origin}/api/products?page=${currentPage}&search=${keyword}`;
 
       if (category) link = link.concat(`&category=${category}`);
+
+      if (sort && order) link = link.concat(`&sort=${sort}&order=${order}`);
 
       const { data } = await axios.get(link);
 

@@ -18,6 +18,8 @@ cloudinary.config({
 export const allProducts = async (req, res) => {
   const resPerPage = 9;
   const currentPage = Number(req.query.page) || 1;
+  const sortString = req.query.sort || 'createdAt';
+  const order = req.query.order || -1;
   const productsCount = await Product.countDocuments();
 
   const apiFeatures = new APIFeatures(Product, req.query).search().filter();
@@ -26,7 +28,7 @@ export const allProducts = async (req, res) => {
   let filteredProductsCount = products.length;
 
   apiFeatures.pagination(resPerPage);
-  products = await apiFeatures.model.clone();
+  products = await apiFeatures.model.clone().sort([[sortString, order]]);
 
   res.status(200).json({
     success: true,
@@ -35,7 +37,7 @@ export const allProducts = async (req, res) => {
     numOfPages: Math.ceil(filteredProductsCount / resPerPage),
     resPerPage,
     filteredProductsCount,
-    products: products.reverse(),
+    products,
   });
 };
 

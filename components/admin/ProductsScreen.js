@@ -10,11 +10,14 @@ import { clearErrors } from '../../redux/actions/productActions';
 
 import { toast } from 'react-toastify';
 import { FaPlusCircle } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 const ProductsScreen = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
-  const [sort, setSort] = useState('');
+  const [sort, setSort] = useState('createdAt');
+  const [order, setOrder] = useState(-1)
 
   const {
     products,
@@ -26,13 +29,7 @@ const ProductsScreen = () => {
     loading,
   } = useSelector((state) => state.productsList);
 
-  useEffect(() => {
-    if (sort) {
-      products.map((product) => console.log(product[sort]));
-    }
-  }, [sort]);
-
-  const raws = products.map((product) => {
+  const raws = products && products.map((product) => {
     return [
       { key: 'id', type: 'string', label: 'ID', value: product._id },
       { key: 'name', type: 'string', label: 'NAME', value: product.name },
@@ -61,7 +58,7 @@ const ProductsScreen = () => {
   const productsTableFormat = {
     title: 'products',
     link: 'admin/products',
-    raws,
+    raws:raws || [],
   };
 
   useEffect(() => {
@@ -69,7 +66,10 @@ const ProductsScreen = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+    if (sort && order) {
+      router.push(`/admin/products?sort=${sort}&order=${order}`);
+    }
+  }, [dispatch, error, sort, order]);
 
   return (
     <div className={classes.container}>
@@ -95,6 +95,9 @@ const ProductsScreen = () => {
             currentPage={currentPage}
             numOfPages={numOfPages}
             setSort={setSort}
+            sort={sort}
+            order={order}
+            setOrder={setOrder}
           />
         )}
       </div>

@@ -21,6 +21,8 @@ class APIFeatures {
   filter() {
     const queryCopy = { ...this.queryStr };
 
+    
+
     //Remove fields from query
     const removeFields = ['search', 'page'];
     removeFields.forEach((el) => delete queryCopy[el]);
@@ -28,6 +30,8 @@ class APIFeatures {
     this.model = this.model.find(queryCopy);
     return this;
   }
+
+  
 
   pagination(resPerPage) {
     const currentPage = Number(this.queryStr.page) || 1;
