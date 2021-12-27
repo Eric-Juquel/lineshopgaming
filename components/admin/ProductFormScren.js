@@ -32,7 +32,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('');
 
   const {
     loading: loadingDetails,
@@ -119,6 +119,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
       dispatch(createProduct(productData));
     }
     if (action === 'edit') {
+      console.log('productData', productData)
       dispatch(updateProduct(productData));
     }
   };

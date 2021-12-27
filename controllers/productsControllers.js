@@ -167,16 +167,15 @@ export const updateProduct = async (req, res, next) => {
     };
   }
 
-  await product.save({
-    user: req.user._id,
-    name,
-    brand,
-    category,
-    price,
-    countInStock,
-    description,
-    image: product.image,
-  });
+  product.user = req.user._id;
+  product.name = name;
+  product.price = price;
+  product.description = description;
+  product.brand = brand;
+  product.category = category;
+  product.countInStock = countInStock;
+
+  await product.save();
 
   res.status(200).json({
     success: `Product ${product.name} updated`,
