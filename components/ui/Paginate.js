@@ -30,7 +30,7 @@ const Paginate = ({
                 : label === 'orders'
                 ? `/admin/orders?page=${p + 1}`
                 : label === 'users'
-                ? `/admin/users?page=${p + 1}`
+                ? `/admin/users?sort=${sort}&order=${order}&page=${p + 1}`
                 : '/'
             }
           >

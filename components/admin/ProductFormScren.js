@@ -40,6 +40,8 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
     product,
   } = useSelector((state) => state.productDetails);
 
+  console.log('product', product)
+
   const { loading, success, error } = useSelector((state) => state.newProduct);
 
   const {
@@ -57,9 +59,9 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
   } = useForm({
     defaultValues: {
       name: product.name || '',
-      price: product.price || '',
+      price: product.price || 0,
       brand: product.brand || '',
-      countInStock: product.countInStock || '',
+      countInStock: product.countInStock || 0,
       category: {
         value: product.category || undefined,
         label: product.category || undefined,
@@ -204,6 +206,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
             name="countInStock"
             placeholder="In Stock"
             mandatory={true}
+            step="1"
           />
         </div>
         <div className={`${classes.formGroup} ${classes.category}`}>

@@ -227,7 +227,7 @@ export const userDeleteReducer = (state = {}, action) => {
     case USER_DELETE_SUCCESS:
       return {
         loading: false,
-        success: true,
+        success: action.payload,
       };
     case USER_DELETE_FAIL:
       return {

@@ -1,15 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import classes from './AdminScreen.module.scss';
 import Spinner from '../ui/Spinner';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { clearErrors } from '../../redux/actions/userActions';
 
 import { toast } from 'react-toastify';
 import AdminTable from './AdminTable';
 
 const UsersScreen = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const [sort, setSort] = useState('createdAt');
+  const [order, setOrder] = useState(-1);
 
   const {
     users,
@@ -25,7 +31,7 @@ const UsersScreen = () => {
     return [
       { key: 'id', type: 'string', label: 'ID', value: user._id },
       {
-        key: 'name',
+        key: 'lastName',
         type: 'string',
         label: 'NAME',
         value: `${user.firstName} ${user.lastName}`,
@@ -60,7 +66,10 @@ const UsersScreen = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+    if (sort && order) {
+      router.push(`/admin/users?sort=${sort}&order=${order}`);
+    }
+  }, [dispatch, error, sort, order]);
 
   return (
     <div className={classes.container}>
@@ -76,6 +85,10 @@ const UsersScreen = () => {
             itemsCount={usersCount}
             currentPage={currentPage}
             numOfPages={numOfPages}
+            setSort={setSort}
+            sort={sort}
+            order={order}
+            setOrder={setOrder}
           />
         )}
       </div>

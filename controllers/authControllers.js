@@ -184,15 +184,18 @@ export const resetPassword = async (req, res, next) => {
 
 // @desc   Get all users
 // @route  GET /api/admin/users
-// @acces  Private/Admin
+// @acces  Admin
 export const allUsers = async (req, res) => {
   const resPerPage = 9;
   const currentPage = Number(req.query.page) || 1;
+  const sortString = req.query.sort || 'createdAt';
+  const order = req.query.order || -1;
   const usersCount = await User.countDocuments();
 
   const users = await User.find()
     .limit(resPerPage)
-    .skip(resPerPage * (currentPage - 1));
+    .skip(resPerPage * (currentPage - 1))
+    .sort([[sortString, order]]);
 
   res.status(200).json({
     success: true,
@@ -200,7 +203,7 @@ export const allUsers = async (req, res) => {
     resPerPage,
     currentPage,
     numOfPages: Math.ceil(usersCount / resPerPage),
-    users: users.reverse(),
+    users: users,
   });
 };
 
@@ -220,21 +223,6 @@ export const userDetails = async (req, res, next) => {
     user,
     userOrders,
   });
-};
-
-// @desc   delete user
-// @route  DELETE /api/admin/users/:userID
-// @acces  Admin
-export const deleteUser = async (req, res, next) => {
-  const user = await User.findById(req.query.userID);
-
-  if (!user) {
-    return next(new ErrorHandler('User not found with this ID', 404));
-  }
-  await user.remove();
-  res
-    .status(200)
-    .json({ success: `User ${user.firstName} ${user.lastName} removed ` });
 };
 
 // @desc   Update user role
@@ -259,6 +247,21 @@ export const updateUserRole = async (req, res, next) => {
     success: true,
     message: `User role updated to ${user.role}`,
   });
+};
+
+// @desc   delete user
+// @route  DELETE /api/admin/users/:userID
+// @acces  Admin
+export const deleteUser = async (req, res, next) => {
+  const user = await User.findById(req.query.userID);
+
+  if (!user) {
+    return next(new ErrorHandler('User not found with this ID', 404));
+  }
+  await user.remove();
+  res
+    .status(200)
+    .json({ success: `User ${user.firstName} ${user.lastName} removed ` });
 };
 
 // @desc   Get users role options from User Model

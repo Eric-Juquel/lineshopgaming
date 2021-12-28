@@ -43,6 +43,7 @@ const ProfileForm = ({ user }) => {
     }
 
     if (isUpdated) {
+      toast.success('User updated.')
       dispatch(loadUser());
       dispatch({ type: USER_UPDATE_PROFILE_RESET });
     }

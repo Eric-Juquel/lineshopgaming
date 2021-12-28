@@ -7,7 +7,7 @@ import Spinner from '../ui/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors } from '../../redux/actions/userActions';
 import UserCard from './UserCard';
-import UserRoleForm from './UserRoleForm';
+import UserForm from './UserForm';
 import { toast } from 'react-toastify';
 import UserOrders from './UserOrders';
 import { USER_ROLE_RESET } from '../../redux/constants/userConstants';
@@ -43,12 +43,11 @@ const UserDetailsScreen = ({ rolesOptions }) => {
         <h1>User Profile</h1>
         <UserCard user={user} />
       </div>
-      <div className={classes.role}>
-        <h1>Rôle</h1>
-        <UserRoleForm
+      <div className={classes.actions}>
+        
+        <UserForm
           rolesOptions={rolesOptions}
-          userRole={user.role}
-          userID={user._id}
+          user={user}
         />
       </div>
       <div className={classes.orders}>

@@ -4,9 +4,10 @@ import { useEffect } from 'react';
 import Footer from './footer/Footer';
 import Header from './header/Header';
 // import ShootingStars from './ShootingStars';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Flip } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
-import CookieConsent, { Cookies } from "react-cookie-consent";
+import CookieConsent, { Cookies } from 'react-cookie-consent';
 
 const Layout = (props) => {
   //   const [session] = useSession();
@@ -25,9 +26,16 @@ const Layout = (props) => {
       {/* <ShootingStars /> */}
       <div className="container">
         <Header />
-        <ToastContainer position="bottom-right" style={{ fontSize: '1.8rem' }} />
+        <ToastContainer
+          position="bottom-right"
+          style={{ fontSize: '1.8rem' }}
+          autoClose={3000}
+          transition={Flip}
+        />
         <main className="main">{props.children}</main>
-        <CookieConsent  style={{fontSize:"20px"}}>This website uses cookies to enhance the user experience.</CookieConsent>
+        <CookieConsent style={{ fontSize: '20px' }}>
+          This website uses cookies to enhance the user experience.
+        </CookieConsent>
         <Footer />
       </div>
     </>

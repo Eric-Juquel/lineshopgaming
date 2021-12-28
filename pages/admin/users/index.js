@@ -42,7 +42,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(listUsers(req.headers.cookie, req, query.page));
+      await store.dispatch(listUsers(req.headers.cookie, req, query.page, query.sort, query.order));
 
       return {
         props: { session },

@@ -25,7 +25,7 @@ import {
 
 // Get all products
 export const listProducts =
-  (req, currentPage = 1, keyword = '', category, sort, order) =>
+  (req, currentPage = 1, keyword = '', category, sort = 'createdAt', order= -1) =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });

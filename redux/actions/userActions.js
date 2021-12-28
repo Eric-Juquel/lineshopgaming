@@ -174,9 +174,9 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
   }
 };
 
-// Admin list users action
+// Admin list users
 export const listUsers =
-  (authCookie, req, page = 1) =>
+  (authCookie, req, page = 1, sort = 'createdAt', order = -1) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -191,10 +191,11 @@ export const listUsers =
         },
       };
 
-      const { data } = await axios.get(
-        `${origin}/api/admin/users?page=${page}`,
-        config
-      );
+      let link = `${origin}/api/admin/users?page=${page}`;
+
+      if (sort && order) link = link.concat(`&sort=${sort}&order=${order}`);
+
+      const { data } = await axios.get(link, config);
 
       dispatch({
         type: USER_LIST_SUCCESS,
@@ -243,36 +244,6 @@ export const getUserDetails = (authCookie, req, id) => async (dispatch) => {
   }
 };
 
-// export const deleteUser = (id) => async (dispatch, getState) => {
-//   try {
-//     dispatch({
-//       type: USER_DELETE_REQUEST,
-//     });
-
-//     const {
-//       userLogin: { userInfo },
-//     } = getState();
-
-//     const config = {
-//       headers: {
-//         Authorization: `Bearer ${userInfo.token}`,
-//       },
-//     };
-
-//     await axios.delete(`/api/users/${id}`, config);
-
-//     dispatch({ type: USER_DELETE_SUCCESS });
-//   } catch (error) {
-//     dispatch({
-//       type: USER_DELETE_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     });
-//   }
-// };
-
 export const updateUserRole = (roleData, userID) => async (dispatch) => {
   try {
     dispatch({
@@ -295,6 +266,27 @@ export const updateUserRole = (roleData, userID) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_ROLE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteUser = (userID) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DELETE_REQUEST });
+
+    const { data } = await axios.delete(`/api/admin/users/${userID}`);
+
+    dispatch({
+      type: USER_DELETE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

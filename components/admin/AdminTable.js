@@ -25,7 +25,7 @@ const AdminTable = ({
   sort,
   setSort,
   order,
-  setOrder
+  setOrder,
 }) => {
   const containerRef = useRef();
 
@@ -63,6 +63,13 @@ const AdminTable = ({
                   ? () => setSortOptions(item.key, order)
                   : null
               }
+              title={
+                item.key !== 'id' && item.key !== 'avatar' ? 'Sort By' : null
+              }
+              style={{
+                cursor:
+                  item.key !== 'id' && item.key !== 'avatar' ? 'pointer' : null,
+              }}
             >
               {item.label}
             </h4>

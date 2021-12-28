@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import classes from './AdminScreen.module.scss';
 import AdminTable from './AdminTable';
@@ -10,7 +11,6 @@ import { clearErrors } from '../../redux/actions/productActions';
 
 import { toast } from 'react-toastify';
 import { FaPlusCircle } from 'react-icons/fa';
-import { useRouter } from 'next/router';
 
 const ProductsScreen = () => {
   const dispatch = useDispatch();
