@@ -23,8 +23,8 @@
       @include flexCenter;
 
       svg {
-        font-size:2rem;
-        margin-right:.5rem
+        font-size: 2rem;
+        margin-right: 0.5rem;
       }
     }
   }
@@ -127,4 +127,8 @@
       max-height: 2.5rem;
     }
   }
+}
+
+.delete {
+  @include deleteModal;
 }

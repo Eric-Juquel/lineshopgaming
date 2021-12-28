@@ -73,7 +73,7 @@ export const getOrderDetails = (authCookie, req, id) => async (dispatch) => {
       payload: data.order,
     });
   } catch (error) {
-    console.log(error.response.data.message)
+    console.log(error.response.data.message);
     dispatch({
       type: ORDER_DETAILS_FAIL,
       payload:
@@ -167,7 +167,7 @@ export const userOrders = (authCookie, req) => async (dispatch) => {
 };
 
 export const listOrders =
-  (authCookie, req, page = 1) =>
+  (authCookie, req, page = 1, sort = 'createdAt', order = -1) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -182,10 +182,11 @@ export const listOrders =
         },
       };
 
-      const { data } = await axios.get(
-        `${origin}/api/admin/orders?page=${page}`,
-        config
-      );
+      let link = `${origin}/api/admin/orders?page=${page}`;
+
+      if (sort && order) link = link.concat(`&sort=${sort}&order=${order}`);
+
+      const { data } = await axios.get(link, config);
 
       dispatch({
         type: ORDER_LIST_SUCCESS,

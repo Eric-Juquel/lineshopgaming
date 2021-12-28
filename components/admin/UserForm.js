@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+
 import { useForm } from 'react-hook-form';
 import RadioBtn from '../forms/RadioBtn';
 import classes from './UserDetailsScreen.module.scss';
@@ -14,7 +15,6 @@ const UserForm = ({ user, rolesOptions }) => {
 
   // Modal
   const modalRef = useRef();
-
   const closeModalHandler = () => {
     modalRef.current.closeModal();
   };
@@ -22,7 +22,7 @@ const UserForm = ({ user, rolesOptions }) => {
   const deleteHandler = (userID) => {
     dispatch(deleteUser(userID));
     modalRef.current.closeModal();
-    router.back()
+    router.back();
   };
 
   const submitHandler = (data) => {
@@ -58,7 +58,7 @@ const UserForm = ({ user, rolesOptions }) => {
       </div>
       <Modal ref={modalRef} height="20rem" width="60rem">
         <div className={classes.delete}>
-          <h4>would you like to delete ?</h4>
+          <h4>{`would you like to delete ${user.firstName} ${user.lastName} ?`}</h4>
 
           <button className={classes.cancel} onClick={closeModalHandler}>
             Cancel

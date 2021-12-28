@@ -17,14 +17,15 @@ import Moment from 'react-moment';
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
+    justifyContent:'space-between',
     backgroundColor: '#E4E4E4',
     paddingTop: 35,
-    paddingBottom: 65,
+    paddingBottom: 10,
     paddingHorizontal: 35,
     fontFamily: 'Helvetica',
   },
   line: {
-    marginTop: 36,
+    marginTop: 15,
     alignSelf: 'center',
     width: '100%',
     height: '2rem',
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     borderBottom: '1px solid black',
   },
   paid: {
-    marginTop: 40,
+    marginBottom: 0,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',

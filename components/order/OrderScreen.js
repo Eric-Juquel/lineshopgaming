@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Moment from 'react-moment';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -27,10 +27,17 @@ import {
 } from '../../redux/constants/orderConstants';
 import { toast } from 'react-toastify';
 import ErrorComponent from '../ui/ErrorComponent';
+import Modal from '../ui/Modal';
 
 const OrderScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  // Modal
+  const modalRef = useRef();
+  const closeModalHandler = () => {
+    modalRef.current.closeModal();
+  };
 
   const [mounted, setMounted] = useState(false);
   const [userOrder, setUserOrder] = useState(null);
@@ -103,16 +110,14 @@ const OrderScreen = () => {
     errorDelete,
   ]);
 
-  const payHandler = () => {
-    console.log('success');
-  };
-
   const deliverHandler = (orderID) => {
     dispatch(deliverOrder(orderID));
   };
 
   const deleteHandler = (orderID) => {
     dispatch(deleteOrder(orderID));
+    modalRef.current.closeModal();
+    router.back();
   };
 
   // When mounted on client, now we can show the UI
@@ -175,7 +180,9 @@ const OrderScreen = () => {
               </Moment>
             </div>
           ) : (
-            <div className={classes.statusDanger}>Not Paid</div>
+            <div className={classes.statusDanger}>
+              {loading ? 'Loading' : 'Not Paid'}
+            </div>
           )}
         </div>
         <div className={classes.order}>
@@ -282,7 +289,7 @@ const OrderScreen = () => {
                   </button>
                   <button
                     className={classes.deleteBtn}
-                    onClick={() => deleteHandler(order._id)}
+                    onClick={() => modalRef.current.openModal()}
                   >
                     Delete
                   </button>
@@ -292,6 +299,21 @@ const OrderScreen = () => {
           )}
         </div>
       </div>
+      <Modal ref={modalRef} height="20rem" width="60rem">
+        <div className={classes.delete}>
+          <h4>{`would you like to delete Order N° ${order._id} ?`}</h4>
+
+          <button className={classes.cancel} onClick={closeModalHandler}>
+            Cancel
+          </button>
+          <button
+            className={classes.validate}
+            onClick={() => deleteHandler(order._id)}
+          >
+            Validate
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

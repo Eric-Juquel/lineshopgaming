@@ -141,11 +141,10 @@
     justify-content: stretch;
     height: 100%;
     width: 100%;
-    overflow-y: auto;
-    scrollbar-width: thin !important;
 
-    @media screen and (max-width: $bp-mobile-vert) {
-      height: 30rem;
+    @media screen and (min-width: $bp-mobile-vert) {
+      overflow-y: auto;
+      scrollbar-width: thin !important;
     }
 
     .item {
@@ -158,6 +157,10 @@
 
       @media screen and (max-width: $bp-mobile-land) {
         height: 40%;
+      }
+
+      @media screen and (max-width: $bp-mobile-vert) {
+        min-height: 8rem;
       }
 
       img {
@@ -392,3 +395,9 @@
     }
   }
 }
+
+.delete {
+  @include deleteModal;
+}
+
+

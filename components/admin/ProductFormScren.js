@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classes from './ProductFormScreen.module.scss';
 
 import { useRouter } from 'next/router';
@@ -11,7 +11,6 @@ import TextareaField from '../forms/Textarea';
 import UploadField from '../forms/UploadField';
 
 import Spinner from '../ui/Spinner';
-import ErrorComponent from '../ui/ErrorComponent';
 import BackBtn from '../ui/BackBtn';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,10 +26,17 @@ import {
 } from '../../redux/constants/productConstants';
 import SelectField from '../forms/SelectField';
 import { toast } from 'react-toastify';
+import Modal from '../ui/Modal';
 
 const ProductFormScreen = ({ action, categoriesOptions }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  // Modal
+  const modalRef = useRef();
+  const closeModalHandler = () => {
+    modalRef.current.closeModal();
+  };
 
   const [image, setImage] = useState('');
 
@@ -104,6 +110,8 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
 
   const deleteHandler = () => {
     dispatch(deleteProduct(product._id));
+    modalRef.current.closeModal();
+    router.back();
   };
 
   const submitHandler = (data) => {
@@ -131,7 +139,7 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
       <div className={classes.header}>
         <h1>{`${action} Product`}</h1>
         {action && action === 'edit' ? (
-          <button className={classes.deleteBtn} onClick={deleteHandler}>
+          <button className={classes.deleteBtn} onClick={() => modalRef.current.openModal()}>
             <GiEmptyMetalBucketHandle />
             Delete Product
           </button>
@@ -254,6 +262,21 @@ const ProductFormScreen = ({ action, categoriesOptions }) => {
           </div>
         </div>
       </form>
+      <Modal ref={modalRef} height="20rem" width="60rem">
+        <div className={classes.delete}>
+          <h4>{`would you like to delete ${product.name} ?`}</h4>
+
+          <button className={classes.cancel} onClick={closeModalHandler}>
+            Cancel
+          </button>
+          <button
+            className={classes.validate}
+            onClick={() => deleteHandler(product._id)}
+          >
+            Validate
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

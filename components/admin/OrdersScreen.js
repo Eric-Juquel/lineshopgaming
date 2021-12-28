@@ -1,15 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import classes from './AdminScreen.module.scss';
 import Spinner from '../ui/Spinner';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { clearErrors } from '../../redux/actions/orderActions';
 
 import { toast } from 'react-toastify';
 import AdminTable from './AdminTable';
 
 const OrdersScreen = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const [sort, setSort] = useState('createdAt');
+  const [order, setOrder] = useState(-1);
 
   const {
     orders,
@@ -25,13 +31,18 @@ const OrdersScreen = () => {
     return [
       { key: 'id', type: 'string', label: 'ID', value: order._id },
       {
-        key: 'name',
+        key: 'user',
         type: 'string',
         label: 'NAME',
         value: `${order.user.firstName} ${order.user.lastName}`,
       },
       { key: 'createdAt', type: 'date', label: 'DATE', value: order.createdAt },
-      { key: 'price', type: 'price', label: 'TOTAL', value: order.totalPrice },
+      {
+        key: 'totalPrice',
+        type: 'price',
+        label: 'TOTAL',
+        value: order.totalPrice,
+      },
       {
         key: 'paidAt',
         type: 'checkDate',
@@ -60,7 +71,11 @@ const OrdersScreen = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+    if (sort && order) {
+      console.log('sort', sort, order);
+      router.push(`/admin/orders?sort=${sort}&order=${order}`);
+    }
+  }, [dispatch, error, sort, order]);
 
   return (
     <div className={classes.container}>
@@ -76,6 +91,10 @@ const OrdersScreen = () => {
             itemsCount={ordersCount}
             currentPage={currentPage}
             numOfPages={numOfPages}
+            setSort={setSort}
+            sort={sort}
+            order={order}
+            setOrder={setOrder}
           />
         )}
       </div>
