@@ -12,7 +12,8 @@ body {
   height: 100%;
   overflow: hidden !important;
   text-align: center;
-  background: url(https://res.cloudinary.com/ericjuquel94/image/upload/v1637593423/LineShop/backgrounds/orion-1920_z8yhuo.jpg) no-repeat center fixed;
+  background: url(https://res.cloudinary.com/ericjuquel94/image/upload/v1637593423/LineShop/backgrounds/orion-1920_z8yhuo.jpg)
+    no-repeat center fixed;
   background-size: cover;
 }
 
@@ -226,9 +227,14 @@ a {
   // height: 100%;
   background-color: $color-background-secondary;
   margin: auto;
-  padding: 0.5rem;
   border-radius: 8px;
   padding: 1rem;
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    @include flexCenter;
+    width: 95%;
+    height: 70%;
+  }
 }
 
 .gallery {
@@ -242,6 +248,10 @@ a {
 
   grid-gap: 1.5rem;
   padding: 1.5rem;
+
+  @media screen and (max-width: $bp-mobile-vert) {
+    grid-template-rows: repeat(5, 9vw);
+  }
 
   &__item {
     transition: all 0.2s ease;
